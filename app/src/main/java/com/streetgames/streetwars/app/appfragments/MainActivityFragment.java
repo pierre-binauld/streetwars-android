@@ -1,4 +1,4 @@
-package com.streetgames.streetwars;
+package com.streetgames.streetwars.app.appfragments;
 
 import android.accounts.Account;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.streetgames.streetwars.R;
 import com.streetgames.streetwars.accounts.Authenticator;
 
 /**

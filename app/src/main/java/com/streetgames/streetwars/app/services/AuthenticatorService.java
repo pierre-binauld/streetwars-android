@@ -1,4 +1,4 @@
-package com.streetgames.streetwars.accounts;
+package com.streetgames.streetwars.app.services;
 
 
 import android.app.Service;

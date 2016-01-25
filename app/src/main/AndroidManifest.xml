@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".app.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -34,7 +34,7 @@
         </provider>
 
         <service
-            android:name=".accounts.AuthenticatorService">
+            android:name=".app.services.AuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -44,7 +44,7 @@
         </service>
 
         <service
-            android:name=".content.SyncService"
+            android:name=".app.services.SyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
