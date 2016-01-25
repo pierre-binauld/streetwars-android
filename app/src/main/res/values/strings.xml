@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Street Wars</string>
     <string name="action_settings">Settings</string>
+
+    <string name="account_type">com.streetgames.streetwars.account</string>
+    <string name="content_authority">com.streetgames.streetwars.game</string>
 </resources>
