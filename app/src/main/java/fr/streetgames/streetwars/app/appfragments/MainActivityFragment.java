@@ -1,4 +1,4 @@
-package com.streetgames.streetwars.app.appfragments;
+package fr.streetgames.streetwars.app.appfragments;
 
 import android.accounts.Account;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.streetgames.streetwars.R;
-import com.streetgames.streetwars.accounts.Authenticator;
+import fr.streetgames.streetwars.accounts.Authenticator;
 
 /**
  * A placeholder fragment containing a simple view.

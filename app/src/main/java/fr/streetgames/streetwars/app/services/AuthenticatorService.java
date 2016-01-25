@@ -1,11 +1,11 @@
-package com.streetgames.streetwars.app.services;
+package fr.streetgames.streetwars.app.services;
 
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.streetgames.streetwars.accounts.Authenticator;
+import fr.streetgames.streetwars.accounts.Authenticator;
 
 
 public class AuthenticatorService extends Service {

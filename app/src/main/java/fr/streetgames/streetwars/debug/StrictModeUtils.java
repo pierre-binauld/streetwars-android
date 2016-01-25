@@ -1,4 +1,4 @@
-package com.streetgames.streetwars.debug;
+package fr.streetgames.streetwars.debug;
 
 import android.os.StrictMode;
 import android.support.design.BuildConfig;

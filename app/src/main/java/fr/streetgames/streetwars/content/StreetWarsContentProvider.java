@@ -1,4 +1,4 @@
-package com.streetgames.streetwars.content;
+package fr.streetgames.streetwars.content;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

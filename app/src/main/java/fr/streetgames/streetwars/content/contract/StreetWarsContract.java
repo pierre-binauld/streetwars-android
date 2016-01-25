@@ -1,4 +1,4 @@
-package com.streetgames.streetwars.content.contract;
+package fr.streetgames.streetwars.content.contract;
 
 import android.net.Uri;
 

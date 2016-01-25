@@ -1,4 +1,4 @@
-package com.streetgames.streetwars.app.activities;
+package fr.streetgames.streetwars.app.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

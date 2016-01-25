@@ -1,4 +1,4 @@
-package com.streetgames.streetwars.accounts;
+package fr.streetgames.streetwars.accounts;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
@@ -10,7 +10,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.streetgames.streetwars.content.contract.StreetWarsContract;
+import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 
 public class Authenticator extends AbstractAccountAuthenticator {
 
