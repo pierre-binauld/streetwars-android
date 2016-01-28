@@ -1,4 +1,4 @@
-package fr.streetgames.streetwars.app.appfragments;
+package fr.streetgames.streetwars.app.fragments;
 
 import android.accounts.Account;
 import android.support.v4.app.Fragment;
