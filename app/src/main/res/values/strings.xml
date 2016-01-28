@@ -4,10 +4,15 @@
 
     <string name="account_type">com.streetgames.streetwars.account</string>
     <string name="content_authority">com.streetgames.streetwars.game</string>
+
     <string name="menu_contract">Contrat</string>
     <string name="menu_map">Carte</string>
     <string name="menu_water_code">Water Code</string>
     <string name="menu_news">News</string>
     <string name="menu_rules">Règles</string>
     <string name="menu_tickets">Tickets</string>
+
+    <string name="title_water_code">Water Code</string>
+    <string name="share_with">Partager avec...</string>
+
 </resources>
