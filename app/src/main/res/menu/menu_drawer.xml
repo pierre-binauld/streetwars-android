@@ -9,27 +9,22 @@
             android:icon="@drawable/ic_code_white_24dp" />
         <item
             android:id="@+id/menu_contract"
-            android:checked="true"
             android:title="@string/menu_contract"
             android:icon="@drawable/ic_my_location_white_24dp" />
         <item
             android:id="@+id/menu_map"
-            android:checked="true"
             android:title="@string/menu_map"
             android:icon="@drawable/ic_room_white_24dp" />
         <item
             android:id="@+id/menu_news"
-            android:checked="true"
             android:title="@string/menu_news"
             android:icon="@drawable/ic_access_time_white_24dp" />
         <item
             android:id="@+id/menu_rules"
-            android:checked="true"
             android:title="@string/menu_rules"
             android:icon="@drawable/ic_flag_white_24dp" />
         <item
             android:id="@+id/menu_tickets"
-            android:checked="true"
             android:title="@string/menu_tickets"
             android:icon="@drawable/ic_message_white_24dp" />
     </group>

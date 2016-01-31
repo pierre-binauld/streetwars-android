@@ -14,5 +14,6 @@
 
     <string name="title_water_code">Water Code</string>
     <string name="share_with">Partager avec...</string>
+    <string name="menu_share">Partager</string>
 
 </resources>
