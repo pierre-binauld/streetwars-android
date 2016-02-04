@@ -3,13 +3,9 @@ package fr.streetgames.streetwars.app.fragments;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -53,24 +49,6 @@ public class WaterCodeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         getActivity().setTitle(R.string.title_water_code);
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_fragment_water_code, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_share:
-                onShareClick();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void onShareClick() {
