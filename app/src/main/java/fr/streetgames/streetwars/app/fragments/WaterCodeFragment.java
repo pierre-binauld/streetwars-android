@@ -48,14 +48,14 @@ public class WaterCodeFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getActivity().setTitle(R.string.title_water_code);
+        getActivity().setTitle(R.string.water_code_title);
     }
 
     private void onShareClick() {
         Resources res = getResources();
         Intent intent = ShareCompat.IntentBuilder.from(getActivity())
                 .setType(HTTP.TYPE_PLAIN_TEXT)
-                .setSubject(res.getString(R.string.title_water_code))
+                .setSubject(res.getString(R.string.water_code_title))
                 .setText(mWaterCodeTextView.getText())
                 .getIntent();
 

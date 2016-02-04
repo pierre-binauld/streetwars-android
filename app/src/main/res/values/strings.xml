@@ -10,10 +10,15 @@
     <string name="menu_water_code">Water Code</string>
     <string name="menu_news">News</string>
     <string name="menu_rules">Règles</string>
+    <string name="menu_share">Partager</string>
     <string name="menu_tickets">Tickets</string>
 
-    <string name="title_water_code">Water Code</string>
+    <string name="water_code_title">Water Code</string>
+    <string name="water_code_rule_1">Le Watercode doit être saisi le plus tôt possible afin de ne pas déséquilibrer le jeu.</string>
+    <string name="water_code_rule_2">Lors d’un échange de Watercode, personne n’est en zone sûre.</string>
+    <string name="water_code_rule_3">Les éliminations sont irréversibles. En cas de litige, n’échangez pas de Watercode et utilisez le système de tickets.</string>
+    <string name="water_code_rule_4">Ne donner pas votre Watercode si quelqu’un vous arrose un samedi.</string>
+
     <string name="share_with">Partager avec...</string>
-    <string name="menu_share">Partager</string>
 
 </resources>

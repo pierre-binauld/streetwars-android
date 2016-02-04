@@ -75,7 +75,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="16dp"
                     android:alpha="0.54"
-                    android:text="Le Watercode doit être saisi le plus tôt possible afin de ne pas déséquilibrer le jeu." />
+                    android:text="@string/water_code_rule_1" />
 
             </FrameLayout>
 
@@ -103,7 +103,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="16dp"
                     android:alpha="0.54"
-                    android:text="Lors d’un échange de Watercode, personne n’est en zone sûre." />
+                    android:text="@string/water_code_rule_2" />
 
             </FrameLayout>
 
@@ -131,7 +131,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="16dp"
                     android:alpha="0.54"
-                    android:text="Les éliminations sont irréversibles. En cas de litige, n’échangez pas de Watercode et utilisez système de tickets." />
+                    android:text="@string/water_code_rule_3" />
 
             </FrameLayout>
 
@@ -159,7 +159,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_marginTop="16dp"
                     android:alpha="0.54"
-                    android:text="Ne donner pas votre Watercode si quelqu’un vous arrose un samedi." />
+                    android:text="@string/water_code_rule_4" />
 
             </FrameLayout>
 
