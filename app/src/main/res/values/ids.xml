@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="content_uri_water_code" type="id" />
+
+    <item name="loader_query_water_code" type="id" />
+    
+</resources>

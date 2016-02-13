@@ -2,9 +2,14 @@ package fr.streetgames.streetwars.app.fragments;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +17,11 @@ import android.widget.TextView;
 
 import com.streetgames.streetwars.R;
 
+import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.utils.HTTP;
 
 
-public class WaterCodeFragment extends FabFragment implements View.OnClickListener {
+public class WaterCodeFragment extends FabFragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String TAG = "WaterCodeFragment";
 
@@ -51,6 +57,13 @@ public class WaterCodeFragment extends FabFragment implements View.OnClickListen
         getActivity().setTitle(R.string.water_code_title);
         mSetupFabButtonListener.setOnFabClickListener(this);
 
+        LoaderManager loaderManager = getLoaderManager();
+        if (null != loaderManager.getLoader(R.id.loader_query_water_code)) {
+            loaderManager.initLoader(R.id.loader_query_water_code, null, this);
+        }
+        else {
+            loaderManager.initLoader(R.id.loader_query_water_code, null, this);
+        }
     }
 
     private void onShareClick() {
@@ -75,4 +88,53 @@ public class WaterCodeFragment extends FabFragment implements View.OnClickListen
                 throw new IllegalArgumentException(String.format("%s is not a valid id", id));
         }
     }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case R.id.loader_query_water_code:
+                return new CursorLoader(
+                        getContext(),
+                        StreetWarsContract.WaterCode.CONTENT_URI,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+            default:
+                throw new IllegalArgumentException(String.format("Unknown loader id: %s", id));
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        @IdRes int id = loader.getId();
+        switch (id) {
+            case R.id.loader_query_water_code:
+                onWaterCodeLoadFinished(cursor);
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Unknown loader id: %s", id));
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        @IdRes int id = loader.getId();
+        switch (id) {
+            case R.id.loader_query_water_code:
+                // Tu bluffes, Martoni !
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Unknown loader id: %s", id));
+        }
+    }
+
+    private void onWaterCodeLoadFinished(@NonNull Cursor cursor) {
+        if (cursor.moveToFirst()) {
+            String waterCode = cursor.getString(0);
+            mWaterCodeTextView.setText(waterCode);
+        }
+    }
+
 }
