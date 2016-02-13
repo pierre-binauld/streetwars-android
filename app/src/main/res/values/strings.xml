@@ -19,6 +19,6 @@
     <string name="water_code_rule_3">Les éliminations sont irréversibles. En cas de litige, n’échangez pas de Watercode et utilisez le système de tickets.</string>
     <string name="water_code_rule_4">Ne donner pas votre Watercode si quelqu’un vous arrose un samedi.</string>
 
-    <string name="share_with">Partager avec...</string>
+    <string name="share_water_code">Envoyer mon Water Code</string>
 
 </resources>

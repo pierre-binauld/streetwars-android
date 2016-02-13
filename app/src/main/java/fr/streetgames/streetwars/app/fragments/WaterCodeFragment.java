@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,11 +58,10 @@ public class WaterCodeFragment extends FabFragment implements View.OnClickListen
         Intent intent = ShareCompat.IntentBuilder.from(getActivity())
                 .setType(HTTP.TYPE_PLAIN_TEXT)
                 .setSubject(res.getString(R.string.water_code_title))
-                .setText(mWaterCodeTextView.getText())
+                .setText(mWaterCodeTextView.getText().toString())
                 .getIntent();
 
-        startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
-
+        startActivity(Intent.createChooser(intent, getString(R.string.share_water_code)));
     }
 
     @Override
