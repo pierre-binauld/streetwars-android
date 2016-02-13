@@ -15,6 +15,8 @@ import fr.streetgames.streetwars.accounts.Authenticator;
  */
 public class MainActivityFragment extends FabFragment {
 
+    public static final String TAG = "MainActivityFragment";
+
     private Account mAccount;
 
     public MainActivityFragment() {

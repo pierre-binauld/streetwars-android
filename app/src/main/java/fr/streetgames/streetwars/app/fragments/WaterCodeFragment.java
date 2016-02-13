@@ -74,7 +74,7 @@ public class WaterCodeFragment extends FabFragment implements View.OnClickListen
                 onShareClick();
                 break;
             default:
-                throw new IllegalArgumentException(id + " is not a valid id.");
+                throw new IllegalArgumentException(String.format("%s is not a valid id", id));
         }
     }
 }
