@@ -1,23 +1,27 @@
 package fr.streetgames.streetwars.app.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.streetgames.streetwars.R;
 
+import fr.streetgames.streetwars.app.fragments.FabFragment;
 import fr.streetgames.streetwars.app.fragments.WaterCodeFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FabFragment.SetupFabButtonListener {
 
     private Fragment mFragment;
 
     private NavigationView mNavigationView;
+
+    private FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +62,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void bindViews() {
         mNavigationView = (NavigationView) findViewById(R.id.drawer);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+    }
+
+    @Override
+    public void setOnFabClickListener(View.OnClickListener listener) {
+        mFab.setOnClickListener(listener);
     }
 }

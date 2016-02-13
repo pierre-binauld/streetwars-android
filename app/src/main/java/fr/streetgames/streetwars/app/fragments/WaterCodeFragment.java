@@ -3,6 +3,7 @@ package fr.streetgames.streetwars.app.fragments;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.view.LayoutInflater;
@@ -14,10 +15,8 @@ import com.streetgames.streetwars.R;
 
 import fr.streetgames.streetwars.utils.HTTP;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class WaterCodeFragment extends Fragment {
+
+public class WaterCodeFragment extends FabFragment implements View.OnClickListener {
 
     public static final String TAG = "WaterCodeFragment";
 
@@ -37,18 +36,22 @@ public class WaterCodeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_water_code, container, false);
+        return inflater.inflate(R.layout.fragment_water_code, container, false);
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         mWaterCodeTextView = (TextView) view.findViewById(R.id.water_code);
 
-        return view;
+
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         getActivity().setTitle(R.string.water_code_title);
+        mSetupFabButtonListener.setOnFabClickListener(this);
+
     }
 
     private void onShareClick() {
@@ -61,5 +64,17 @@ public class WaterCodeFragment extends Fragment {
 
         startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        @IdRes int id = v.getId();
+        switch (id) {
+            case R.id.fab:
+                onShareClick();
+                break;
+            default:
+                throw new IllegalArgumentException(id + " is not a valid id.");
+        }
     }
 }

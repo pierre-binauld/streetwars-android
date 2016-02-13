@@ -13,7 +13,7 @@ import fr.streetgames.streetwars.accounts.Authenticator;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends FabFragment {
 
     private Account mAccount;
 
