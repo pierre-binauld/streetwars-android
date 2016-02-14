@@ -17,8 +17,9 @@ import android.widget.TextView;
 
 import com.streetgames.streetwars.R;
 
-import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.utils.HTTP;
+
+import static fr.streetgames.streetwars.content.contract.StreetWarsContract.*;
 
 
 public class WaterCodeFragment extends FabFragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor> {
@@ -95,8 +96,8 @@ public class WaterCodeFragment extends FabFragment implements View.OnClickListen
             case R.id.loader_query_water_code:
                 return new CursorLoader(
                         getContext(),
-                        StreetWarsContract.WaterCode.CONTENT_URI,
-                        null,
+                        Player.CONTENT_URI,
+                        new String[] {Player.WATER_CODE},
                         null,
                         null,
                         null

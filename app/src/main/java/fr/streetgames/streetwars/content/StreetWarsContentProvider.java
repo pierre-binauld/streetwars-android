@@ -14,8 +14,8 @@ import android.util.Log;
 import com.streetgames.streetwars.R;
 
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
-import fr.streetgames.streetwars.database.Player;
 import fr.streetgames.streetwars.database.StreetWarsDatabaseOpenHelper;
+import fr.streetgames.streetwars.database.Tables;
 
 public class StreetWarsContentProvider extends ContentProvider {
 
@@ -40,9 +40,8 @@ public class StreetWarsContentProvider extends ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         int match = mUriMatcher.match(uri);
         switch (match) {
-            case R.id.content_uri_water_code:
-                projection = new String[] {Player.WATER_CODE};
-                qb.setTables(Player.TABLE_NAME);
+            case R.id.content_uri_player:
+                qb.setTables(Tables.PLAYER);
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
@@ -71,8 +70,9 @@ public class StreetWarsContentProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         int match = mUriMatcher.match(uri);
         switch (match) {
-            case R.id.content_uri_water_code:
-                return StreetWarsContract.WaterCode.CONTENT_ITEM_TYPE;
+            case R.id.content_uri_player
+                    :
+                return StreetWarsContract.Player.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
         }
@@ -83,7 +83,7 @@ public class StreetWarsContentProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         int match = mUriMatcher.match(uri);
         switch (match) {
-            case R.id.content_uri_water_code:
+            case R.id.content_uri_player:
 
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
@@ -94,7 +94,7 @@ public class StreetWarsContentProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         int match = mUriMatcher.match(uri);
         switch (match) {
-            case R.id.content_uri_water_code:
+            case R.id.content_uri_player:
 
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
@@ -105,7 +105,7 @@ public class StreetWarsContentProvider extends ContentProvider {
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int match = mUriMatcher.match(uri);
         switch (match) {
-            case R.id.content_uri_water_code:
+            case R.id.content_uri_player:
 
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
@@ -114,8 +114,8 @@ public class StreetWarsContentProvider extends ContentProvider {
 
     private void setupUriMatcher() {
         mUriMatcher.addURI(StreetWarsContract.AUTHORITY,
-                StreetWarsContract.WaterCode.CONTENT_URI.getPath(),
-                R.id.content_uri_water_code
+                StreetWarsContract.Player.CONTENT_URI.getPath(),
+                R.id.content_uri_player
         );
     }
 }
