@@ -11,12 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.streetgames.streetwars.R;
 
 import fr.streetgames.streetwars.app.fragments.FabFragment;
 import fr.streetgames.streetwars.app.fragments.MainActivityFragment;
 import fr.streetgames.streetwars.app.fragments.WaterCodeFragment;
+import fr.streetgames.streetwars.picasso.CircleTransform;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FabFragment.SetupFabButtonListener {
 
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FloatingActionButton mFab;
 
+    private ImageView mHeaderPhotoImageView;
+
+    private ImageView mHeaderBackgroundImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +42,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         bindViews();
         setupNavigationView();
+
+        Picasso.with(this)
+                .load("http://images-cdn.9gag.com/photo/a1YmX32_700b.jpg")
+                .transform(new CircleTransform())
+                .into(mHeaderPhotoImageView);
+
+        Picasso.with(this)
+                .load("http://androidspin.com/wp-content/uploads/2014/02/samsung_galaxy_s5_wallpaper___blue_version_by_shimmi1-d78444j-750x400.jpg")
+                .into(mHeaderBackgroundImageView);
 
         // Manage fragment
         if (savedInstanceState == null) {
@@ -67,6 +83,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mNavigationView = (NavigationView) findViewById(R.id.navigation);
         mFab = (FloatingActionButton) findViewById(R.id.fab);
+
+        View headerView = mNavigationView.getHeaderView(0);
+        mHeaderPhotoImageView = (ImageView) headerView.findViewById(R.id.header_photo);
+        mHeaderBackgroundImageView = (ImageView) headerView.findViewById(R.id.header_background);
     }
 
     private void setupNavigationView() {

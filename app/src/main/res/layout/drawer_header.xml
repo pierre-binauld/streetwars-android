@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="@dimen/drawer_header_height"
     android:background="?attr/colorPrimaryDark"
-    android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:gravity="bottom">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/header_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    
+    <ImageView
+        android:id="@+id/header_photo"
+        android:layout_marginTop="@dimen/drawer_photo_margin_top"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="centerCrop" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/header_alias"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Street Wars"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentBottom="true"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:text="Pierre Binauld"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/header_alias"
+        android:layout_alignLeft="@id/header_alias"
+        android:layout_above="@id/header_alias"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:text="Zxcv"/>
+
+</RelativeLayout>
