@@ -44,7 +44,7 @@ public class StreetWarsContentProvider extends ContentProvider {
                 qb.setTables(Tables.PLAYER);
                 break;
             default:
-                throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
+                throw new IllegalArgumentException(String.format("Unknown uri: %s", uri));
         }
 
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();

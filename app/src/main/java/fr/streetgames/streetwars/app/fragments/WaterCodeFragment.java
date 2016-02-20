@@ -110,12 +110,14 @@ public class WaterCodeFragment extends FabFragment implements View.OnClickListen
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         @IdRes int id = loader.getId();
-        switch (id) {
-            case R.id.loader_query_water_code:
-                onWaterCodeLoadFinished(cursor);
-                break;
-            default:
-                throw new IllegalArgumentException(String.format("Unknown loader id: %s", id));
+        if (null != cursor) {
+            switch (id) {
+                case R.id.loader_query_water_code:
+                    onWaterCodeLoadFinished(cursor);
+                    break;
+                default:
+                    throw new IllegalArgumentException(String.format("Unknown loader id: %s", id));
+            }
         }
     }
 
