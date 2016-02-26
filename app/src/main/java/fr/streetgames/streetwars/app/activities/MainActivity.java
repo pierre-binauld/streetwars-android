@@ -1,11 +1,13 @@
 package fr.streetgames.streetwars.app.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,54 +15,73 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-import com.streetgames.streetwars.R;
+import com.bumptech.glide.Glide;
 
-import fr.streetgames.streetwars.app.fragments.FabFragment;
+import fr.streetgames.streetwars.R;
+
 import fr.streetgames.streetwars.app.fragments.MainActivityFragment;
 import fr.streetgames.streetwars.app.fragments.WaterCodeFragment;
-import fr.streetgames.streetwars.picasso.CircleTransform;
+import fr.streetgames.streetwars.glide.CircleTransform;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FabFragment.SetupFabButtonListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "MainActivity";
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+    private ImageView mHeaderPhotoImageView;
+    private ImageView mHeaderBackgroundImageView;
     private Fragment mFragment;
 
-    private DrawerLayout mDrawerLayout;
-
-    private NavigationView mNavigationView;
-
-    private FloatingActionButton mFab;
-
-    private ImageView mHeaderPhotoImageView;
-
-    private ImageView mHeaderBackgroundImageView;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bindViews();
-        setupNavigationView();
+        onViewCreated();
 
-        Picasso.with(this)
+        Glide.with(this)
                 .load("http://images-cdn.9gag.com/photo/a1YmX32_700b.jpg")
-                .transform(new CircleTransform())
+                .transform(new CircleTransform(this))
                 .into(mHeaderPhotoImageView);
 
-        Picasso.with(this)
+        Glide.with(this)
                 .load("http://androidspin.com/wp-content/uploads/2014/02/samsung_galaxy_s5_wallpaper___blue_version_by_shimmi1-d78444j-750x400.jpg")
                 .into(mHeaderBackgroundImageView);
 
         // Manage fragment
         if (savedInstanceState == null) {
-           switchToWaterCodeFragment();
+            switchToWaterCodeFragment();
         } else {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            mFragment = fragmentManager.findFragmentByTag(
-                    WaterCodeFragment.TAG
-            );
+            mFragment = fragmentManager.findFragmentByTag(WaterCodeFragment.TAG);
         }
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -79,22 +100,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void bindViews() {
+    private void onViewCreated() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mNavigationView = (NavigationView) findViewById(R.id.navigation);
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
 
         View headerView = mNavigationView.getHeaderView(0);
         mHeaderPhotoImageView = (ImageView) headerView.findViewById(R.id.header_photo);
         mHeaderBackgroundImageView = (ImageView) headerView.findViewById(R.id.header_background);
     }
 
-    private void setupNavigationView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    public ActionBar setupToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar actionBar = getSupportActionBar();
+        //noinspection ConstantConditions
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
         // Initializing Drawer Layout and ActionBarToggle
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.content_authority, R.string.content_authority) {
+        //TODO Change R.string.content_authority
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.content_authority, R.string.content_authority) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -105,24 +130,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-
                 super.onDrawerOpened(drawerView);
             }
         };
 
-        //Setting the actionbarToggle to drawer layout
-        mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
+        // Setting the actionbarToggle to drawer layout
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        //calling sync state is necessay or else your hamburger icon wont show up
-        actionBarDrawerToggle.syncState();
+        // calling sync state is necessary or else your hamburger icon wont show up
+        mDrawerToggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
-    }
-
-    @Override
-    public void setOnFabClickListener(View.OnClickListener listener) {
-        mFab.setOnClickListener(listener);
+        return actionBar;
     }
 
     private void switchToWaterCodeFragment() {

@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.streetgames.streetwars.R;
+import fr.streetgames.streetwars.R;
 
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.database.StreetWarsDatabaseOpenHelper;

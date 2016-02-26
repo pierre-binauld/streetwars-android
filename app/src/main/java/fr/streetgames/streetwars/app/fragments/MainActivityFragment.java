@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.streetgames.streetwars.R;
+import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.accounts.Authenticator;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends FabFragment {
+public class MainActivityFragment extends Fragment {
 
     public static final String TAG = "MainActivityFragment";
 
