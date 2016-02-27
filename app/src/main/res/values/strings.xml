@@ -5,6 +5,9 @@
     <string name="account_type">com.streetgames.streetwars.account</string>
     <string name="content_authority">com.streetgames.streetwars.game</string>
 
+    <string name="drawer_description_close">Close Drawer</string>
+    <string name="drawer_description_open">Open Drawer</string>
+
     <string name="menu_contract">Contrat</string>
     <string name="menu_map">Carte</string>
     <string name="menu_water_code">Water Code</string>

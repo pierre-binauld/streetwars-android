@@ -2,7 +2,6 @@ package fr.streetgames.streetwars.app.fragments;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -17,6 +16,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,8 +24,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -50,7 +53,8 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
             STATE_COLLAPSED,
             STATE_EXPANDED
     })
-    public @interface AppBarState {}
+    public @interface AppBarState {
+    }
 
     private CoordinatorLayout mCoordinatorLayout;
     private AppBarLayout mAppBarLayout;
@@ -110,15 +114,33 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
 
         ((MainActivity) getActivity()).setupToolbar(mToolbar);
 
-        setupAppBarBehavior();
-
         queryWaterCode();
+
+        animate();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if(mAppBarState == STATE_COLLAPSED) {
+        if (mAppBarState == STATE_COLLAPSED) {
             inflater.inflate(R.menu.menu_fragment_water_code, menu);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_share:
+                onShareClick();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -152,7 +174,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
                 return new CursorLoader(
                         getContext(),
                         Player.CONTENT_URI,
-                        new String[] {Player.WATER_CODE},
+                        new String[]{Player.WATER_CODE},
                         null,
                         null,
                         null
@@ -191,8 +213,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         LoaderManager loaderManager = getLoaderManager();
         if (null != loaderManager.getLoader(R.id.loader_query_water_code)) {
             loaderManager.initLoader(R.id.loader_query_water_code, null, this);
-        }
-        else {
+        } else {
             loaderManager.initLoader(R.id.loader_query_water_code, null, this);
         }
     }
@@ -201,31 +222,54 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         if (cursor != null && cursor.moveToFirst()) {
             String waterCode = cursor.getString(0);
             mCollapsingToolbar.setTitle(waterCode);
-        }
-        else {
+        } else {
             Log.w(TAG, "onWaterCodeLoadFinished: No water code found in database !");
         }
     }
 
-    private void setupAppBarBehavior() {
-        TypedArray a = getActivity().getTheme().obtainStyledAttributes(R.style.AppTheme, new int[] {R.attr.actionBarSize});
-        final int actionBarSizeId = a.getResourceId(0, 0);
-        final float actionBarSize = getResources().getDimension(actionBarSizeId);
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener(){
-
+    private void animate() {
+        mCoordinatorLayout.post(new Runnable() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                int appBarSize = appBarLayout.getTotalScrollRange() + verticalOffset;
-                if(mAppBarState != STATE_EXPANDED && appBarSize > actionBarSize) {
-                    mAppBarState = STATE_EXPANDED;
-                    getActivity().invalidateOptionsMenu();
-                }
-                else if (mAppBarState != STATE_COLLAPSED && appBarSize <= actionBarSize) {
-                    mAppBarState = STATE_COLLAPSED;
-                    getActivity().invalidateOptionsMenu();
-                }
+            public void run() {
+                Interpolator interpolator = new DecelerateInterpolator();
+
+                ViewCompat.setAlpha(mAppBarLayout, 0);
+                ViewCompat.setTranslationY(mAppBarLayout, -100);
+                ViewCompat.animate(mAppBarLayout)
+                        .alpha(1)
+                        .translationY(0)
+                        .setInterpolator(interpolator)
+                        .setStartDelay(100)
+                        .start();
+
+                ViewCompat.setScaleX(mFab, 0);
+                ViewCompat.setScaleY(mFab, 0);
+                ViewCompat.animate(mFab)
+                        .scaleX(1)
+                        .scaleY(1)
+                        .setInterpolator(interpolator)
+                        .setStartDelay(300)
+                        .start();
+
+                int rowIndex = 0;
+                int startDelay = 500;
+                View rowView;
+                do {
+                    rowView = mRuleRecycleView.getChildAt(rowIndex);
+                    if (rowView != null) {
+                        ViewCompat.setAlpha(rowView, 0);
+                        ViewCompat.setTranslationY(rowView, 50);
+                        ViewCompat.animate(rowView)
+                                .alpha(1)
+                                .translationY(0)
+                                .setInterpolator(interpolator)
+                                .setStartDelay(startDelay)
+                                .start();
+                    }
+                    rowIndex++;
+                    startDelay += 50;
+                } while (rowView != null);
             }
         });
     }
-
 }

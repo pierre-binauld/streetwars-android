@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         onViewCreated();
 
+        mNavigationView.setNavigationItemSelectedListener(this);
+
         Glide.with(this)
                 .load("http://images-cdn.9gag.com/photo/a1YmX32_700b.jpg")
                 .transform(new CircleTransform(this))
@@ -109,17 +111,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mHeaderBackgroundImageView = (ImageView) headerView.findViewById(R.id.header_background);
     }
 
-    public ActionBar setupToolbar(Toolbar toolbar) {
+    public void setupToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
-
         ActionBar actionBar = getSupportActionBar();
         //noinspection ConstantConditions
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
         // Initializing Drawer Layout and ActionBarToggle
-        //TODO Change R.string.content_authority
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.content_authority, R.string.content_authority) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_description_open, R.string.drawer_description_close) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -139,10 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // calling sync state is necessary or else your hamburger icon wont show up
         mDrawerToggle.syncState();
-
-        mNavigationView.setNavigationItemSelectedListener(this);
-
-        return actionBar;
     }
 
     private void switchToWaterCodeFragment() {

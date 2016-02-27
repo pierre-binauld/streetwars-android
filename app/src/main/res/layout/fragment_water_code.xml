@@ -49,6 +49,7 @@
         android:id="@+id/recycler_view_rule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         android:paddingTop="32dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/row_rule" />
