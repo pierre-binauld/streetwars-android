@@ -3,6 +3,8 @@
 
     <item name="content_uri_player" type="id" />
 
+    <item name="content_uri_rule" type="id" />
+
     <item name="loader_query_water_code" type="id" />
     
 </resources>
