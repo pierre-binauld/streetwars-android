@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -22,16 +21,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.activities.MainActivity;
@@ -45,17 +39,6 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
 
     public static final String TAG = "WaterCodeFragment";
 
-    private static final int STATE_COLLAPSED = 0;
-    private static final int STATE_EXPANDED = 1;
-
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({
-            STATE_COLLAPSED,
-            STATE_EXPANDED
-    })
-    public @interface AppBarState {
-    }
-
     private CoordinatorLayout mCoordinatorLayout;
     private AppBarLayout mAppBarLayout;
     private CollapsingToolbarLayout mCollapsingToolbar;
@@ -65,9 +48,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     private LinearLayoutManager mLayoutManager;
 
     private RuleAdapter mAdapter;
-
-    @AppBarState
-    private int mAppBarState = STATE_EXPANDED;
+    private boolean mDoAnimation;
 
     public static WaterCodeFragment newInstance() {
         WaterCodeFragment fragment = new WaterCodeFragment();
@@ -78,6 +59,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setHasOptionsMenu(true);
+        mDoAnimation = true;
     }
 
     @Override
@@ -115,22 +97,15 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         ((MainActivity) getActivity()).setupToolbar(mToolbar);
 
         queryWaterCode();
-
-        animate();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (mAppBarState == STATE_COLLAPSED) {
-            inflater.inflate(R.menu.menu_fragment_water_code, menu);
+        if (mDoAnimation) {
+            prepareAnimation();
+            animate();
         }
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -227,14 +202,32 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    private void prepareAnimation() {
+        ViewCompat.setAlpha(mAppBarLayout, 0);
+        ViewCompat.setTranslationY(mAppBarLayout, -100);
+
+        ViewCompat.setScaleX(mFab, 0);
+        ViewCompat.setScaleY(mFab, 0);
+
+        int rowIndex = 0;
+        View rowView;
+        do {
+            rowView = mRuleRecycleView.getChildAt(rowIndex);
+            if (rowView != null) {
+                ViewCompat.setAlpha(rowView, 0);
+                ViewCompat.setTranslationY(rowView, 50);
+            }
+            rowIndex++;
+        } while (rowView != null);
+
+    }
+
     private void animate() {
         mCoordinatorLayout.post(new Runnable() {
             @Override
             public void run() {
                 Interpolator interpolator = new DecelerateInterpolator();
 
-                ViewCompat.setAlpha(mAppBarLayout, 0);
-                ViewCompat.setTranslationY(mAppBarLayout, -100);
                 ViewCompat.animate(mAppBarLayout)
                         .alpha(1)
                         .translationY(0)
@@ -242,8 +235,6 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
                         .setStartDelay(100)
                         .start();
 
-                ViewCompat.setScaleX(mFab, 0);
-                ViewCompat.setScaleY(mFab, 0);
                 ViewCompat.animate(mFab)
                         .scaleX(1)
                         .scaleY(1)
@@ -269,7 +260,10 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
                     rowIndex++;
                     startDelay += 50;
                 } while (rowView != null);
+
+                mDoAnimation = false;
             }
         });
     }
+
 }
