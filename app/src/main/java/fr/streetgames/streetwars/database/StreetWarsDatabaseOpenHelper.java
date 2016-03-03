@@ -40,10 +40,26 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                 + ")");
 
         if(BuildConfig.DEBUG) {
-            Log.d(TAG, "onCreate: Insert rule #1");
-            Log.d(TAG, "onCreate: Insert rule #2");
-            Log.d(TAG, "onCreate: Insert rule #3");
-            Log.d(TAG, "onCreate: Insert rule #4");
+            Log.d(TAG, "onCreate: Insert player");
+            db.execSQL("INSERT INTO " + Tables.PLAYER + " (" +
+                    PlayerColumns.ID + ", " +
+                    PlayerColumns.FIRST_NAME + ", " +
+                    PlayerColumns.LAST_NAME + ", " +
+                    PlayerColumns.ALIAS + ", " +
+                    PlayerColumns.PHOTO + ", " +
+                    PlayerColumns.WATER_CODE +
+                    ") " +
+                    "VALUES (?, ?, ?, ?, ?, ?)",
+                    new Object[] {
+                            0,
+                            "Pierre",
+                            "Binauld",
+                            "Zxcv",
+                            "http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-162ppbj_ec9d6c7c.jpeg",
+                            "NEIOZXCV"
+                    });
+
+            Log.d(TAG, "onCreate: Insert rule #1 ~ #4");
             db.execSQL("INSERT INTO " + Tables.RULE + " " +
                     "(" + RuleColumns.ID + ", " + RuleColumns.GROUP + ", " + RuleColumns.RULE + ") " +
                     "VALUES (?, ?, ?), (?, ?, ?), (?, ?, ?), (?, ?, ?)",
