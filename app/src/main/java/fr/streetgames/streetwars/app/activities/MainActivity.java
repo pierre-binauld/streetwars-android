@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
 
         Glide.with(this)
-                .load("http://images-cdn.9gag.com/photo/a1YmX32_700b.jpg")
+                .load("http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-162ppbj_ec9d6c7c.jpeg")
                 .transform(new CircleTransform(this))
                 .into(mHeaderPhotoImageView);
 
         Glide.with(this)
-                .load("http://androidspin.com/wp-content/uploads/2014/02/samsung_galaxy_s5_wallpaper___blue_version_by_shimmi1-d78444j-750x400.jpg")
+                .load(R.drawable.header_placeholder_drawer)
                 .into(mHeaderBackgroundImageView);
 
         // Manage fragment
