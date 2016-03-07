@@ -1,11 +1,15 @@
 package fr.streetgames.streetwars.app.activities;
 
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -21,18 +26,26 @@ import fr.streetgames.streetwars.R;
 
 import fr.streetgames.streetwars.app.fragments.MainActivityFragment;
 import fr.streetgames.streetwars.app.fragments.WaterCodeFragment;
+import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.glide.CircleTransform;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "MainActivity";
+
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-    private ImageView mHeaderPhotoImageView;
-    private ImageView mHeaderBackgroundImageView;
+    private ImageView mDrawerBackgroundImageView;
+    private ImageView mPlayerPhotoImageView;
+    private TextView mPlayerNameTextView;
+    private TextView mPlayerAliasTextView;
+
     private Fragment mFragment;
 
     private ActionBarDrawerToggle mDrawerToggle;
+    private Cursor mPlayerCursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +57,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
 
         Glide.with(this)
-                .load("http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-162ppbj_ec9d6c7c.jpeg")
-                .transform(new CircleTransform(this))
-                .into(mHeaderPhotoImageView);
+                .load(R.drawable.drawer_header_temporary)
+                .placeholder(R.color.colorPrimaryDark)
+                .into(mDrawerBackgroundImageView);
 
-        Glide.with(this)
-                .load(R.drawable.header_placeholder_drawer)
-                .into(mHeaderBackgroundImageView);
+        // Reattach loaders
+        LoaderManager loaderManager = getSupportLoaderManager();
+        if(loaderManager.getLoader(R.id.loader_query_player) != null) {
+            loaderManager.initLoader(R.id.loader_query_player, null, this);
+        }
+
+        // Run loaders
+        queryPlayer();
 
         // Manage fragment
         if (savedInstanceState == null) {
@@ -59,6 +77,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentManager fragmentManager = getSupportFragmentManager();
             mFragment = fragmentManager.findFragmentByTag(WaterCodeFragment.TAG);
         }
+    }
+
+    private void onViewCreated() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation);
+
+        View headerView = mNavigationView.getHeaderView(0);
+        mDrawerBackgroundImageView = (ImageView) headerView.findViewById(R.id.header_background);
+        mPlayerPhotoImageView = (ImageView) headerView.findViewById(R.id.header_photo);
+        mPlayerNameTextView = (TextView) headerView.findViewById(R.id.header_name);
+        mPlayerAliasTextView = (TextView) headerView.findViewById(R.id.header_alias);
     }
 
     @Override
@@ -102,13 +131,83 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void onViewCreated() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation);
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case R.id.loader_query_player:
+                return onCreateQueryPlayerLoader(args);
+            default:
+                throw new IllegalArgumentException("Unknown loader id: " + id);
+        }
+    }
 
-        View headerView = mNavigationView.getHeaderView(0);
-        mHeaderPhotoImageView = (ImageView) headerView.findViewById(R.id.header_photo);
-        mHeaderBackgroundImageView = (ImageView) headerView.findViewById(R.id.header_background);
+    private Loader<Cursor> onCreateQueryPlayerLoader(Bundle args) {
+        return new CursorLoader(
+                this,
+                StreetWarsContract.Player.CONTENT_URI,
+                PlayerProjection.PROJECTION,
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        int id = loader.getId();
+        switch (id) {
+            case R.id.loader_query_player:
+                onQueryPlayerLoadFinished(cursor);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown loader id: " + id);
+        }
+    }
+
+    private void onQueryPlayerLoadFinished(Cursor cursor) {
+        mPlayerCursor = cursor;
+        updatePlayerInfo();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        int id = loader.getId();
+        switch (id) {
+            case R.id.loader_query_player:
+                mPlayerCursor = null;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown loader id: " + id);
+        }
+    }
+
+    private void queryPlayer() {
+        LoaderManager loaderManager = getSupportLoaderManager();
+        if(loaderManager.getLoader(R.id.loader_query_player) == null) {
+            loaderManager.initLoader(R.id.loader_query_player, null, this);
+        }
+    }
+
+    private void switchToWaterCodeFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mFragment = fragmentManager.findFragmentByTag(WaterCodeFragment.TAG);
+        if (null == mFragment) {
+            mFragment = WaterCodeFragment.newInstance();
+        }
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_fragment, mFragment, WaterCodeFragment.TAG)
+                .commit();
+    }
+
+    private void switchToContractFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mFragment = fragmentManager.findFragmentByTag(MainActivityFragment.TAG);
+        if (null == mFragment) {
+            mFragment = new MainActivityFragment();
+        }
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_fragment, mFragment, MainActivityFragment.TAG)
+                .commit();
     }
 
     public void setupToolbar(Toolbar toolbar) {
@@ -141,26 +240,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerToggle.syncState();
     }
 
-    private void switchToWaterCodeFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragment = fragmentManager.findFragmentByTag(WaterCodeFragment.TAG);
-        if (null == mFragment) {
-            mFragment = WaterCodeFragment.newInstance();
+    private void updatePlayerInfo() {
+        if(mPlayerCursor != null && mPlayerCursor.moveToFirst()) {
+            Glide.with(this)
+                    .load(mPlayerCursor.getString(PlayerProjection.QUERY_PHOTO))
+                    .placeholder(R.drawable.drawer_photo_placeholder)
+                    .transform(new CircleTransform(this))
+                    .into(mPlayerPhotoImageView);
+
+            mPlayerNameTextView.setText(
+                    getResources()
+                            .getString(
+                                    R.string.drawer_player_name,
+                                    mPlayerCursor.getString(PlayerProjection.QUERY_FIRST_NAME),
+                                    mPlayerCursor.getString(PlayerProjection.QUERY_LAST_NAME)
+                            )
+            );
+
+            mPlayerAliasTextView.setText(
+                    mPlayerCursor.getString(PlayerProjection.QUERY_ALIAS)
+            );
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_fragment, mFragment, WaterCodeFragment.TAG)
-                .commit();
     }
 
-    private void switchToContractFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragment = fragmentManager.findFragmentByTag(MainActivityFragment.TAG);
-        if (null == mFragment) {
-            mFragment = new MainActivityFragment();
-        }
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_fragment, mFragment, MainActivityFragment.TAG)
-                .commit();
-    }
+    public interface PlayerProjection {
 
+        String[] PROJECTION = new String[] {
+                StreetWarsContract.Player.ID,
+                StreetWarsContract.Player.FIRST_NAME,
+                StreetWarsContract.Player.LAST_NAME,
+                StreetWarsContract.Player.ALIAS,
+                StreetWarsContract.Player.PHOTO
+        };
+
+        int QUERY_ID = 0;
+
+        int QUERY_FIRST_NAME = 1;
+
+        int QUERY_LAST_NAME = 2;
+
+        int QUERY_ALIAS = 3;
+
+        int QUERY_PHOTO = 4;
+    }
 }

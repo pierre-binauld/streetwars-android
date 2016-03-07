@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_header_height"
-    android:background="?attr/colorPrimaryDark"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    tools:background="?attr/colorPrimaryDark">
 
     <ImageView
         android:id="@+id/header_background"
@@ -15,15 +15,15 @@
     
     <ImageView
         android:id="@+id/header_photo"
-        android:layout_marginTop="@dimen/drawer_photo_margin_top"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="80dp"
+        android:scaleType="centerInside" />
 
     <TextView
-        android:id="@+id/header_alias"
+        android:id="@+id/header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -31,16 +31,16 @@
         android:layout_marginBottom="8dp"
         android:layout_alignParentBottom="true"
         style="@style/TextAppearance.AppCompat.Body1"
-        android:text="Pierre Binauld"/>
+        tools:text="Pierre Binauld"/>
 
     <TextView
-        android:id="@+id/header_name"
+        android:id="@+id/header_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/header_alias"
-        android:layout_alignLeft="@id/header_alias"
-        android:layout_above="@id/header_alias"
+        android:layout_alignStart="@id/header_name"
+        android:layout_alignLeft="@id/header_name"
+        android:layout_above="@id/header_name"
         style="@style/TextAppearance.AppCompat.Body2"
-        android:text="Zxcv"/>
+        tools:text="Zxcv"/>
 
 </RelativeLayout>
