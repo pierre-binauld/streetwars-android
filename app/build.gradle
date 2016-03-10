@@ -16,11 +16,16 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
 
+            buildConfigField "String", "CONTENT_AUTHORITY", "\"${defaultConfig.applicationId}${applicationIdSuffix}.content\""
+
             buildConfigField "String", "LOCATION_HEADER_WATER_CODE", "\"http://5.135.183.92:50220/sea.jpg\""
             buildConfigField "String", "LOCATION_HEADER_DRAWER", "\"http://5.135.183.92:50220/skull.jpg\""
 
         }
         release {
+
+            buildConfigField "String", "CONTENT_AUTHORITY", "\"${defaultConfig.applicationId}.content\""
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

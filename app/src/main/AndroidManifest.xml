@@ -31,7 +31,7 @@
 
         <provider
             android:name="fr.streetgames.streetwars.content.StreetWarsContentProvider"
-            android:authorities="fr.streetgames.streetwars.game"
+            android:authorities="${applicationId}.content"
             android:enabled="true"
             android:exported="false"
             android:syncable="true"/>
