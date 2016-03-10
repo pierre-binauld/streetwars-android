@@ -76,7 +76,7 @@ public class StreetWarsContentProvider extends ContentProvider {
             case R.id.content_uri_player:
                 return StreetWarsContract.Player.CONTENT_ITEM_TYPE;
             case R.id.content_uri_rule:
-                return StreetWarsContract.Rule.CONTENT_ITEM_TYPE;
+                return StreetWarsContract.Rule.CONTENT_TYPE;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
         }

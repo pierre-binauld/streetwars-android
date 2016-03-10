@@ -5,4 +5,8 @@ public interface Tables {
     String PLAYER = "player";
 
     String RULE = "rule";
+
+    String TEAM = "team";
+
+    String TARGET = "target";
 }
