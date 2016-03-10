@@ -16,6 +16,7 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +27,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
+import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.activities.MainActivity;
 import fr.streetgames.streetwars.utils.HTTP;
@@ -43,6 +48,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     private AppBarLayout mAppBarLayout;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private Toolbar mToolbar;
+    private ImageView mHeaderImageView;
     private RecyclerView mRuleRecycleView;
     private FloatingActionButton mFab;
     private LinearLayoutManager mLayoutManager;
@@ -72,6 +78,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        mHeaderImageView = (ImageView) view.findViewById(R.id.header);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mCollapsingToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
         mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
@@ -90,7 +97,11 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         mRuleRecycleView.setLayoutManager(mLayoutManager);
         mRuleRecycleView.setAdapter(mAdapter);
 
-        mCollapsingToolbar.setTitle("QWFPGJLU");
+        Glide.with(this)
+                .load(BuildConfig.LOCATION_HEADER_WATER_CODE)
+//                .placeholder(R.color.colorPrimary) // TODO Use Picasso
+                .centerCrop()
+                .into(mHeaderImageView);
 
         mFab.setOnClickListener(this);
 

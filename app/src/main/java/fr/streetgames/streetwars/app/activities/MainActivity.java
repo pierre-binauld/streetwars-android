@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
 
 import fr.streetgames.streetwars.app.fragments.MainActivityFragment;
@@ -57,8 +58,9 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.setNavigationItemSelectedListener(this);
 
         Glide.with(this)
-                .load(R.drawable.drawer_header_temporary)
+                .load(BuildConfig.LOCATION_HEADER_DRAWER)
                 .placeholder(R.color.colorPrimaryDark)
+                .centerCrop()
                 .into(mDrawerBackgroundImageView);
 
         // Reattach loaders
@@ -245,6 +247,7 @@ public class MainActivity extends AppCompatActivity
             Glide.with(this)
                     .load(mPlayerCursor.getString(PlayerProjection.QUERY_PHOTO))
                     .placeholder(R.drawable.drawer_photo_placeholder)
+                    .centerCrop()
                     .transform(new CircleTransform(this))
                     .into(mPlayerPhotoImageView);
 

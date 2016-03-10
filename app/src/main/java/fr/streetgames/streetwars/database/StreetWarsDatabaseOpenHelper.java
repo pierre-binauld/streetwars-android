@@ -55,7 +55,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                             "Pierre",
                             "Binauld",
                             "Zxcv",
-                            "http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-162ppbj_ec9d6c7c.jpeg",
+                            "http://5.135.183.92:50220/pirate.jpeg",
                             "NEIOZXCV"
                     });
 

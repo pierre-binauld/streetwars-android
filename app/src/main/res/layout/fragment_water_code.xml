@@ -26,12 +26,11 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/water_code_header_temporary"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
