@@ -43,8 +43,11 @@ public class StreetWarsContentProvider extends ContentProvider {
             case R.id.content_uri_player:
                 qb.setTables(Tables.PLAYER);
                 break;
-            case R.id.content_uri_rule:
+            case R.id.content_uri_rules:
                 qb.setTables(Tables.RULE);
+                break;
+            case R.id.content_uri_targets:
+                qb.setTables(Tables.TARGET);
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown uri: %s", uri));
@@ -75,8 +78,10 @@ public class StreetWarsContentProvider extends ContentProvider {
         switch (match) {
             case R.id.content_uri_player:
                 return StreetWarsContract.Player.CONTENT_ITEM_TYPE;
-            case R.id.content_uri_rule:
+            case R.id.content_uri_rules:
                 return StreetWarsContract.Rule.CONTENT_TYPE;
+            case R.id.content_uri_targets:
+                return StreetWarsContract.Target.CONTENT_TYPE;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
         }
@@ -94,9 +99,13 @@ public class StreetWarsContentProvider extends ContentProvider {
                 table = Tables.PLAYER;
                 baseUri = StreetWarsContract.Player.CONTENT_URI;
                 break;
-            case R.id.content_uri_rule:
+            case R.id.content_uri_rules:
                 table = Tables.RULE;
                 baseUri = StreetWarsContract.Rule.CONTENT_URI;
+                break;
+            case R.id.content_uri_targets:
+                table = Tables.TARGET;
+                baseUri = StreetWarsContract.Target.CONTENT_URI;
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
@@ -124,9 +133,13 @@ public class StreetWarsContentProvider extends ContentProvider {
                 table = Tables.PLAYER;
                 baseUri = StreetWarsContract.Player.CONTENT_URI;
                 break;
-            case R.id.content_uri_rule:
+            case R.id.content_uri_rules:
                 table = Tables.RULE;
                 baseUri = StreetWarsContract.Rule.CONTENT_URI;
+                break;
+            case R.id.content_uri_targets:
+                table = Tables.TARGET;
+                baseUri = StreetWarsContract.Target.CONTENT_URI;
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
@@ -155,9 +168,13 @@ public class StreetWarsContentProvider extends ContentProvider {
                 table = Tables.PLAYER;
                 baseUri = StreetWarsContract.Player.CONTENT_URI;
                 break;
-            case R.id.content_uri_rule:
+            case R.id.content_uri_rules:
                 table = Tables.RULE;
                 baseUri = StreetWarsContract.Rule.CONTENT_URI;
+                break;
+            case R.id.content_uri_targets:
+                table = Tables.TARGET;
+                baseUri = StreetWarsContract.Target.CONTENT_URI;
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
@@ -182,7 +199,11 @@ public class StreetWarsContentProvider extends ContentProvider {
         );
         mUriMatcher.addURI(StreetWarsContract.AUTHORITY,
                 StreetWarsContract.Rule.CONTENT_URI.getPath(),
-                R.id.content_uri_rule
+                R.id.content_uri_rules
+        );
+        mUriMatcher.addURI(StreetWarsContract.AUTHORITY,
+                StreetWarsContract.Target.CONTENT_URI.getPath(),
+                R.id.content_uri_targets
         );
     }
 }

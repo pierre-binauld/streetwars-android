@@ -64,6 +64,6 @@ public class StreetWarsContract {
                 .appendPath(PATH_TARGET)
                 .build();
 
-        String CONTENT_ITEM_TYPE = CONTENT_TYPE_BASE + PATH_TARGET;
+        String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_TARGET;
     }
 }

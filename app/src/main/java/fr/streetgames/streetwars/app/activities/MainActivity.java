@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity
             mPlayerNameTextView.setText(
                     getResources()
                             .getString(
-                                    R.string.drawer_player_name,
+                                    R.string.util_name,
                                     mPlayerCursor.getString(PlayerProjection.QUERY_FIRST_NAME),
                                     mPlayerCursor.getString(PlayerProjection.QUERY_LAST_NAME)
                             )

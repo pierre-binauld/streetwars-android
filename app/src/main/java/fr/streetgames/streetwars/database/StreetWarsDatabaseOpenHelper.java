@@ -55,7 +55,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                 + TargetColumns.TEAM_ID + " INTEGER NOT NULL, "
                 + TargetColumns.HOME + " TEXT NOT NULL, "
                 + TargetColumns.WORK + " TEXT, "
-                + TargetColumns.JOB_CATEGORY + " TEXT NOT NULL, "
+                + TargetColumns.JOB_CATEGORY + " INTEGER NOT NULL, "
                 + TargetColumns.EXTRA + " TEXT NOT NULL "
                 + ")");
 
@@ -115,8 +115,8 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                             0,
                             "34 rue Tupin, Lyon 2",
                             "50 quai Paul Sedaillan, Lyon 9",
-                            "Salarié",
-                            "Yolo !",
+                            0,
+                            "To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him.",
 
                             1,
                             "Sailor",
@@ -126,8 +126,8 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                             0,
                             "21 rue Voltaire, Lyon 3",
                             "",
-                            "Sans Emploi",
-                            "Yolo !",
+                            2,
+                            "That's the Flying Dutchman? It doesn't look like much.",
 
                             2,
                             "Lady",
@@ -137,8 +137,8 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                             0,
                             "15 rue Sebastien Gryphe, Lyon 7",
                             "86 Rue Pasteur, 69007 Lyon",
-                            "Etudiant",
-                            "Yolo !"
+                            1,
+                            "I'm not entirely sure that I've had enough rum to allow that kind of talk."
                     });
 
             Log.d(TAG, "onCreate: Insert rules #1 ~ #4");

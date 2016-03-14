@@ -7,7 +7,6 @@
 
     <string name="drawer_description_close">Close Drawer</string>
     <string name="drawer_description_open">Open Drawer</string>
-    <string name="drawer_player_name">%1$s %2$s</string>
 
     <string name="menu_contract">Contrat</string>
     <string name="menu_map">Carte</string>
@@ -24,5 +23,7 @@
     <string name="water_code_rule_4">Ne donner pas votre Watercode si quelqu’un vous arrose un samedi.</string>
 
     <string name="share_water_code">Envoyer mon Water Code</string>
+
+    <string name="util_name">%1$s %2$s</string>
 
 </resources>
