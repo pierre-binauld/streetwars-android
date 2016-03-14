@@ -10,11 +10,13 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import fr.streetgames.streetwars.R;
+import fr.streetgames.streetwars.app.activities.MainActivity;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.widget.TargetAdapter;
 
@@ -24,6 +26,8 @@ import fr.streetgames.streetwars.widget.TargetAdapter;
 public class ContractFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String TAG = "ContractFragment";
+
+    private Toolbar mToolbar;
 
     private RecyclerView mRecyclerView;
 
@@ -41,14 +45,19 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_contract);
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle(R.string.contract_title);
+
         mAdapter = new TargetAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
+        ((MainActivity) getActivity()).setupToolbar(mToolbar);
 
         LoaderManager loaderManager = getLoaderManager();
         if(loaderManager.getLoader(R.id.loader_query_targets) == null) {
