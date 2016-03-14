@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide;
 import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
 
-import fr.streetgames.streetwars.app.fragments.MainActivityFragment;
+import fr.streetgames.streetwars.app.fragments.ContractFragment;
 import fr.streetgames.streetwars.app.fragments.WaterCodeFragment;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.glide.CircleTransform;
@@ -203,12 +203,12 @@ public class MainActivity extends AppCompatActivity
 
     private void switchToContractFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragment = fragmentManager.findFragmentByTag(MainActivityFragment.TAG);
+        mFragment = fragmentManager.findFragmentByTag(ContractFragment.TAG);
         if (null == mFragment) {
-            mFragment = new MainActivityFragment();
+            mFragment = new ContractFragment();
         }
         fragmentManager.beginTransaction()
-                .replace(R.id.content_fragment, mFragment, MainActivityFragment.TAG)
+                .replace(R.id.content_fragment, mFragment, ContractFragment.TAG)
                 .commit();
     }
 

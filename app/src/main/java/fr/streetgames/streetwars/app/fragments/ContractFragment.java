@@ -13,13 +13,13 @@ import fr.streetgames.streetwars.accounts.Authenticator;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class ContractFragment extends Fragment {
 
-    public static final String TAG = "MainActivityFragment";
+    public static final String TAG = "ContractFragment";
 
     private Account mAccount;
 
-    public MainActivityFragment() {
+    public ContractFragment() {
     }
 
     @Override
