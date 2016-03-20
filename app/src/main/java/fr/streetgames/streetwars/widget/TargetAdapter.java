@@ -2,10 +2,9 @@ package fr.streetgames.streetwars.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,11 @@ import com.bumptech.glide.Glide;
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.api.StreetWarsJobCategory;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
+import fr.streetgames.streetwars.utils.IntentUtils;
 
 public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder> {
+
+    private static final String TAG = "TargetAdapter";
 
     @NonNull
     private Context mContext;
@@ -36,6 +38,31 @@ public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder>
     public TargetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_contract, parent, false);
         TargetViewHolder holder = new TargetViewHolder(view);
+
+        holder.itemView.setTag(holder);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TargetAdapter.this.onTargetCLick(((TargetViewHolder) v.getTag()).getAdapterPosition());
+            }
+        });
+
+        holder.homeImageButton.setTag(holder);
+        holder.homeImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TargetAdapter.this.onHomeCLick(((TargetViewHolder) v.getTag()).getAdapterPosition());
+            }
+        });
+
+        holder.workImageButton.setTag(holder);
+        holder.workImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TargetAdapter.this.onWorkCLick(((TargetViewHolder) v.getTag()).getAdapterPosition());
+            }
+        });
+
         return holder;
     }
 
@@ -73,6 +100,36 @@ public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder>
                     holder.workImageButton.setVisibility(View.VISIBLE);
                     break;
             }
+        }
+    }
+
+    private void onTargetCLick(int position) {
+
+    }
+
+    private void onHomeCLick(int position) {
+        if(null != mCursor && mCursor.moveToPosition(position)) {
+            String address = mCursor.getString(TargetProjection.QUERY_HOME);
+            boolean started = IntentUtils.startGeoActivity(mContext, address);
+            if (!started) {
+                //TODO Snackbar: No app found to open address
+            }
+        }
+        else {
+            Log.d(TAG, "onHomeCLick: Position #" + position + " is not reachable.");
+        }
+    }
+
+    private void onWorkCLick(int position) {
+        if(null != mCursor && mCursor.moveToPosition(position)) {
+            String address = mCursor.getString(TargetProjection.QUERY_WORK);
+            boolean started = IntentUtils.startGeoActivity(mContext, address);
+            if (!started) {
+                //TODO Snackbar: No app found to open address
+            }
+        }
+        else {
+            Log.d(TAG, "onHomeCLick: Position #" + position + " is not reachable.");
         }
     }
 
