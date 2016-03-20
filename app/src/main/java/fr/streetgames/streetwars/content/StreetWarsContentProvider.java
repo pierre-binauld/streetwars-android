@@ -47,7 +47,7 @@ public class StreetWarsContentProvider extends ContentProvider {
                 qb.setTables(Tables.RULE);
                 break;
             case R.id.content_uri_targets:
-                qb.setTables(Tables.TARGET);
+                qb.setTables(StreetWarsContentProviderHelper.getTargetFromStatement());
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown uri: %s", uri));
