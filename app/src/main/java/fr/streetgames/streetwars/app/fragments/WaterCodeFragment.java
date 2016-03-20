@@ -37,6 +37,7 @@ import fr.streetgames.streetwars.app.activities.MainActivity;
 import fr.streetgames.streetwars.utils.HTTP;
 import fr.streetgames.streetwars.widget.RuleAdapter;
 
+import static fr.streetgames.streetwars.content.contract.StreetWarsContract.*;
 import static fr.streetgames.streetwars.content.contract.StreetWarsContract.Player;
 
 
@@ -156,6 +157,15 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
+            case R.id.loader_query_rules:
+                return new CursorLoader(
+                        getContext(),
+                        Rule.CONTENT_URI,
+                        new String[]{Rule.RULE},
+                        null,
+                        null,
+                        null
+                );
             case R.id.loader_query_water_code:
                 return new CursorLoader(
                         getContext(),
@@ -174,6 +184,9 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         @IdRes int id = loader.getId();
         switch (id) {
+            case R.id.loader_query_rules:
+                onRulesLoadFinished(cursor);
+                break;
             case R.id.loader_query_water_code:
                 onWaterCodeLoadFinished(cursor);
                 break;
@@ -182,10 +195,26 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    private void onRulesLoadFinished(@Nullable Cursor cursor) {
+        mAdapter.swapCursor(cursor);
+    }
+
+    private void onWaterCodeLoadFinished(@Nullable Cursor cursor) {
+        if (cursor != null && cursor.moveToFirst()) {
+            String waterCode = cursor.getString(0);
+            mCollapsingToolbar.setTitle(waterCode);
+        } else {
+            Log.w(TAG, "onWaterCodeLoadFinished: No water code found in database !");
+        }
+    }
+
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         @IdRes int id = loader.getId();
         switch (id) {
+            case R.id.loader_query_rules:
+                // Tu bluffes, Martoni !
+                break;
             case R.id.loader_query_water_code:
                 // Tu bluffes, Martoni !
                 break;
@@ -197,19 +226,20 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     private void queryWaterCode() {
 
         LoaderManager loaderManager = getLoaderManager();
+        if (null != loaderManager.getLoader(R.id.loader_query_rules)) {
+            loaderManager.initLoader(R.id.loader_query_rules, null, this);
+        } else {
+            loaderManager.initLoader(R.id.loader_query_rules, null, this);
+        }
+    }
+
+    private void queryRules() {
+
+        LoaderManager loaderManager = getLoaderManager();
         if (null != loaderManager.getLoader(R.id.loader_query_water_code)) {
             loaderManager.initLoader(R.id.loader_query_water_code, null, this);
         } else {
             loaderManager.initLoader(R.id.loader_query_water_code, null, this);
-        }
-    }
-
-    private void onWaterCodeLoadFinished(@Nullable Cursor cursor) {
-        if (cursor != null && cursor.moveToFirst()) {
-            String waterCode = cursor.getString(0);
-            mCollapsingToolbar.setTitle(waterCode);
-        } else {
-            Log.w(TAG, "onWaterCodeLoadFinished: No water code found in database !");
         }
     }
 

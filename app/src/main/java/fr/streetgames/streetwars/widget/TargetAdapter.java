@@ -19,10 +19,7 @@ import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.api.StreetWarsJobCategory;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 
-public class TargetAdapter extends RecyclerView.Adapter<TargetAdapter.TargetViewHolder> {
-
-    @Nullable
-    private Cursor mCursor;
+public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder> {
 
     @NonNull
     private Context mContext;
@@ -77,24 +74,6 @@ public class TargetAdapter extends RecyclerView.Adapter<TargetAdapter.TargetView
                     break;
             }
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return mCursor != null ? mCursor.getCount() : 0;
-    }
-
-    public Cursor swapCursor(@Nullable Cursor newCursor) {
-        if (newCursor == mCursor) {
-            return null;
-        }
-        Cursor oldCursor = mCursor;
-        mCursor = newCursor;
-        if (newCursor != null) {
-            // notify the observers about the new cursor
-            notifyDataSetChanged();
-        }
-        return oldCursor;
     }
 
     public class TargetViewHolder extends RecyclerView.ViewHolder {
