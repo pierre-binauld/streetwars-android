@@ -21,6 +21,10 @@ android {
             buildConfigField "String", "LOCATION_HEADER_WATER_CODE", "\"http://5.135.183.92:50220/sea.jpg\""
             buildConfigField "String", "LOCATION_HEADER_DRAWER", "\"http://5.135.183.92:50220/skull.jpg\""
 
+            buildConfigField "int", "GAME_MODE", "1"
+            buildConfigField "int", "LOOP", "0"
+            buildConfigField "int", "FFA", "1"
+
         }
         release {
 
