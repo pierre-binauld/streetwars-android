@@ -2,6 +2,8 @@ package fr.streetgames.streetwars.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.CallSuper;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,14 +16,25 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.api.StreetWarsJobCategory;
-import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.utils.IntentUtils;
 
-public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder> {
+import static fr.streetgames.streetwars.content.contract.StreetWarsContract.*;
+
+public class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "TargetAdapter";
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            Target.TYPE_TEAM,
+            Target.TYPE_TARGET
+    })
+    public @interface ViewType {}
 
     @NonNull
     private Context mContext;
@@ -34,9 +47,40 @@ public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder>
         mRes = mContext.getResources();
     }
 
+    @CallSuper
     @Override
-    public TargetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_contract, parent, false);
+    public int getItemViewType(int position) {
+        if (null != mCursor && mCursor.moveToPosition(position)) {
+            return mCursor.getInt(TargetProjection.QUERY_TYPE) == Target.TYPE_TEAM
+                    ? Target.TYPE_TEAM
+                    : Target.TYPE_TARGET;
+        }
+        else {
+            throw new IllegalArgumentException("Position #" + position + " is not reachable.");
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, @ViewType int viewType) {
+        switch (viewType) {
+            case Target.TYPE_TARGET:
+                return onCreateTargetViewHolder(parent);
+            case Target.TYPE_TEAM:
+                return onCreateTeamViewHolder(parent);
+            default:
+                throw new IllegalArgumentException("Item view type " + viewType + " does not exist");
+        }
+    }
+
+    private RecyclerView.ViewHolder onCreateTeamViewHolder(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_team, parent, false);
+        TeamViewHolder holder = new TeamViewHolder(view);
+        return holder;
+    }
+
+    @NonNull
+    private RecyclerView.ViewHolder onCreateTargetViewHolder(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_target, parent, false);
         TargetViewHolder holder = new TargetViewHolder(view);
 
         holder.itemView.setTag(holder);
@@ -67,7 +111,27 @@ public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(TargetViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        @ViewType int viewType = getItemViewType(position);
+        switch (viewType) {
+            case fr.streetgames.streetwars.database.TypeColumns.TYPE_TARGET:
+                onBindTargetViewHolder((TargetViewHolder) holder, position);
+                break;
+            case fr.streetgames.streetwars.database.TypeColumns.TYPE_TEAM:
+                onBindTeamViewHolder((TeamViewHolder) holder, position);
+                break;
+            default:
+                throw new IllegalArgumentException("Item view type " + viewType + " does not exist");
+        }
+    }
+
+    private void onBindTeamViewHolder(TeamViewHolder holder, int position) {
+        if (null != mCursor && mCursor.moveToPosition(position)) {
+            holder.nameTextView.setText(mCursor.getString(TargetProjection.QUERY_TEAM_NAME));
+        }
+    }
+
+    private void onBindTargetViewHolder(TargetViewHolder holder, int position) {
         if (mCursor != null && mCursor.moveToPosition(position)) {
             holder.mameTextView.setText(
                     mRes.getString(
@@ -158,36 +222,52 @@ public class TargetAdapter extends CursorAdapter<TargetAdapter.TargetViewHolder>
         }
     }
 
+    public class TeamViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView nameTextView;
+
+        public TeamViewHolder(View itemView) {
+            super(itemView);
+            nameTextView = (TextView) itemView.findViewById(R.id.name);
+        }
+    }
+
     public interface TargetProjection {
 
         String[] PROJECTION = new String[]{
-                StreetWarsContract.Target.ID,
-                StreetWarsContract.Target.FIRST_NAME,
-                StreetWarsContract.Target.LAST_NAME,
-                StreetWarsContract.Target.ALIAS,
-                StreetWarsContract.Target.PHOTO,
-                StreetWarsContract.Target.JOB_CATEGORY,
-                StreetWarsContract.Target.HOME,
-                StreetWarsContract.Target.WORK,
-                StreetWarsContract.Target.EXTRA
+                Target.TYPE,
+                Target.TEAM_NAME,
+                Target.ID,
+                Target.FIRST_NAME,
+                Target.LAST_NAME,
+                Target.ALIAS,
+                Target.PHOTO,
+                Target.JOB_CATEGORY,
+                Target.HOME,
+                Target.WORK,
+                Target.EXTRA
         };
 
-        int QUERY_ID = 0;
+        int QUERY_TYPE = 0;
 
-        int QUERY_FIRST_NAME = 1;
+        int QUERY_TEAM_NAME = 1;
 
-        int QUERY_LAST_NAME = 2;
+        int QUERY_ID = 2;
 
-        int QUERY_ALIAS = 3;
+        int QUERY_FIRST_NAME = 3;
 
-        int QUERY_PHOTO = 4;
+        int QUERY_LAST_NAME = 4;
 
-        int QUERY_JOB_CATEGORY = 5;
+        int QUERY_ALIAS = 5;
 
-        int QUERY_HOME = 6;
+        int QUERY_PHOTO = 6;
 
-        int QUERY_WORK = 7;
+        int QUERY_JOB_CATEGORY = 7;
 
-        int QUERY_EXTRA = 8;
+        int QUERY_HOME = 8;
+
+        int QUERY_WORK = 9;
+
+        int QUERY_EXTRA = 10;
     }
 }

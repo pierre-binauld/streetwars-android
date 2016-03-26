@@ -3,11 +3,11 @@ package fr.streetgames.streetwars.content.contract;
 import android.net.Uri;
 
 import fr.streetgames.streetwars.BuildConfig;
-import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.database.RuleColumns;
 import fr.streetgames.streetwars.database.TargetColumns;
 import fr.streetgames.streetwars.database.TeamColumns;
+import fr.streetgames.streetwars.database.TypeColumns;
 
 public class StreetWarsContract {
 
@@ -58,7 +58,9 @@ public class StreetWarsContract {
         String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_TEAM;
     }
 
-    public interface Target extends TargetColumns {
+    public interface Target extends TargetColumns, TypeColumns {
+
+        String TEAM_NAME = TeamColumns.NAME;
 
         Uri CONTENT_URI = BASE_URI.buildUpon()
                 .appendPath(PATH_TARGET)

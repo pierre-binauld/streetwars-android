@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
 
         // Manage fragment
         if (savedInstanceState == null) {
-            switchToWaterCodeFragment();
+            switchToContractFragment();
         } else {
             FragmentManager fragmentManager = getSupportFragmentManager();
             mFragment = fragmentManager.findFragmentByTag(WaterCodeFragment.TAG);

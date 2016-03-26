@@ -39,6 +39,7 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // TODO 19:9 aspect ratio
         return inflater.inflate(R.layout.fragment_contract, container, false);
     }
 

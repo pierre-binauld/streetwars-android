@@ -3,17 +3,12 @@ package fr.streetgames.streetwars.content;
 import fr.streetgames.streetwars.database.Tables;
 import fr.streetgames.streetwars.database.TargetColumns;
 import fr.streetgames.streetwars.database.TeamColumns;
+import fr.streetgames.streetwars.database.TypeColumns;
 
 public abstract class StreetWarsContentProviderHelper {
 
-    public static final String TYPE = "Type";
-
-    public static final int TYPE_TEAM = 0;
-
-    public static final int TYPE_TARGET = 1;
-
     public static String getTargetFromStatement() {
-        return "(SELECT " + TYPE_TARGET + " AS " + TYPE + ", " +
+        return "(SELECT " + TypeColumns.TYPE_TARGET + " AS " + TypeColumns.TYPE + ", " +
                 Tables.TEAM + ".*, " +
                 TargetColumns.ID + ", " +
                 TargetColumns.ALIAS + ", " +
@@ -31,7 +26,7 @@ public abstract class StreetWarsContentProviderHelper {
 
                 " UNION " +
 
-                "SELECT " + TYPE_TEAM + " AS " + TYPE + ", " +
+                "SELECT " + TypeColumns.TYPE_TEAM + " AS " + TypeColumns.TYPE + ", " +
                 Tables.TEAM + ".*, " +
                 "null AS " + TargetColumns.ID + ", " +
                 "null AS " + TargetColumns.ALIAS + ", " +
@@ -44,7 +39,7 @@ public abstract class StreetWarsContentProviderHelper {
                 "null AS " + TargetColumns.JOB_CATEGORY + ", " +
                 "null AS " + TargetColumns.EXTRA +
                 " FROM " + Tables.TEAM +
-                " ORDER BY " + TeamColumns.ID + ", " + TYPE +
+                " ORDER BY " + TeamColumns.ID + ", " + TypeColumns.TYPE +
                 ")";
     }
 }
