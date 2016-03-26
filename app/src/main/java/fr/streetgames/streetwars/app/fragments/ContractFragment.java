@@ -39,7 +39,7 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // TODO 19:9 aspect ratio
+        // TODO 16:9 aspect ratio
         return inflater.inflate(R.layout.fragment_contract, container, false);
     }
 
@@ -65,7 +65,7 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
             queryTargets();
         }
         else {
-            loaderManager.initLoader(R.id.loader_query_player, null, this);
+            loaderManager.initLoader(R.id.loader_query_targets, null, this);
         }
     }
 
