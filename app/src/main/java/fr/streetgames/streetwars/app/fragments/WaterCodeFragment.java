@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -16,7 +17,6 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -55,7 +54,10 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     private LinearLayoutManager mLayoutManager;
 
     private RuleAdapter mAdapter;
-    private boolean mDoAnimation;
+
+    private DecelerateInterpolator mInterpolator;
+    private boolean mDoWaterCodeAnimation;
+    private boolean mDoRulesAnimation;
 
     public static WaterCodeFragment newInstance() {
         WaterCodeFragment fragment = new WaterCodeFragment();
@@ -66,7 +68,8 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setHasOptionsMenu(true);
-        mDoAnimation = true;
+        mDoWaterCodeAnimation = true;
+        mDoRulesAnimation = true;
     }
 
     @Override
@@ -86,6 +89,9 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         mCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinator_layout);
         mFab = (FloatingActionButton) view.findViewById(R.id.fab);
         mRuleRecycleView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_rule);
+
+        prepareWaterCodeAnimation();
+        prepareRulesAnimation();
     }
 
     @Override
@@ -108,15 +114,20 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
 
         ((MainActivity) getActivity()).setupToolbar(mToolbar);
 
+        onReattachLoader();
+
         queryWaterCode();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mDoAnimation) {
-            prepareAnimation();
-            animate();
+    @CallSuper
+    protected void onReattachLoader() {
+        LoaderManager loaderManager = getLoaderManager();
+        if (loaderManager.getLoader(R.id.loader_query_player) != null) {
+            loaderManager.initLoader(R.id.loader_query_player, null, WaterCodeFragment.this);
+        }
+        // TODO Put this in adapter
+        if (loaderManager.getLoader(R.id.loader_query_rules) != null) {
+            loaderManager.initLoader(R.id.loader_query_rules, null, WaterCodeFragment.this);
         }
     }
 
@@ -197,12 +208,17 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
 
     private void onRulesLoadFinished(@Nullable Cursor cursor) {
         mAdapter.swapCursor(cursor);
+        if (cursor != null) {
+            startRulesAnimation();
+        }
     }
 
     private void onWaterCodeLoadFinished(@Nullable Cursor cursor) {
         if (cursor != null && cursor.moveToFirst()) {
             String waterCode = cursor.getString(0);
             mCollapsingToolbar.setTitle(waterCode);
+            queryRules();
+            startWaterCodeAnimation();
         } else {
             Log.w(TAG, "onWaterCodeLoadFinished: No water code found in database !");
         }
@@ -213,8 +229,6 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         @IdRes int id = loader.getId();
         switch (id) {
             case R.id.loader_query_rules:
-                // Tu bluffes, Martoni !
-                break;
             case R.id.loader_query_water_code:
                 // Tu bluffes, Martoni !
                 break;
@@ -223,7 +237,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    private void queryWaterCode() {
+    private void queryRules() {
 
         LoaderManager loaderManager = getLoaderManager();
         if (null != loaderManager.getLoader(R.id.loader_query_rules)) {
@@ -233,7 +247,7 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    private void queryRules() {
+    private void queryWaterCode() {
 
         LoaderManager loaderManager = getLoaderManager();
         if (null != loaderManager.getLoader(R.id.loader_query_water_code)) {
@@ -243,68 +257,85 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    private void prepareAnimation() {
-        ViewCompat.setAlpha(mAppBarLayout, 0);
-        ViewCompat.setTranslationY(mAppBarLayout, -100);
+    private void prepareWaterCodeAnimation() {
+        if (mDoWaterCodeAnimation) {
+            ViewCompat.setAlpha(mAppBarLayout, 0);
+            ViewCompat.setTranslationY(mAppBarLayout, -100);
 
-        ViewCompat.setScaleX(mFab, 0);
-        ViewCompat.setScaleY(mFab, 0);
-
-        int rowIndex = 0;
-        View rowView;
-        do {
-            rowView = mRuleRecycleView.getChildAt(rowIndex);
-            if (rowView != null) {
-                ViewCompat.setAlpha(rowView, 0);
-                ViewCompat.setTranslationY(rowView, 50);
-            }
-            rowIndex++;
-        } while (rowView != null);
-
+            ViewCompat.setScaleX(mFab, 0);
+            ViewCompat.setScaleY(mFab, 0);
+        }
     }
 
-    private void animate() {
-        mCoordinatorLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Interpolator interpolator = new DecelerateInterpolator();
-
-                ViewCompat.animate(mAppBarLayout)
-                        .alpha(1)
-                        .translationY(0)
-                        .setInterpolator(interpolator)
-                        .setStartDelay(100)
-                        .start();
-
-                ViewCompat.animate(mFab)
-                        .scaleX(1)
-                        .scaleY(1)
-                        .setInterpolator(interpolator)
-                        .setStartDelay(300)
-                        .start();
-
-                int rowIndex = 0;
-                int startDelay = 500;
-                View rowView;
-                do {
-                    rowView = mRuleRecycleView.getChildAt(rowIndex);
-                    if (rowView != null) {
-                        ViewCompat.setAlpha(rowView, 0);
-                        ViewCompat.setTranslationY(rowView, 50);
-                        ViewCompat.animate(rowView)
-                                .alpha(1)
-                                .translationY(0)
-                                .setInterpolator(interpolator)
-                                .setStartDelay(startDelay)
-                                .start();
-                    }
-                    rowIndex++;
-                    startDelay += 50;
-                } while (rowView != null);
-
-                mDoAnimation = false;
-            }
-        });
+    private void prepareRulesAnimation() {
+        if(mDoRulesAnimation) {
+            mRuleRecycleView.setAlpha(0F);
+        }
     }
 
+    private void startWaterCodeAnimation() {
+        if(mDoWaterCodeAnimation) {
+            mDoWaterCodeAnimation = false;
+            mCoordinatorLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mInterpolator = new DecelerateInterpolator();
+
+                    ViewCompat.animate(mAppBarLayout)
+                            .alpha(1)
+                            .translationY(0)
+                            .setInterpolator(mInterpolator)
+                            .setStartDelay(100)
+                            .start();
+
+                    ViewCompat.animate(mFab)
+                            .scaleX(1)
+                            .scaleY(1)
+                            .setInterpolator(mInterpolator)
+                            .setStartDelay(300)
+                            .start();
+                }
+            });
+        }
+    }
+
+    private void startRulesAnimation() {
+        if(!mDoWaterCodeAnimation && mDoRulesAnimation) {
+            mDoRulesAnimation = false;
+            mCoordinatorLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    int rowIndex = 0;
+                    View rowView;
+                    do {
+                        rowView = mRuleRecycleView.getChildAt(rowIndex);
+                        if (rowView != null) {
+                            ViewCompat.setAlpha(rowView, 0);
+                            ViewCompat.setTranslationY(rowView, 50);
+                        }
+                        rowIndex++;
+                    } while (rowView != null);
+                    mRuleRecycleView.setAlpha(1F);
+
+                    rowIndex = 0;
+                    int startDelay = 500;
+                    do {
+                        rowView = mRuleRecycleView.getChildAt(rowIndex);
+                        if (rowView != null) {
+                            ViewCompat.setAlpha(rowView, 0);
+                            ViewCompat.setTranslationY(rowView, 50);
+                            ViewCompat.animate(rowView)
+                                    .alpha(1)
+                                    .translationY(0)
+                                    .setInterpolator(mInterpolator)
+                                    .setStartDelay(startDelay)
+                                    .start();
+                        }
+                        rowIndex++;
+                        startDelay += 50;
+                    } while (rowView != null);
+                }
+            });
+        }
+    }
 }
