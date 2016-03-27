@@ -6,6 +6,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,6 +129,9 @@ public class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolder> {
     private void onBindTeamViewHolder(TeamViewHolder holder, int position) {
         if (null != mCursor && mCursor.moveToPosition(position)) {
             holder.nameTextView.setText(mCursor.getString(TargetProjection.QUERY_TEAM_NAME));
+            //TODO if orientation == horizontal
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+            layoutParams.setFullSpan(true);
         }
     }
 

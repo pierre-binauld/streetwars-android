@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_padding">56dp</dimen> <!-- = 64 - list_item_margin -->
+</resources>
