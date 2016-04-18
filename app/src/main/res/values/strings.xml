@@ -17,6 +17,7 @@
     <string name="menu_news">News</string>
     <string name="menu_rules">Règles</string>
     <string name="menu_share">Partager</string>
+    <string name="menu_target_down">Suppression d’une cible</string>
     <string name="menu_tickets">Tickets</string>
 
     <string name="water_code_title">Water Code</string>
