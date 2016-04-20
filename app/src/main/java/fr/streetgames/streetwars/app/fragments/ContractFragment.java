@@ -19,9 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.activities.MainActivity;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
+import fr.streetgames.streetwars.widget.CardTargetAdapter;
+import fr.streetgames.streetwars.widget.LineTargetAdapter;
 import fr.streetgames.streetwars.widget.TargetAdapter;
 
 /**
@@ -31,11 +34,24 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
 
     public static final String TAG = "ContractFragment";
 
+    private static final String ARG_GAME_MODE = "arg:game_mode";
+
     private Toolbar mToolbar;
 
     private RecyclerView mRecyclerView;
 
     private TargetAdapter mAdapter;
+
+    @MainActivity.GameMode
+    private int mGameMode;
+
+    public static ContractFragment newInstance(@MainActivity.GameMode int gameMode) {
+        Bundle args = new Bundle(1);
+        args.putInt(ARG_GAME_MODE, gameMode);
+        ContractFragment fragment = new ContractFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public ContractFragment() {
     }
@@ -44,6 +60,8 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setHasOptionsMenu(true);
+        //noinspection WrongConstant
+        mGameMode = getArguments().getInt(ARG_GAME_MODE);
     }
 
     @Override
@@ -64,7 +82,12 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
         super.onActivityCreated(savedInstanceState);
         getActivity().setTitle(R.string.contract_title);
 
-        mAdapter = new TargetAdapter(getContext());
+        if (BuildConfig.LOOP == mGameMode) {
+            mAdapter = new CardTargetAdapter(getContext());
+        }
+        else {
+            mAdapter = new LineTargetAdapter(getContext());
+        }
         StaggeredGridLayoutManager layoutManager;
         switch (getResources().getConfiguration().orientation) {
             case Configuration.ORIENTATION_LANDSCAPE:
@@ -120,7 +143,7 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
         return new CursorLoader(
                 getContext(),
                 StreetWarsContract.Target.CONTENT_URI,
-                TargetAdapter.TargetProjection.PROJECTION,
+                CardTargetAdapter.TargetProjection.PROJECTION,
                 null,
                 null,
                 null);

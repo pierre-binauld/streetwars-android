@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.IntDef;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
@@ -47,6 +51,14 @@ public class MainActivity extends AppCompatActivity
 
     private ActionBarDrawerToggle mDrawerToggle;
     private Cursor mPlayerCursor;
+
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            BuildConfig.LOOP,
+            BuildConfig.FFA,
+    })
+    public @interface GameMode {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +217,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         mFragment = fragmentManager.findFragmentByTag(ContractFragment.TAG);
         if (null == mFragment) {
-            mFragment = new ContractFragment();
+            mFragment = ContractFragment.newInstance(BuildConfig.GAME_MODE);
         }
         fragmentManager.beginTransaction()
                 .replace(R.id.content_fragment, mFragment, ContractFragment.TAG)
