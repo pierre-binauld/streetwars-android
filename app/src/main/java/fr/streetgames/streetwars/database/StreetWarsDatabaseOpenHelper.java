@@ -153,7 +153,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "34 rue Tupin, Lyon 2",
                         "50 quai Paul Sedaillan, Lyon 9",
                         0,
-                        "To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him.",
+                        "To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him. To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him.",
 
                         1,
                         "Sailor",
