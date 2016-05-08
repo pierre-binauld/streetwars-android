@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -194,17 +195,34 @@ public class StreetWarsContentProvider extends ContentProvider {
     }
 
     private void setupUriMatcher() {
-        mUriMatcher.addURI(StreetWarsContract.AUTHORITY,
+        addUriToUriMatcher(
+                mUriMatcher,
+                StreetWarsContract.AUTHORITY,
                 StreetWarsContract.Player.CONTENT_URI.getPath(),
                 R.id.content_uri_player
         );
-        mUriMatcher.addURI(StreetWarsContract.AUTHORITY,
+        addUriToUriMatcher(
+                mUriMatcher,
+                StreetWarsContract.AUTHORITY,
                 StreetWarsContract.Rule.CONTENT_URI.getPath(),
                 R.id.content_uri_rules
         );
-        mUriMatcher.addURI(StreetWarsContract.AUTHORITY,
+        addUriToUriMatcher(
+                mUriMatcher,
+                StreetWarsContract.AUTHORITY,
                 StreetWarsContract.Target.CONTENT_URI.getPath(),
                 R.id.content_uri_targets
         );
+    }
+
+    private static void addUriToUriMatcher(
+            @NonNull UriMatcher uriMatcher,
+            @NonNull String authority,
+            @NonNull String path,
+            int code) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            path = path.substring(1);
+        }
+        uriMatcher.addURI(authority, path, code);
     }
 }
