@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import fr.streetgames.streetwars.R;
+import fr.streetgames.streetwars.api.StreetWarsJobCategory;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.utils.IntentUtils;
 
@@ -105,23 +107,49 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
         return new TargetBottomSheetViewHolder(bottomSheetDialog);
     }
 
-    public void bindTargetBottomSheet(@NonNull TargetBottomSheetViewHolder bottomSheetViewHolder, int position) {
+    public void onBindTargetBottomSheet(@NonNull TargetBottomSheetViewHolder holder, int position) {
         if (null != mCursor && mCursor.moveToPosition(position)) {
-            bottomSheetViewHolder.nameTextView.setText(
+            holder.nameTextView.setText(
                     mResources.getString(
                             R.string.util_name,
                             mCursor.getString(TargetProjection.QUERY_FIRST_NAME),
                             mCursor.getString(TargetProjection.QUERY_LAST_NAME)
                     )
             );
-            bottomSheetViewHolder.aliasTextView.setText(mCursor.getString(TargetProjection.QUERY_ALIAS));
-            bottomSheetViewHolder.extraTextView.setText(mCursor.getString(TargetProjection.QUERY_EXTRA));
-            bottomSheetViewHolder.homeTextView.setText(mCursor.getString(TargetProjection.QUERY_HOME));
-            bottomSheetViewHolder.workTextView.setText(mCursor.getString(TargetProjection.QUERY_WORK));
+            holder.aliasTextView.setText(mCursor.getString(TargetProjection.QUERY_ALIAS));
+            holder.extraTextView.setText(mCursor.getString(TargetProjection.QUERY_EXTRA));
+            holder.homeTextView.setText(mCursor.getString(TargetProjection.QUERY_HOME));
+            holder.workTextView.setText(mCursor.getString(TargetProjection.QUERY_WORK));
             Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
                     .placeholder(R.color.colorAccent)
-                    .into(bottomSheetViewHolder.photoImageView);
+                    .into(holder.photoImageView);
+
+            @StreetWarsJobCategory.JobCategory int jobCat = mCursor.getInt(TargetProjection.QUERY_JOB_CATEGORY);
+            switch (jobCat) {
+                case StreetWarsJobCategory.NO_jOB:
+                    holder.homeView.setVisibility(View.VISIBLE);
+                    holder.workView.setVisibility(View.GONE);
+                    holder.homeImageView.setImageResource(R.drawable.ic_no_job_accent_24dp);
+                    holder.homeLabelTextView.setText(R.string.target_home);
+                    break;
+                case StreetWarsJobCategory.STUDENT:
+                    holder.homeView.setVisibility(View.VISIBLE);
+                    holder.workView.setVisibility(View.VISIBLE);
+                    holder.homeImageView.setImageResource(R.drawable.ic_home_accent_24dp);
+                    holder.workImageView.setImageResource(R.drawable.ic_school_accent_24dp);
+                    holder.homeLabelTextView.setText(R.string.target_home);
+                    holder.workLabelTextView.setText(R.string.target_school);
+                    break;
+                case StreetWarsJobCategory.WORKER:
+                    holder.homeView.setVisibility(View.VISIBLE);
+                    holder.workView.setVisibility(View.VISIBLE);
+                    holder.homeImageView.setImageResource(R.drawable.ic_home_accent_24dp);
+                    holder.workImageView.setImageResource(R.drawable.ic_work_accent_24dp);
+                    holder.homeLabelTextView.setText(R.string.target_home);
+                    holder.workLabelTextView.setText(R.string.target_work);
+                    break;
+            }
         }
     }
 
@@ -137,7 +165,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
 
         TargetBottomSheetViewHolder targetBottomSheetViewHolder = onCreateTargetBottomSheetViewHolder(mBottomSheetDialog);
 
-        bindTargetBottomSheet(targetBottomSheetViewHolder, position);
+        onBindTargetBottomSheet(targetBottomSheetViewHolder, position);
 
         mBottomSheetDialog.show();
     }
@@ -170,7 +198,15 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
 
     public class TargetBottomSheetViewHolder {
 
+        public final View homeView;
+
+        public final View workView;
+
         public final ImageView photoImageView;
+
+        public final ImageView homeImageView;
+
+        public final ImageView workImageView;
 
         public final TextView nameTextView;
 
@@ -182,13 +218,23 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
 
         public final TextView workTextView;
 
+        public final TextView homeLabelTextView;
+
+        public final TextView workLabelTextView;
+
         public TargetBottomSheetViewHolder(BottomSheetDialog bottomSheetDialog) {
+            homeView = bottomSheetDialog.findViewById(R.id.target_container_home);
+            workView = bottomSheetDialog.findViewById(R.id.target_container_work);
             photoImageView = (ImageView) bottomSheetDialog.findViewById(R.id.target_photo);
+            homeImageView = (ImageView) bottomSheetDialog.findViewById(R.id.target_ic_home);
+            workImageView = (ImageView) bottomSheetDialog.findViewById(R.id.target_ic_work);
             nameTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_name);
             aliasTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_alias);
             extraTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_extra);
             homeTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_home);
             workTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_work);
+            homeLabelTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_label_home);
+            workLabelTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_label_work);
         }
 
     }

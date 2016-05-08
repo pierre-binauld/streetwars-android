@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:text="Extra"
+                    android:text="@string/target_extra"
                     android:textColor="@color/colorPrimary" />
 
                 <View
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="16dp"
-                    android:text="yolnouaerntanrh dkvamrvkiantvkaistvkaev dkvamrvkiantvkaistvkaev dkvamrvkiantvkaistvkaev dkvamrvkiantvkaistvkaev" />
+                    tools:text="yolnouaerntanrh dkvamrvkiantvkaistvkaev dkvamrvkiantvkaistvkaev dkvamrvkiantvkaistvkaev dkvamrvkiantvkaistvkaev" />
 
             </LinearLayout>
 
@@ -130,7 +130,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Home" />
+                    tools:text="@string/target_home" />
 
             </RelativeLayout>
 
@@ -179,7 +179,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
-                    android:text="Work" />
+                    tools:text="@string/target_work" />
 
             </RelativeLayout>
 
