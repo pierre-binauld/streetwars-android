@@ -43,6 +43,14 @@ public class LineTargetAdapter extends TargetAdapter {
             }
         });
 
+        holder.photoImageView.setTag(holder);
+        holder.photoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LineTargetAdapter.this.onPhotoClick(((TargetViewHolder) v.getTag()).getAdapterPosition());
+            }
+        });
+
         return holder;
     }
 

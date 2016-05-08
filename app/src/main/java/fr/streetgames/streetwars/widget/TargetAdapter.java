@@ -105,7 +105,33 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
     protected abstract void onBindTargetViewHolder(RecyclerView.ViewHolder holder, int position);
 
     protected TargetBottomSheetViewHolder onCreateTargetBottomSheetViewHolder(BottomSheetDialog bottomSheetDialog) {
-        return new TargetBottomSheetViewHolder(bottomSheetDialog);
+        TargetBottomSheetViewHolder viewHolder = new TargetBottomSheetViewHolder(bottomSheetDialog);
+
+        viewHolder.photoImageButton.setTag(viewHolder);
+        viewHolder.photoImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TargetAdapter.this.onPhotoClick((TargetBottomSheetViewHolder) v.getTag());
+            }
+        });
+
+        viewHolder.homeView.setTag(viewHolder);
+        viewHolder.homeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TargetAdapter.this.onHomeCLick((TargetBottomSheetViewHolder) v.getTag());
+            }
+        });
+
+        viewHolder.workView.setTag(viewHolder);
+        viewHolder.workView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TargetAdapter.this.onWorkCLick((TargetBottomSheetViewHolder) v.getTag());
+            }
+        });
+
+        return viewHolder;
     }
 
     public void onBindTargetBottomSheet(@NonNull TargetBottomSheetViewHolder holder, int position) {
@@ -121,8 +147,10 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
             holder.extraTextView.setText(mCursor.getString(TargetProjection.QUERY_EXTRA));
             holder.homeTextView.setText(mCursor.getString(TargetProjection.QUERY_HOME));
             holder.workTextView.setText(mCursor.getString(TargetProjection.QUERY_WORK));
+
+            holder.photoUrl = mCursor.getString(TargetProjection.QUERY_PHOTO);
             Picasso.with(mContext)
-                    .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
+                    .load(holder.photoUrl)
                     .placeholder(R.color.colorAccent)
                     .into(holder.photoImageButton);
 
@@ -171,30 +199,49 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
         mBottomSheetDialog.show();
     }
 
-    protected void onHomeCLick(int position, int homeColumnIndex) {
+    protected void onPhotoClick(int position) {
         if (null != mCursor && mCursor.moveToPosition(position)) {
-            String address = mCursor.getString(homeColumnIndex);
-            boolean started = IntentUtils.startGeoActivity(mContext, address);
-            if (!started) {
-                //TODO Snackbar: No app found to open address
-            }
+            String url = mCursor.getString(TargetProjection.QUERY_PHOTO);
+
+            IntentUtils.startImageActivity(mContext, url);
         }
         else {
             Log.d(TAG, "onHomeCLick: Position #" + position + " is not reachable.");
         }
     }
 
-    protected void onWorkCLick(int position, int workColumnIndex) {
+    protected void onPhotoClick(TargetBottomSheetViewHolder viewHolder) {
+        IntentUtils.startImageActivity(mContext, viewHolder.photoUrl);
+    }
+
+    protected void onHomeCLick(int position) {
         if (null != mCursor && mCursor.moveToPosition(position)) {
-            String address = mCursor.getString(workColumnIndex);
-            boolean started = IntentUtils.startGeoActivity(mContext, address);
-            if (!started) {
-                //TODO Snackbar: No app found to open address
-            }
+            String address = mCursor.getString(TargetProjection.QUERY_WORK);
+            IntentUtils.startGeoActivity(mContext, address);
         }
         else {
             Log.d(TAG, "onHomeCLick: Position #" + position + " is not reachable.");
         }
+    }
+
+    protected void onHomeCLick(TargetBottomSheetViewHolder viewHolder) {
+        String address = String.valueOf(viewHolder.homeTextView.getText());
+        IntentUtils.startGeoActivity(mContext, address);
+    }
+
+    protected void onWorkCLick(int position) {
+        if (null != mCursor && mCursor.moveToPosition(position)) {
+            String address = mCursor.getString(TargetProjection.QUERY_WORK);
+            IntentUtils.startGeoActivity(mContext, address);
+        }
+        else {
+            Log.d(TAG, "onHomeCLick: Position #" + position + " is not reachable.");
+        }
+    }
+
+    protected void onWorkCLick(TargetBottomSheetViewHolder viewHolder) {
+        String address = String.valueOf(viewHolder.workTextView.getText());
+        IntentUtils.startGeoActivity(mContext, address);
     }
 
     public class TargetBottomSheetViewHolder {
@@ -222,6 +269,8 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
         public final TextView homeLabelTextView;
 
         public final TextView workLabelTextView;
+
+        public String photoUrl;
 
         public TargetBottomSheetViewHolder(BottomSheetDialog bottomSheetDialog) {
             homeView = bottomSheetDialog.findViewById(R.id.target_container_home);

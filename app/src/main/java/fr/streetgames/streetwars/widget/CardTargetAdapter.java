@@ -49,7 +49,7 @@ public class CardTargetAdapter extends TargetAdapter {
         holder.homeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardTargetAdapter.this.onHomeCLick(((TargetViewHolder) v.getTag()).getAdapterPosition(), TargetProjection.QUERY_HOME);
+                CardTargetAdapter.this.onHomeCLick(((TargetViewHolder) v.getTag()).getAdapterPosition());
             }
         });
 
@@ -57,7 +57,7 @@ public class CardTargetAdapter extends TargetAdapter {
         holder.workImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardTargetAdapter.this.onWorkCLick(((TargetViewHolder) v.getTag()).getAdapterPosition(), TargetProjection.QUERY_WORK);
+                CardTargetAdapter.this.onWorkCLick(((TargetViewHolder) v.getTag()).getAdapterPosition());
             }
         });
 
