@@ -18,10 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/target_photo"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:foreground="?android:selectableItemBackground"
+                android:padding="0dp"
                 android:scaleType="centerCrop"
                 app:layout_aspectRatio="100%"
                 app:layout_widthPercent="100%"
@@ -109,6 +112,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
                 android:padding="16dp">
 
                 <ImageView
@@ -155,6 +160,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
                 android:padding="16dp">
 
                 <ImageView

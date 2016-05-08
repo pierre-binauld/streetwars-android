@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -123,7 +124,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
             Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
                     .placeholder(R.color.colorAccent)
-                    .into(holder.photoImageView);
+                    .into(holder.photoImageButton);
 
             @StreetWarsJobCategory.JobCategory int jobCat = mCursor.getInt(TargetProjection.QUERY_JOB_CATEGORY);
             switch (jobCat) {
@@ -202,7 +203,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
 
         public final View workView;
 
-        public final ImageView photoImageView;
+        public final ImageButton photoImageButton;
 
         public final ImageView homeImageView;
 
@@ -225,7 +226,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
         public TargetBottomSheetViewHolder(BottomSheetDialog bottomSheetDialog) {
             homeView = bottomSheetDialog.findViewById(R.id.target_container_home);
             workView = bottomSheetDialog.findViewById(R.id.target_container_work);
-            photoImageView = (ImageView) bottomSheetDialog.findViewById(R.id.target_photo);
+            photoImageButton = (ImageButton) bottomSheetDialog.findViewById(R.id.target_photo);
             homeImageView = (ImageView) bottomSheetDialog.findViewById(R.id.target_ic_home);
             workImageView = (ImageView) bottomSheetDialog.findViewById(R.id.target_ic_work);
             nameTextView = (TextView) bottomSheetDialog.findViewById(R.id.target_name);
