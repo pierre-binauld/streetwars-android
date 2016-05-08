@@ -10,9 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import fr.streetgames.streetwars.R;
+import fr.streetgames.streetwars.glide.CircleTransform;
 
 public class LineTargetAdapter extends TargetAdapter {
 
@@ -68,8 +69,9 @@ public class LineTargetAdapter extends TargetAdapter {
                     )
             );
             holder.aliasTextView.setText(mCursor.getString(TargetProjection.QUERY_ALIAS));
-            Glide.with(mContext)
+            Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
+                    .transform(new CircleTransform())
                     .placeholder(R.color.colorAccent)
                     .into(holder.photoImageView);
         }

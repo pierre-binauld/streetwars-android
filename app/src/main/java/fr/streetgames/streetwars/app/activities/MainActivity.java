@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -58,26 +58,29 @@ public class MainActivity extends AppCompatActivity
             BuildConfig.LOOP,
             BuildConfig.FFA,
     })
-    public @interface GameMode {}
+    public @interface GameMode {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (BuildConfig.DEBUG) {
+            Picasso.with(this).setIndicatorsEnabled(BuildConfig.DEBUG);
+        }
 
         onViewCreated();
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        Glide.with(this)
+        Picasso.with(this)
                 .load(BuildConfig.LOCATION_HEADER_DRAWER)
                 .placeholder(R.color.colorPrimaryDark)
-                .centerCrop()
                 .into(mDrawerBackgroundImageView);
 
         // Reattach loaders
         LoaderManager loaderManager = getSupportLoaderManager();
-        if(loaderManager.getLoader(R.id.loader_query_player) != null) {
+        if (loaderManager.getLoader(R.id.loader_query_player) != null) {
             loaderManager.initLoader(R.id.loader_query_player, null, this);
         }
 
@@ -197,7 +200,7 @@ public class MainActivity extends AppCompatActivity
 
     private void queryPlayer() {
         LoaderManager loaderManager = getSupportLoaderManager();
-        if(loaderManager.getLoader(R.id.loader_query_player) == null) {
+        if (loaderManager.getLoader(R.id.loader_query_player) == null) {
             loaderManager.initLoader(R.id.loader_query_player, null, this);
         }
     }
@@ -217,6 +220,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         mFragment = fragmentManager.findFragmentByTag(ContractFragment.TAG);
         if (null == mFragment) {
+            //noinspection WrongConstant
             mFragment = ContractFragment.newInstance(BuildConfig.GAME_MODE);
         }
         fragmentManager.beginTransaction()
@@ -255,12 +259,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updatePlayerInfo() {
-        if(mPlayerCursor != null && mPlayerCursor.moveToFirst()) {
-            Glide.with(this)
+        if (mPlayerCursor != null && mPlayerCursor.moveToFirst()) {
+            Picasso.with(this)
                     .load(mPlayerCursor.getString(PlayerProjection.QUERY_PHOTO))
                     .placeholder(R.drawable.drawer_photo_placeholder)
-                    .centerCrop()
-                    .transform(new CircleTransform(this))
+                    .transform(new CircleTransform())
                     .into(mPlayerPhotoImageView);
 
             mPlayerNameTextView.setText(
@@ -280,7 +283,7 @@ public class MainActivity extends AppCompatActivity
 
     public interface PlayerProjection {
 
-        String[] PROJECTION = new String[] {
+        String[] PROJECTION = new String[]{
                 StreetWarsContract.Player.ID,
                 StreetWarsContract.Player.FIRST_NAME,
                 StreetWarsContract.Player.LAST_NAME,

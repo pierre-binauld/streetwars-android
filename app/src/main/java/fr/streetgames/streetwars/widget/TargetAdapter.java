@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -118,7 +118,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
             bottomSheetViewHolder.extraTextView.setText(mCursor.getString(TargetProjection.QUERY_EXTRA));
             bottomSheetViewHolder.homeTextView.setText(mCursor.getString(TargetProjection.QUERY_HOME));
             bottomSheetViewHolder.workTextView.setText(mCursor.getString(TargetProjection.QUERY_WORK));
-            Glide.with(mContext)
+            Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
                     .placeholder(R.color.colorAccent)
                     .into(bottomSheetViewHolder.photoImageView);

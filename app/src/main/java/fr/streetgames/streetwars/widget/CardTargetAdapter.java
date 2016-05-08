@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.api.StreetWarsJobCategory;
@@ -88,7 +88,7 @@ public class CardTargetAdapter extends TargetAdapter {
             );
             holder.aliasTextView.setText(mCursor.getString(TargetProjection.QUERY_ALIAS));
             holder.extraTextView.setText(mCursor.getString(TargetProjection.QUERY_EXTRA));
-            Glide.with(mContext)
+            Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
                     .placeholder(R.color.colorAccent)
                     .into(holder.photoImageView);

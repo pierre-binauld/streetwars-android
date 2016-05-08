@@ -18,10 +18,10 @@ android {
 
             buildConfigField "String", "CONTENT_AUTHORITY", "\"${defaultConfig.applicationId}${applicationIdSuffix}.content\""
 
-            buildConfigField "String", "LOCATION_HEADER_WATER_CODE", "\"http://5.135.183.92:50220/res/sea.jpg\""
+            buildConfigField "String", "LOCATION_HEADER_WATER_CODE", "\"http://www.thewallpapers.org/photo/60369/Sun-And-Sea-065.jpg\""
             buildConfigField "String", "LOCATION_HEADER_DRAWER", "\"http://5.135.183.92:50220/res/skull.jpg\""
 
-            buildConfigField "int", "GAME_MODE", "0"
+            buildConfigField "int", "GAME_MODE", "1"
             buildConfigField "int", "LOOP", "0"
             buildConfigField "int", "FFA", "1"
 
@@ -46,6 +46,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.android.support:percent:23.3.0'
-    compile 'github.bumptech.glide:glide:3.5.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
 }

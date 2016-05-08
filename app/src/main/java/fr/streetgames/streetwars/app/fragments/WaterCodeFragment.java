@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
@@ -104,12 +104,6 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         mRuleRecycleView.setLayoutManager(mLayoutManager);
         mRuleRecycleView.setAdapter(mAdapter);
 
-        Glide.with(this)
-                .load(BuildConfig.LOCATION_HEADER_WATER_CODE)
-//                .placeholder(R.color.colorPrimary) // TODO Use Picasso
-                .centerCrop()
-                .into(mHeaderImageView);
-
         mFab.setOnClickListener(this);
 
         ((MainActivity) getActivity()).setupToolbar(mToolbar);
@@ -117,6 +111,15 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         onReattachLoader();
 
         queryWaterCode();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Picasso.with(getContext())
+                .load(BuildConfig.LOCATION_HEADER_WATER_CODE)
+                .placeholder(R.color.colorPrimary)
+                .into(mHeaderImageView);
     }
 
     @CallSuper
