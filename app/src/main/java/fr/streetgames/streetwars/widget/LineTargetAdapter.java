@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import fr.streetgames.streetwars.R;
-import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 
 public class LineTargetAdapter extends TargetAdapter {
 
@@ -61,7 +60,7 @@ public class LineTargetAdapter extends TargetAdapter {
     protected void onBindTargetViewHolder(RecyclerView.ViewHolder recyclerViewHolder, int position) {
         TargetViewHolder holder = (TargetViewHolder) recyclerViewHolder;
         if (mCursor != null && mCursor.moveToPosition(position)) {
-            holder.mameTextView.setText(
+            holder.nameTextView.setText(
                     mResources.getString(
                             R.string.util_name,
                             mCursor.getString(TargetProjection.QUERY_FIRST_NAME),
@@ -80,15 +79,15 @@ public class LineTargetAdapter extends TargetAdapter {
 
         private final ImageView photoImageView;
 
-        private final TextView mameTextView;
+        private final TextView nameTextView;
 
         private final TextView aliasTextView;
 
         public TargetViewHolder(View itemView) {
             super(itemView);
-            photoImageView = (ImageView) itemView.findViewById(R.id.photo);
-            mameTextView = (TextView) itemView.findViewById(R.id.name);
-            aliasTextView = (TextView) itemView.findViewById(R.id.alias);
+            photoImageView = (ImageView) itemView.findViewById(R.id.target_photo);
+            nameTextView = (TextView) itemView.findViewById(R.id.target_name);
+            aliasTextView = (TextView) itemView.findViewById(R.id.target_alias);
         }
     }
 
@@ -102,28 +101,4 @@ public class LineTargetAdapter extends TargetAdapter {
         }
     }
 
-    public interface TargetProjection extends TargetAdapter.TargetProjection {
-
-        String[] PROJECTION = new String[]{
-                StreetWarsContract.Target.TYPE,
-                StreetWarsContract.Target.TEAM_NAME,
-                StreetWarsContract.Target.ID,
-                StreetWarsContract.Target.FIRST_NAME,
-                StreetWarsContract.Target.LAST_NAME,
-                StreetWarsContract.Target.ALIAS,
-                StreetWarsContract.Target.PHOTO,
-        };
-
-        int QUERY_TEAM_NAME = 1;
-
-        int QUERY_ID = 2;
-
-        int QUERY_FIRST_NAME = 3;
-
-        int QUERY_LAST_NAME = 4;
-
-        int QUERY_ALIAS = 5;
-
-        int QUERY_PHOTO = 6;
-    }
 }

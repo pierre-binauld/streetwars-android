@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.api.StreetWarsJobCategory;
-import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 
 public class CardTargetAdapter extends TargetAdapter {
 
@@ -80,7 +79,7 @@ public class CardTargetAdapter extends TargetAdapter {
     protected void onBindTargetViewHolder(RecyclerView.ViewHolder recyclerViewHolder, int position) {
         TargetViewHolder holder = (TargetViewHolder) recyclerViewHolder;
         if (mCursor != null && mCursor.moveToPosition(position)) {
-            holder.mameTextView.setText(
+            holder.nameTextView.setText(
                     mResources.getString(
                             R.string.util_name,
                             mCursor.getString(TargetProjection.QUERY_FIRST_NAME),
@@ -118,7 +117,7 @@ public class CardTargetAdapter extends TargetAdapter {
 
         private final ImageView photoImageView;
 
-        private final TextView mameTextView;
+        private final TextView nameTextView;
 
         private final TextView aliasTextView;
 
@@ -130,12 +129,12 @@ public class CardTargetAdapter extends TargetAdapter {
 
         public TargetViewHolder(View itemView) {
             super(itemView);
-            photoImageView = (ImageView) itemView.findViewById(R.id.photo);
-            mameTextView = (TextView) itemView.findViewById(R.id.name);
-            aliasTextView = (TextView) itemView.findViewById(R.id.alias);
-            extraTextView = (TextView) itemView.findViewById(R.id.extra);
-            homeImageButton = (ImageButton) itemView.findViewById(R.id.ic_home);
-            workImageButton = (ImageButton) itemView.findViewById(R.id.ic_work);
+            photoImageView = (ImageView) itemView.findViewById(R.id.target_photo);
+            nameTextView = (TextView) itemView.findViewById(R.id.target_name);
+            aliasTextView = (TextView) itemView.findViewById(R.id.target_alias);
+            extraTextView = (TextView) itemView.findViewById(R.id.target_extra);
+            homeImageButton = (ImageButton) itemView.findViewById(R.id.target_ic_home);
+            workImageButton = (ImageButton) itemView.findViewById(R.id.target_ic_work);
         }
     }
 
@@ -147,44 +146,6 @@ public class CardTargetAdapter extends TargetAdapter {
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.name);
         }
-    }
-
-
-    public interface TargetProjection extends TargetAdapter.TargetProjection {
-
-        String[] PROJECTION = new String[]{
-                StreetWarsContract.Target.TYPE,
-                StreetWarsContract.Target.TEAM_NAME,
-                StreetWarsContract.Target.ID,
-                StreetWarsContract.Target.FIRST_NAME,
-                StreetWarsContract.Target.LAST_NAME,
-                StreetWarsContract.Target.ALIAS,
-                StreetWarsContract.Target.PHOTO,
-                StreetWarsContract.Target.JOB_CATEGORY,
-                StreetWarsContract.Target.HOME,
-                StreetWarsContract.Target.WORK,
-                StreetWarsContract.Target.EXTRA
-        };
-
-        int QUERY_TEAM_NAME = 1;
-
-        int QUERY_ID = 2;
-
-        int QUERY_FIRST_NAME = 3;
-
-        int QUERY_LAST_NAME = 4;
-
-        int QUERY_ALIAS = 5;
-
-        int QUERY_PHOTO = 6;
-
-        int QUERY_JOB_CATEGORY = 7;
-
-        int QUERY_HOME = 8;
-
-        int QUERY_WORK = 9;
-
-        int QUERY_EXTRA = 10;
     }
 
 }

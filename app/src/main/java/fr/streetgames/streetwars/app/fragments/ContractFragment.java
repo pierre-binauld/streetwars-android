@@ -2,10 +2,10 @@ package fr.streetgames.streetwars.app.fragments;
 
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -105,7 +105,7 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
         ((MainActivity) getActivity()).setupToolbar(mToolbar);
 
         LoaderManager loaderManager = getLoaderManager();
-        if(loaderManager.getLoader(R.id.loader_query_targets) == null) {
+        if (loaderManager.getLoader(R.id.loader_query_targets) == null) {
             queryTargets();
         }
         else {

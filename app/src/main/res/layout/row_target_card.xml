@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/photo"
+                android:id="@+id/target_photo"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
@@ -42,24 +42,24 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/target_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Jack Sparrow"
                 style="@style/TextAppearance.AppCompat.Title"/>
 
             <TextView
-                android:id="@+id/alias"
+                android:id="@+id/target_alias"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name"
+                android:layout_below="@id/target_name"
                 tools:text="Captain"
                 style="@style/TextAppearance.AppCompat.Subhead"/>
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/extra"
+            android:id="@+id/target_extra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
@@ -83,7 +83,7 @@
             android:gravity="right">
 
             <ImageButton
-                android:id="@+id/ic_home"
+                android:id="@+id/target_ic_home"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
@@ -92,7 +92,7 @@
                 android:src="@drawable/ic_home_accent_24dp"/>
 
             <ImageButton
-                android:id="@+id/ic_work"
+                android:id="@+id/target_ic_work"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="8dp"

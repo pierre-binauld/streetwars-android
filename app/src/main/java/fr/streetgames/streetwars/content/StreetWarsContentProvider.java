@@ -66,6 +66,7 @@ public class StreetWarsContentProvider extends ContentProvider {
                 null
         );
 
+        assert null != getContext();
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;

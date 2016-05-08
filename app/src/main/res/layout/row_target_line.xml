@@ -7,7 +7,7 @@
     android:gravity="center_vertical">
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/target_photo"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
@@ -27,14 +27,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/target_name"
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Jack Sparrow" />
 
         <TextView
-            android:id="@+id/alias"
+            android:id="@+id/target_alias"
             style="@style/Base.TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
