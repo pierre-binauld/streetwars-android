@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet"
+    style="@style/AppTheme.Background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,8 +56,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/target_container_photo"
-            android:layout_margin="8dp"
-            android:padding="16dp">
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="5dp"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,19 +99,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/target_container_extra"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginStart="6dp"
+            app:cardUseCompatPadding="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
                 <ImageView
                     android:id="@+id/target_ic_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
                     android:src="@drawable/ic_home_accent_24dp" />
 
                 <TextView
@@ -113,10 +123,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/target_ic_home"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginLeft="72dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginStart="72dp"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginStart="56dp"
                     tools:text="34 rue Tupin, 69002 Lyon" />
 
                 <TextView
@@ -127,9 +135,6 @@
                     android:layout_alignLeft="@id/target_home"
                     android:layout_alignStart="@id/target_home"
                     android:layout_below="@id/target_home"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     tools:text="@string/target_home" />
 
             </RelativeLayout>
@@ -141,19 +146,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/target_container_home"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginEnd="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginStart="6dp"
+            app:cardUseCompatPadding="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
                 <ImageView
                     android:id="@+id/target_ic_work"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
                     android:src="@drawable/ic_work_accent_24dp" />
 
                 <TextView
@@ -162,10 +169,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/target_ic_work"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginLeft="72dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginStart="72dp"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginStart="56dp"
                     tools:text="34 rue Tupin, 69002 Lyon" />
 
                 <TextView
@@ -176,9 +181,6 @@
                     android:layout_alignLeft="@id/target_work"
                     android:layout_alignStart="@id/target_work"
                     android:layout_below="@id/target_work"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     tools:text="@string/target_work" />
 
             </RelativeLayout>
