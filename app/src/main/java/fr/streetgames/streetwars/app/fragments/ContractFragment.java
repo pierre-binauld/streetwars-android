@@ -23,6 +23,7 @@ import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.activities.MainActivity;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
+import fr.streetgames.streetwars.utils.IntentUtils;
 import fr.streetgames.streetwars.widget.CardTargetAdapter;
 import fr.streetgames.streetwars.widget.LineTargetAdapter;
 import fr.streetgames.streetwars.widget.TargetAdapter;
@@ -122,7 +123,8 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.menu_target_down:
+            case R.id.menu_contract_elimination:
+                IntentUtils.startContractEliminationActivity(getContext());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
