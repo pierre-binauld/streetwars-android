@@ -35,7 +35,8 @@
     <string name="util_name">%1$s %2$s</string>
     <string name="target_extra">Extra</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="elimination_water_code_label">Who\'ve been killed?</string>
+    <string name="elimination_killer_label">Who\'s the killer?</string>
+    <string name="elimination_water_code_hint">Water Code</string>
 
 </resources>
