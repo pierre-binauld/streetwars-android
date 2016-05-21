@@ -262,8 +262,8 @@ public class MainActivity extends AppCompatActivity
         if (mPlayerCursor != null && mPlayerCursor.moveToFirst()) {
             Picasso.with(this)
                     .load(mPlayerCursor.getString(PlayerProjection.QUERY_PHOTO))
-                    .placeholder(R.drawable.drawer_photo_placeholder)
                     .transform(new CircleTransform())
+                    .placeholder(R.drawable.placeholder_user_round_64dp)
                     .into(mPlayerPhotoImageView);
 
             mPlayerNameTextView.setText(

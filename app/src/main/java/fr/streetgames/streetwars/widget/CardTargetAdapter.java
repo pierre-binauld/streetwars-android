@@ -90,7 +90,7 @@ public class CardTargetAdapter extends TargetAdapter {
             holder.extraTextView.setText(mCursor.getString(TargetProjection.QUERY_EXTRA));
             Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
-                    .placeholder(R.color.colorAccent)
+                    .placeholder(R.drawable.placeholder_user_full_336dp)
                     .into(holder.photoImageView);
 
             @StreetWarsJobCategory.JobCategory int jobCat = mCursor.getInt(TargetProjection.QUERY_JOB_CATEGORY);

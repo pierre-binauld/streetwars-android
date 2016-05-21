@@ -151,7 +151,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
             holder.photoUrl = mCursor.getString(TargetProjection.QUERY_PHOTO);
             Picasso.with(mContext)
                     .load(holder.photoUrl)
-                    .placeholder(R.color.colorAccent)
+                    .placeholder(R.drawable.placeholder_user_full_336dp)
                     .into(holder.photoImageButton);
 
             @StreetWarsJobCategory.JobCategory int jobCat = mCursor.getInt(TargetProjection.QUERY_JOB_CATEGORY);

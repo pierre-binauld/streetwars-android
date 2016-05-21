@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   fill="#000000"
+   height="24"
+   viewBox="0 0 24 24"
+   width="24"
+   id="svg3386"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="placeholder_user_16_9.svg"
+   inkscape:export-filename="/home/pierre/Workspace/android-studio/streetwars-android/app/src/main/res/drawable-xxhdpi/placeholder_user_48dp.png"
+   inkscape:export-xdpi="540"
+   inkscape:export-ydpi="540">
+  <metadata
+     id="metadata3396">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3394" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview3392"
+     showgrid="false"
+     inkscape:zoom="32"
+     inkscape:cx="13.586416"
+     inkscape:cy="11.501971"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer3" />
+  <path
+     d="M0 0h24v24H0z"
+     fill="none"
+     id="path3390" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="bg">
+    <ellipse
+       style="fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="path4280"
+       cx="11.20481"
+       cy="12.906392"
+       rx="12.012303"
+       ry="11.987684"
+       transform="matrix(0.99691332,-0.07851005,0.06429183,0.99793114,0,0)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="person">
+    <path
+       inkscape:connector-curvature="0"
+       d="m 12,12 c 1.6575,0 3,-1.3425 3,-3 0,-1.6575 -1.3425,-3 -3,-3 -1.6575,0 -3,1.3425 -3,3 0,1.6575 1.3425,3 3,3 z m 0,1.5 c -2.0025,0 -6,1.005 -6,3 l 0,1.5 12,0 0,-1.5 c 0,-1.995 -3.9975,-3 -6,-3 z"
+       id="path3388"
+       style="fill:#bdbdbd;fill-opacity:1;stroke:none" />
+  </g>
+</svg>

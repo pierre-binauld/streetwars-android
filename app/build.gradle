@@ -21,7 +21,7 @@ android {
             buildConfigField "String", "LOCATION_HEADER_WATER_CODE", "\"http://www.thewallpapers.org/photo/60369/Sun-And-Sea-065.jpg\""
             buildConfigField "String", "LOCATION_HEADER_DRAWER", "\"http://5.135.183.92:50220/res/skull.jpg\""
 
-            buildConfigField "int", "GAME_MODE", "1"
+            buildConfigField "int", "GAME_MODE", "0"
             buildConfigField "int", "LOOP", "0"
             buildConfigField "int", "FFA", "1"
 

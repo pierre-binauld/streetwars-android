@@ -17,7 +17,7 @@ public class TeamMateAdapter extends CursorAdapter<TeamMateAdapter.TeamMateViewH
 
     @Override
     public TeamMateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_killer, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_team_mate, parent, false);
         TeamMateViewHolder holder = new TeamMateViewHolder(view);
 
         return holder;
@@ -31,7 +31,7 @@ public class TeamMateAdapter extends CursorAdapter<TeamMateAdapter.TeamMateViewH
                     .with(holder.itemView.getContext())
                     .load(mCursor.getString(TeamMateProjection.QUERY_PHOTO))
                     .transform(new CircleTransform())
-                    .placeholder(R.color.colorAccent)
+                    .placeholder(R.drawable.placeholder_user_round_48dp)
                     .into(holder.teamMatePhotoImageView);
         }
     }

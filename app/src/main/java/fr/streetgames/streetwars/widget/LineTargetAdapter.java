@@ -80,7 +80,7 @@ public class LineTargetAdapter extends TargetAdapter {
             Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
                     .transform(new CircleTransform())
-                    .placeholder(R.color.colorAccent)
+                    .placeholder(R.drawable.placeholder_user_round_48dp)
                     .into(holder.photoImageView);
         }
     }
