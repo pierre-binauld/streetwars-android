@@ -1,4 +1,4 @@
-package fr.streetgames.streetwars.glide;
+package fr.streetgames.streetwars.picasso;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

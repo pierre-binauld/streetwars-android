@@ -32,7 +32,7 @@ import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.fragments.ContractFragment;
 import fr.streetgames.streetwars.app.fragments.WaterCodeFragment;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
-import fr.streetgames.streetwars.glide.CircleTransform;
+import fr.streetgames.streetwars.picasso.CircleTransform;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,

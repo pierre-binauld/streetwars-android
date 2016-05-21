@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import fr.streetgames.streetwars.R;
-import fr.streetgames.streetwars.glide.CircleTransform;
+import fr.streetgames.streetwars.picasso.CircleTransform;
 
 public class LineTargetAdapter extends TargetAdapter {
 
