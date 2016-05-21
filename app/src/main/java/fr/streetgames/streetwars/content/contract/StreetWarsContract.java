@@ -7,6 +7,7 @@ import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.database.RuleColumns;
 import fr.streetgames.streetwars.database.TargetColumns;
 import fr.streetgames.streetwars.database.TeamColumns;
+import fr.streetgames.streetwars.database.TeamMateColumns;
 import fr.streetgames.streetwars.database.TypeColumns;
 
 public class StreetWarsContract {
@@ -27,6 +28,8 @@ public class StreetWarsContract {
 
     public static final String PATH_TEAM = "team";
 
+    public static final String PATH_TEAM_MATE = "team";
+
     public static final String PATH_TARGET = "target";
 
     public static final String PATH_WATER_CODE = "water_code";
@@ -38,6 +41,15 @@ public class StreetWarsContract {
                 .build();
 
         String CONTENT_ITEM_TYPE = CONTENT_ITEM_TYPE_BASE + PATH_WATER_CODE;
+    }
+
+    public interface TeamMate extends TeamMateColumns {
+
+        Uri CONTENT_URI = BASE_URI.buildUpon()
+                .appendPath(PATH_TEAM_MATE)
+                .build();
+
+        String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_TEAM_MATE;
     }
 
     public interface Rule extends RuleColumns {

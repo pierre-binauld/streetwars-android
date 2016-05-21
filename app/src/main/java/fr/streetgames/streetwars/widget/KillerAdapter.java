@@ -30,10 +30,6 @@ public class KillerAdapter extends CursorAdapter<KillerAdapter.KillerViewHolder>
     @Override
     public void onBindViewHolder(KillerViewHolder holder, int position) {
 
-        if (position == 1) {
-            holder.killerImageView.setMinimumWidth(2000);
-        }
-
         Picasso
                 .with(holder.itemView.getContext())
                 .load("http://5.135.183.92:50220/res/davy_jones")

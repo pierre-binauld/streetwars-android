@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import fr.streetgames.streetwars.BuildConfig;
+import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 
 public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
 
@@ -59,6 +60,12 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                 + TargetColumns.EXTRA + " TEXT NOT NULL "
                 + ")");
 
+        Log.d(TAG, "onCreate: Create table " + Tables.TEAM_MATE);
+        db.execSQL("CREATE TABLE " + Tables.TEAM_MATE + " ("
+                + StreetWarsContract.TeamMate.ID + " INTEGER PRIMARY KEY, "
+                + StreetWarsContract.TeamMate.PHOTO + " TEXT NOT NULL "
+                + ")");
+
         if(BuildConfig.DEBUG) {
             switch (BuildConfig.GAME_MODE) {
                 default:
@@ -74,7 +81,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        //TODO
     }
 
     public void insertLoopTestData(SQLiteDatabase db) {
@@ -114,6 +121,20 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Zxcv",
                         "http://5.135.183.92:50220/res/davy_jones",
                         "NEIOZXCV"
+                });
+
+        Log.d(TAG, "insertLoopTestData: Insert team mates");
+        db.execSQL("INSERT INTO " + Tables.TEAM_MATE + " (" +
+                        TeamMateColumns.ID + ", " +
+                        TeamMateColumns.PHOTO +
+                        ") " +
+                        "VALUES (?, ?), " +
+                        "(?, ?)",
+                new Object[] {
+                        0,
+                        "http://5.135.183.92:50220/res/luffy",
+                        1,
+                        "http://5.135.183.92:50220/res/zorro"
                 });
 
         Log.d(TAG, "insertLoopTestData: Insert team");

@@ -8,5 +8,7 @@ public interface Tables {
 
     String TEAM = "team";
 
+    String TEAM_MATE = "team_mate";
+
     String TARGET = "target";
 }
