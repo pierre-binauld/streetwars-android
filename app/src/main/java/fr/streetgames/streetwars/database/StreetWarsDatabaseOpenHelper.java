@@ -53,6 +53,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                 + TargetColumns.FIRST_NAME + " TEXT NOT NULL, "
                 + TargetColumns.LAST_NAME + " TEXT NOT NULL, "
                 + TargetColumns.PHOTO + " TEXT NOT NULL, "
+                + TargetColumns.KILL_COUNT + " INTEGER NOT NULL, "
                 + TargetColumns.TEAM_ID + " INTEGER NOT NULL, "
                 + TargetColumns.HOME + " TEXT NOT NULL, "
                 + TargetColumns.WORK + " TEXT, "
@@ -155,21 +156,23 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         TargetColumns.FIRST_NAME + ", " +
                         TargetColumns.LAST_NAME + ", " +
                         TargetColumns.PHOTO + ", " +
+                        TargetColumns.KILL_COUNT + ", " +
                         TargetColumns.TEAM_ID + ", " +
                         TargetColumns.HOME + ", " +
                         TargetColumns.WORK + ", " +
                         TargetColumns.JOB_CATEGORY + ", " +
                         TargetColumns.EXTRA +
                         ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {
                         0,
                         "Captain",
                         "Jack",
                         "Sparrow",
                         "http://5.135.183.92:50220/res/jack_sparrow",
+                        "3",
                         0,
                         "34 rue Tupin, Lyon 2",
                         "50 quai Paul Sedaillan, Lyon 9",
@@ -181,6 +184,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Will",
                         "Turner",
                         "http://5.135.183.92:50220/res/will_turner",
+                        "6",
                         0,
                         "21 rue Voltaire, Lyon 3",
                         "",
@@ -192,6 +196,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Elisabeth",
                         "Swann",
                         "http://5.135.183.92:50220/res/elizabeth_swann",
+                        "4",
                         0,
                         "15 rue Sebastien Gryphe, Lyon 7",
                         "86 Rue Pasteur, 69007 Lyon",
@@ -221,21 +226,23 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         TargetColumns.FIRST_NAME + ", " +
                         TargetColumns.LAST_NAME + ", " +
                         TargetColumns.PHOTO + ", " +
+                        TargetColumns.KILL_COUNT + ", " +
                         TargetColumns.TEAM_ID + ", " +
                         TargetColumns.HOME + ", " +
                         TargetColumns.WORK + ", " +
                         TargetColumns.JOB_CATEGORY + ", " +
                         TargetColumns.EXTRA +
                         ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {
                         3,
                         "Straw Hat Luffy",
                         "Monkey D.",
                         "Luffy",
                         "http://5.135.183.92:50220/res/luffy",
+                        "4",
                         1,
                         "34 rue Tupin, Lyon 2",
                         "50 quai Paul Sedaillan, Lyon 9",
@@ -247,6 +254,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Roronoa",
                         "Zoro",
                         "http://5.135.183.92:50220/res/zoro",
+                        "5",
                         1,
                         "21 rue Voltaire, Lyon 3",
                         "",
@@ -258,6 +266,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Sanji",
                         "",
                         "http://5.135.183.92:50220/res/sanji",
+                        "2",
                         1,
                         "15 rue Sebastien Gryphe, Lyon 7",
                         "86 Rue Pasteur, 69007 Lyon",

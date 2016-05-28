@@ -12,6 +12,8 @@ public interface TargetColumns {
 
     String PHOTO = Tables.TARGET + "_photo";
 
+    String KILL_COUNT = Tables.TARGET + "_kill_count";
+
     String TEAM_ID = Tables.TARGET + "_team_id";
 
     String HOME = Tables.TARGET + "_home";
