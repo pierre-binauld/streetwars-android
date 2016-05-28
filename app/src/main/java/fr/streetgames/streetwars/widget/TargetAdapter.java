@@ -292,17 +292,18 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
     public interface TargetProjection {
 
         String[] PROJECTION = new String[]{
-                StreetWarsContract.Target.TYPE,
-                StreetWarsContract.Target.TEAM_NAME,
-                StreetWarsContract.Target.ID,
-                StreetWarsContract.Target.FIRST_NAME,
-                StreetWarsContract.Target.LAST_NAME,
-                StreetWarsContract.Target.ALIAS,
-                StreetWarsContract.Target.PHOTO,
-                StreetWarsContract.Target.JOB_CATEGORY,
-                StreetWarsContract.Target.HOME,
-                StreetWarsContract.Target.WORK,
-                StreetWarsContract.Target.EXTRA
+                Target.TYPE,
+                Target.TEAM_NAME,
+                Target.ID,
+                Target.FIRST_NAME,
+                Target.LAST_NAME,
+                Target.ALIAS,
+                Target.PHOTO,
+                Target.KILL_COUNT,
+                Target.JOB_CATEGORY,
+                Target.HOME,
+                Target.WORK,
+                Target.EXTRA
         };
 
         int QUERY_TYPE = 0;
@@ -319,12 +320,14 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
 
         int QUERY_PHOTO = 6;
 
-        int QUERY_JOB_CATEGORY = 7;
+        int QUERY_KILL_COUNT = 7;
 
-        int QUERY_HOME = 8;
+        int QUERY_JOB_CATEGORY = 8;
 
-        int QUERY_WORK = 9;
+        int QUERY_HOME = 9;
 
-        int QUERY_EXTRA = 10;
+        int QUERY_WORK = 10;
+
+        int QUERY_EXTRA = 11;
     }
 }

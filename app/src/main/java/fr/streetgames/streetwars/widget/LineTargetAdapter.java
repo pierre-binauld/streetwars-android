@@ -69,6 +69,7 @@ public class LineTargetAdapter extends TargetAdapter {
     protected void onBindTargetViewHolder(RecyclerView.ViewHolder recyclerViewHolder, int position) {
         TargetViewHolder holder = (TargetViewHolder) recyclerViewHolder;
         if (mCursor != null && mCursor.moveToPosition(position)) {
+
             holder.nameTextView.setText(
                     mResources.getString(
                             R.string.util_name,
@@ -76,7 +77,20 @@ public class LineTargetAdapter extends TargetAdapter {
                             mCursor.getString(TargetProjection.QUERY_LAST_NAME)
                     )
             );
+
             holder.aliasTextView.setText(mCursor.getString(TargetProjection.QUERY_ALIAS));
+
+            int killCount = mCursor.getInt(TargetProjection.QUERY_KILL_COUNT);
+            if (killCount > 0) {
+                holder.killCountTextView.setText(String.valueOf(killCount));
+                holder.killCountTextView.setVisibility(View.VISIBLE);
+                holder.killCountImageView.setVisibility(View.VISIBLE);
+            }
+            else {
+                holder.killCountTextView.setVisibility(View.GONE);
+                holder.killCountImageView.setVisibility(View.GONE);
+            }
+
             Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
                     .transform(new CircleTransform())
@@ -89,15 +103,21 @@ public class LineTargetAdapter extends TargetAdapter {
 
         private final ImageView photoImageView;
 
+        private final ImageView killCountImageView;
+
         private final TextView nameTextView;
 
         private final TextView aliasTextView;
 
+        private final TextView killCountTextView;
+
         public TargetViewHolder(View itemView) {
             super(itemView);
             photoImageView = (ImageView) itemView.findViewById(R.id.target_photo);
+            killCountImageView = (ImageView) itemView.findViewById(R.id.target_ic_kill);
             nameTextView = (TextView) itemView.findViewById(R.id.target_name);
             aliasTextView = (TextView) itemView.findViewById(R.id.target_alias);
+            killCountTextView = (TextView) itemView.findViewById(R.id.target_kill_count);
         }
     }
 

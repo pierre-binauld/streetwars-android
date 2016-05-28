@@ -79,6 +79,7 @@ public class CardTargetAdapter extends TargetAdapter {
     protected void onBindTargetViewHolder(RecyclerView.ViewHolder recyclerViewHolder, int position) {
         TargetViewHolder holder = (TargetViewHolder) recyclerViewHolder;
         if (mCursor != null && mCursor.moveToPosition(position)) {
+
             holder.nameTextView.setText(
                     mResources.getString(
                             R.string.util_name,
@@ -86,8 +87,22 @@ public class CardTargetAdapter extends TargetAdapter {
                             mCursor.getString(TargetProjection.QUERY_LAST_NAME)
                     )
             );
+
             holder.aliasTextView.setText(mCursor.getString(TargetProjection.QUERY_ALIAS));
+
             holder.extraTextView.setText(mCursor.getString(TargetProjection.QUERY_EXTRA));
+
+            int killCount = mCursor.getInt(TargetProjection.QUERY_KILL_COUNT);
+            if (killCount > 0) {
+                holder.killCountTextView.setText(String.valueOf(killCount));
+                holder.killCountTextView.setVisibility(View.VISIBLE);
+                holder.killCountImageView.setVisibility(View.VISIBLE);
+            }
+            else {
+                holder.killCountTextView.setVisibility(View.GONE);
+                holder.killCountImageView.setVisibility(View.GONE);
+            }
+
             Picasso.with(mContext)
                     .load(mCursor.getString(TargetProjection.QUERY_PHOTO))
                     .placeholder(R.drawable.placeholder_user_full_336dp)
@@ -123,9 +138,13 @@ public class CardTargetAdapter extends TargetAdapter {
 
         private final TextView extraTextView;
 
+        private final TextView killCountTextView;
+
         private final ImageButton homeImageButton;
 
         private final ImageButton workImageButton;
+
+        private final ImageView killCountImageView;
 
         public TargetViewHolder(View itemView) {
             super(itemView);
@@ -133,8 +152,10 @@ public class CardTargetAdapter extends TargetAdapter {
             nameTextView = (TextView) itemView.findViewById(R.id.target_name);
             aliasTextView = (TextView) itemView.findViewById(R.id.target_alias);
             extraTextView = (TextView) itemView.findViewById(R.id.target_extra);
+            killCountTextView = (TextView) itemView.findViewById(R.id.target_kill_count);
             homeImageButton = (ImageButton) itemView.findViewById(R.id.target_ic_home);
             workImageButton = (ImageButton) itemView.findViewById(R.id.target_ic_work);
+            killCountImageView = (ImageView) itemView.findViewById(R.id.target_ic_kill);
         }
     }
 

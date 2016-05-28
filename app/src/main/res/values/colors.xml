@@ -6,4 +6,6 @@
 
     <color name="background">#F5F5F5</color>
     <color name="transparent">#88000000</color>
+
+    <color name="icon">#61000000</color>
 </resources>

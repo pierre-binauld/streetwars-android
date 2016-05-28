@@ -15,6 +15,7 @@ public abstract class StreetWarsContentProviderHelper {
                 TargetColumns.FIRST_NAME + ", " +
                 TargetColumns.LAST_NAME + ", " +
                 TargetColumns.PHOTO + ", " +
+                TargetColumns.KILL_COUNT + ", " +
                 TargetColumns.TEAM_ID + ", " +
                 TargetColumns.HOME + ", " +
                 TargetColumns.WORK + ", " +
@@ -33,6 +34,7 @@ public abstract class StreetWarsContentProviderHelper {
                 "null AS " + TargetColumns.FIRST_NAME + ", " +
                 "null AS " + TargetColumns.LAST_NAME + ", " +
                 "null AS " + TargetColumns.PHOTO + ", " +
+                "null AS " + TargetColumns.KILL_COUNT + ", " +
                 "null AS " + TargetColumns.TEAM_ID + ", " +
                 "null AS " + TargetColumns.HOME + ", " +
                 "null AS " + TargetColumns.WORK + ", " +
