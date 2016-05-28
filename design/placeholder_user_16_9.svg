@@ -7,17 +7,17 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   fill="#000000"
    height="24"
-   viewBox="0 0 24 24"
-   width="24"
+   viewBox="0 0 48 24"
+   width="48"
    id="svg3386"
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="placeholder_user_16_9.svg"
-   inkscape:export-filename="/home/pierre/Workspace/android-studio/streetwars-android/app/src/main/res/drawable-xxhdpi/placeholder_user_48dp.png"
-   inkscape:export-xdpi="540"
-   inkscape:export-ydpi="540">
+   inkscape:export-filename="/home/pierre/Workspace/android-studio/streetwars-android/app/src/main/res/drawable-xxxhdpi/placeholder_user_full_48dp.png"
+   inkscape:export-xdpi="5040"
+   inkscape:export-ydpi="5040"
+   style="fill:#000000">
   <metadata
      id="metadata3396">
     <rdf:RDF>
@@ -45,29 +45,34 @@
      inkscape:window-height="1016"
      id="namedview3392"
      showgrid="false"
-     inkscape:zoom="32"
-     inkscape:cx="13.586416"
-     inkscape:cy="11.501971"
+     inkscape:zoom="22.627417"
+     inkscape:cx="23.788797"
+     inkscape:cy="11.505067"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer3" />
+     inkscape:current-layer="layer4"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     width="43px" />
   <path
-     d="M0 0h24v24H0z"
-     fill="none"
-     id="path3390" />
+     d="m 5.0077882e-7,-7.2109793e-7 24.00000049922118,0 0,23.99999972109793 -24.00000049922118,0 z"
+     id="path3390"
+     inkscape:connector-curvature="0"
+     style="fill:none" />
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="bg">
-    <ellipse
+    <rect
        style="fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-opacity:1"
-       id="path4280"
-       cx="11.20481"
-       cy="12.906392"
-       rx="12.012303"
-       ry="11.987684"
-       transform="matrix(0.99691332,-0.07851005,0.06429183,0.99793114,0,0)" />
+       id="rect4393"
+       width="48"
+       height="24"
+       x="0"
+       y="-2.6645353e-15" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -75,7 +80,7 @@
      inkscape:label="person">
     <path
        inkscape:connector-curvature="0"
-       d="m 12,12 c 1.6575,0 3,-1.3425 3,-3 0,-1.6575 -1.3425,-3 -3,-3 -1.6575,0 -3,1.3425 -3,3 0,1.6575 1.3425,3 3,3 z m 0,1.5 c -2.0025,0 -6,1.005 -6,3 l 0,1.5 12,0 0,-1.5 c 0,-1.995 -3.9975,-3 -6,-3 z"
+       d="m 24,12 c 1.6575,0 3,-1.3425 3,-3 0,-1.6575 -1.3425,-3 -3,-3 -1.6575,0 -3,1.3425 -3,3 0,1.6575 1.3425,3 3,3 z m 0,1.5 c -2.0025,0 -6,1.005 -6,3 l 0,1.5 12,0 0,-1.5 c 0,-1.995 -3.9975,-3 -6,-3 z"
        id="path3388"
        style="fill:#bdbdbd;fill-opacity:1;stroke:none" />
   </g>

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -13,9 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -41,6 +39,8 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
 
     private RecyclerView mRecyclerView;
 
+    private FloatingActionButton mFab;
+
     private TargetAdapter mAdapter;
 
     @MainActivity.GameMode
@@ -60,7 +60,6 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setHasOptionsMenu(true);
         //noinspection WrongConstant
         mGameMode = getArguments().getInt(ARG_GAME_MODE);
     }
@@ -76,12 +75,20 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_contract);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        mFab = (FloatingActionButton) view.findViewById(R.id.fab_elimination);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getActivity().setTitle(R.string.contract_title);
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtils.startContractEliminationActivity(getContext());
+            }
+        });
 
         if (BuildConfig.LOOP == mGameMode) {
             mAdapter = new CardTargetAdapter(getContext());
@@ -111,23 +118,6 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
         }
         else {
             loaderManager.initLoader(R.id.loader_query_targets, null, this);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_fragment_contract, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.menu_contract_elimination:
-                IntentUtils.startContractEliminationActivity(getContext());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 

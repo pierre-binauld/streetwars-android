@@ -47,10 +47,10 @@
                     android:id="@+id/elimination_water_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"
                     android:hint="@string/elimination_water_code_hint" />
 
             </android.support.design.widget.TextInputLayout>
-
 
             <ImageButton
                 android:id="@+id/elimination_water_code_photo"
