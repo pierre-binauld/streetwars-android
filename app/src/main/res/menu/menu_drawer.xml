@@ -12,10 +12,9 @@
             android:title="@string/menu_contract"
             android:icon="@drawable/ic_my_location_white_24dp" />
         <item
-            android:id="@+id/menu_map"
+            android:id="@+id/menu_maps"
             android:title="@string/menu_map"
-            android:icon="@drawable/ic_room_white_24dp"
-            android:enabled="false"/>
+            android:icon="@drawable/ic_room_white_24dp"/>
         <item
             android:id="@+id/menu_news"
             android:title="@string/menu_news"
