@@ -1,10 +1,15 @@
 package fr.streetgames.streetwars.app.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -21,9 +26,11 @@ import fr.streetgames.streetwars.R;
 
 import static fr.streetgames.streetwars.content.contract.StreetWarsContract.Target;
 
-public class MapsFragment extends Fragment implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
+public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String TAG = "MapsFragment";
+
+    private static final int PERMISSION_CODE_ACCESS_FINE_LOCATION = 0;
 
     private GoogleMap mMap;
 
@@ -56,10 +63,40 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Loader
         super.onActivityCreated(savedInstanceState);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CODE_ACCESS_FINE_LOCATION:
+                if (permissions.length == 1 &&
+                        Manifest.permission.ACCESS_FINE_LOCATION.equals(permissions[0]) &&
+                        PackageManager.PERMISSION_GRANTED == grantResults[0]) {
+                    //noinspection MissingPermission
+                    mMap.setMyLocationEnabled(true);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown permission request code: " + requestCode);
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        boolean checkPermission = ContextCompat
+                .checkSelfPermission(
+                        getContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED;
+        if (checkPermission) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_CODE_ACCESS_FINE_LOCATION
+            );
+        }
 
         LatLng lyon = new LatLng(45.764043, 4.835659);
 
