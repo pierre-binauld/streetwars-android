@@ -72,6 +72,8 @@ public class StreetWarsContract {
 
     public interface Target extends TargetColumns, TypeColumns {
 
+        String PARAM_SHOW_TEAM = "show_team";
+
         String TEAM_NAME = TeamColumns.NAME;
 
         Uri CONTENT_URI = BASE_URI.buildUpon()
@@ -79,5 +81,7 @@ public class StreetWarsContract {
                 .build();
 
         String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_TARGET;
+
     }
+
 }

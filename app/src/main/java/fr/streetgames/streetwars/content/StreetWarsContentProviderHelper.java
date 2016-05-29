@@ -7,7 +7,7 @@ import fr.streetgames.streetwars.database.TypeColumns;
 
 public abstract class StreetWarsContentProviderHelper {
 
-    public static String getTargetFromStatement() {
+    public static String getTeamAndTargetStatement() {
         return "(SELECT " + TypeColumns.TYPE_TARGET + " AS " + TypeColumns.TYPE + ", " +
                 Tables.TEAM + ".*, " +
                 TargetColumns.ID + ", " +
@@ -42,6 +42,26 @@ public abstract class StreetWarsContentProviderHelper {
                 "null AS " + TargetColumns.EXTRA +
                 " FROM " + Tables.TEAM +
                 " ORDER BY " + TeamColumns.ID + ", " + TypeColumns.TYPE +
+                ")";
+    }
+
+    public static String getTargetStatement() {
+        return "(SELECT " +
+                Tables.TEAM + ".*, " +
+                TargetColumns.ID + ", " +
+                TargetColumns.ALIAS + ", " +
+                TargetColumns.FIRST_NAME + ", " +
+                TargetColumns.LAST_NAME + ", " +
+                TargetColumns.PHOTO + ", " +
+                TargetColumns.KILL_COUNT + ", " +
+                TargetColumns.TEAM_ID + ", " +
+                TargetColumns.HOME + ", " +
+                TargetColumns.WORK + ", " +
+                TargetColumns.JOB_CATEGORY + ", " +
+                TargetColumns.EXTRA +
+                " FROM " + Tables.TEAM +
+                " JOIN " + Tables.TARGET +
+                " ON " + TeamColumns.ID + " = " + TargetColumns.TEAM_ID +
                 ")";
     }
 }

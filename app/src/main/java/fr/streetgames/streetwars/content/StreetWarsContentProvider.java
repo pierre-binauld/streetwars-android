@@ -48,7 +48,12 @@ public class StreetWarsContentProvider extends ContentProvider {
                 qb.setTables(Tables.RULE);
                 break;
             case R.id.content_uri_targets:
-                qb.setTables(StreetWarsContentProviderHelper.getTargetFromStatement());
+                if (uri.getBooleanQueryParameter(StreetWarsContract.Target.PARAM_SHOW_TEAM, true)) {
+                    qb.setTables(StreetWarsContentProviderHelper.getTeamAndTargetStatement());
+                }
+                else {
+                    qb.setTables(StreetWarsContentProviderHelper.getTargetStatement());
+                }
                 break;
             case R.id.content_uri_team_mates:
                 qb.setTables(Tables.TEAM_MATE);
