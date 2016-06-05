@@ -18,7 +18,15 @@ public interface TargetColumns {
 
     String HOME = Tables.TARGET + "_home";
 
+    String HOME_LATITUDE = Tables.TARGET + "_home_latitude";
+
+    String HOME_LONGITUDE = Tables.TARGET + "_home_longitude";
+
     String WORK = Tables.TARGET + "_work";
+
+    String WORK_LATITUDE = Tables.TARGET + "_work_latitude";
+
+    String WORK_LONGITUDE = Tables.TARGET + "_work_longitude";
 
     String JOB_CATEGORY = Tables.TARGET + "_job_category";
 

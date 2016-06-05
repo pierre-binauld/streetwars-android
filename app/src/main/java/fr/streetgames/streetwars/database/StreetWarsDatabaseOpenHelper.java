@@ -56,7 +56,11 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                 + TargetColumns.KILL_COUNT + " INTEGER NOT NULL, "
                 + TargetColumns.TEAM_ID + " INTEGER NOT NULL, "
                 + TargetColumns.HOME + " TEXT NOT NULL, "
+                + TargetColumns.HOME_LATITUDE + " NUMERIC NOT NULL, "
+                + TargetColumns.HOME_LONGITUDE + " NUMERIC NOT NULL, "
                 + TargetColumns.WORK + " TEXT, "
+                + TargetColumns.WORK_LATITUDE + " NUMERIC, "
+                + TargetColumns.WORK_LONGITUDE + " NUMERIC, "
                 + TargetColumns.JOB_CATEGORY + " INTEGER NOT NULL, "
                 + TargetColumns.EXTRA + " TEXT NOT NULL "
                 + ")");
@@ -159,13 +163,17 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         TargetColumns.KILL_COUNT + ", " +
                         TargetColumns.TEAM_ID + ", " +
                         TargetColumns.HOME + ", " +
+                        TargetColumns.HOME_LATITUDE + ", " +
+                        TargetColumns.HOME_LONGITUDE + ", " +
                         TargetColumns.WORK + ", " +
+                        TargetColumns.WORK_LATITUDE + ", " +
+                        TargetColumns.WORK_LONGITUDE + ", " +
                         TargetColumns.JOB_CATEGORY + ", " +
                         TargetColumns.EXTRA +
                         ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {
                         0,
                         "Captain",
@@ -175,7 +183,11 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         0,
                         0,
                         "34 rue Tupin, Lyon 2",
+                        45.762836,
+                        4.835285,
                         "50 quai Paul Sedaillan, Lyon 9",
+                        45.788470,
+                        4.814715,
                         0,
                         "To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him. To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him.",
 
@@ -187,7 +199,11 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         7,
                         0,
                         "21 rue Voltaire, Lyon 3",
+                        45.759731,
+                        4.848365,
                         "",
+                        null,
+                        null,
                         2,
                         "That's the Flying Dutchman? It doesn't look like much.",
 
@@ -199,7 +215,11 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         0,
                         0,
                         "15 rue Sebastien Gryphe, Lyon 7",
+                        45.752845,
+                        4.844944,
                         "86 Rue Pasteur, 69007 Lyon",
+                        45.749211,
+                        4.836951,
                         1,
                         "I'm not entirely sure that I've had enough rum to allow that kind of talk."
                 });
@@ -229,13 +249,17 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         TargetColumns.KILL_COUNT + ", " +
                         TargetColumns.TEAM_ID + ", " +
                         TargetColumns.HOME + ", " +
+                        TargetColumns.HOME_LATITUDE + ", " +
+                        TargetColumns.HOME_LONGITUDE + ", " +
                         TargetColumns.WORK + ", " +
+                        TargetColumns.WORK_LATITUDE + ", " +
+                        TargetColumns.WORK_LONGITUDE + ", " +
                         TargetColumns.JOB_CATEGORY + ", " +
                         TargetColumns.EXTRA +
                         ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {
                         3,
                         "Straw Hat Luffy",
@@ -244,8 +268,12 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "http://5.135.183.92:50220/res/luffy",
                         4,
                         1,
-                        "34 rue Tupin, Lyon 2",
-                        "50 quai Paul Sedaillan, Lyon 9",
+                        "32 rue de bourgogne, lyon 9",
+                        45.777478,
+                        4.803474,
+                        "3 - 4 Place Charles Hernu, Villeurbanne, France",
+                        45.770155,
+                        4.863494,
                         0,
                         "If you don't take risks, you can't create a future.",
 
@@ -256,8 +284,12 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "http://5.135.183.92:50220/res/zoro",
                         5,
                         1,
-                        "21 rue Voltaire, Lyon 3",
+                        "34 rue tupin",
+                        45.762836,
+                        4.835285,
                         "",
+                        null,
+                        null,
                         2,
                         "I don't care what the society says. I've regretted doing anything. I will survive and do what I want to.\n",
 
@@ -268,8 +300,12 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "http://5.135.183.92:50220/res/sanji",
                         2,
                         1,
-                        "15 rue Sebastien Gryphe, Lyon 7",
-                        "86 Rue Pasteur, 69007 Lyon",
+                        "21 Route de Vienne, Lyon, France",
+                        45.744202,
+                        4.850469,
+                        "148 Cours Emile Zola, Villeurbanne, France",
+                        45.769116,
+                        4.877422,
                         1,
                         "I don't care if you're a god. If you lay even one finger on Nami-san, I'll become the Devil of the Blue Sea!"
                 });

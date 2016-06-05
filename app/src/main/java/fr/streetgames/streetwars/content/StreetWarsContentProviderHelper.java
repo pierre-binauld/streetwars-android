@@ -56,7 +56,11 @@ public abstract class StreetWarsContentProviderHelper {
                 TargetColumns.KILL_COUNT + ", " +
                 TargetColumns.TEAM_ID + ", " +
                 TargetColumns.HOME + ", " +
+                TargetColumns.HOME_LATITUDE + ", " +
+                TargetColumns.HOME_LONGITUDE + ", " +
                 TargetColumns.WORK + ", " +
+                TargetColumns.WORK_LATITUDE + ", " +
+                TargetColumns.WORK_LONGITUDE + ", " +
                 TargetColumns.JOB_CATEGORY + ", " +
                 TargetColumns.EXTRA +
                 " FROM " + Tables.TEAM +

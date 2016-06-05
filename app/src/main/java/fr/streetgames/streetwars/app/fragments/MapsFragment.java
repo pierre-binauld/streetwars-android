@@ -20,9 +20,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import fr.streetgames.streetwars.R;
+import fr.streetgames.streetwars.api.StreetWarsJobCategory;
+import fr.streetgames.streetwars.utils.MarkerUtils;
 
 import static fr.streetgames.streetwars.content.contract.StreetWarsContract.Target;
 
@@ -98,10 +102,12 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
             );
         }
 
-        LatLng lyon = new LatLng(45.764043, 4.835659);
+
+        // TODO get from DB
+        LatLng lyon = new LatLng(45.763590, 4.848425);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lyon));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
 
         queryTargets();
 
@@ -143,10 +149,46 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
 
     private void onQueryTargetsLoadFinished(@Nullable Cursor cursor) {
         if (null != cursor) {
+            int i = 0;
             cursor.moveToFirst();
             do {
+                MarkerOptions markerOptions = new MarkerOptions();
 
+                @StreetWarsJobCategory.JobCategory int jobCat = cursor.getInt(TargetProjection.QUERY_JOB_CATEGORY);
 
+                // Bind home marker
+                final LatLng homeCoord = new LatLng(
+                        cursor.getDouble(TargetProjection.QUERY_HOME_LATITUDE),
+                        cursor.getDouble(TargetProjection.QUERY_HOME_LONGITUDE)
+                );
+
+                String title = cursor.getString(TargetProjection.QUERY_FIRST_NAME);
+
+                mMap.addMarker(
+                        markerOptions
+                                .position(homeCoord)
+                                .title(title)
+                                .icon(BitmapDescriptorFactory.defaultMarker(MarkerUtils.HUE[i]))
+                );
+
+                // Bind work marker
+                if (StreetWarsJobCategory.NO_jOB != jobCat) {
+                    final LatLng workCoord = new LatLng(
+                            cursor.getDouble(TargetProjection.QUERY_WORK_LATITUDE),
+                            cursor.getDouble(TargetProjection.QUERY_WORK_LONGITUDE)
+                    );
+
+                    title = cursor.getString(TargetProjection.QUERY_FIRST_NAME);
+
+                    mMap.addMarker(
+                            markerOptions
+                                    .position(workCoord)
+                                    .title(title)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(MarkerUtils.HUE[i]))
+                    );
+                }
+
+                i++;
             } while (cursor.moveToNext());
         }
     }
@@ -180,7 +222,11 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
                 Target.KILL_COUNT,
                 Target.JOB_CATEGORY,
                 Target.HOME,
-                Target.WORK
+                Target.HOME_LATITUDE,
+                Target.HOME_LONGITUDE,
+                Target.WORK,
+                Target.WORK_LATITUDE,
+                Target.WORK_LONGITUDE
         };
 
         int QUERY_ID = 0;
@@ -201,7 +247,15 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
 
         int QUERY_HOME = 8;
 
-        int QUERY_WORK = 9;
+        int QUERY_HOME_LATITUDE = 9;
+
+        int QUERY_HOME_LONGITUDE = 10;
+
+        int QUERY_WORK = 11;
+
+        int QUERY_WORK_LATITUDE = 12;
+
+        int QUERY_WORK_LONGITUDE = 13;
     }
 
 }
