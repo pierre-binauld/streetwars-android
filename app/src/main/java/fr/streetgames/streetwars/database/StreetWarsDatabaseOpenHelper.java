@@ -124,7 +124,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Pierre",
                         "Binauld",
                         "Zxcv",
-                        "http://5.135.183.92:50220/res/davy_jones",
+                        "http://5.135.183.92:50100/res/davy_jones.jpg",
                         "NEIOZXCV"
                 });
 
@@ -137,9 +137,9 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "(?, ?)",
                 new Object[] {
                         0,
-                        "http://5.135.183.92:50220/res/luffy",
+                        "http://5.135.183.92:50100/res/luffy.jpg",
                         1,
-                        "http://5.135.183.92:50220/res/zorro"
+                        "http://5.135.183.92:50100/res/zorr.jpgo"
                 });
 
         Log.d(TAG, "insertLoopTestData: Insert team");
@@ -179,7 +179,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Captain",
                         "Jack",
                         "Sparrow",
-                        "http://5.135.183.92:50220/res/jack_sparrow",
+                        "http://5.135.183.92:50100/res/jack_sparrow.jpg",
                         0,
                         0,
                         "34 rue Tupin, Lyon 2",
@@ -195,7 +195,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Sailor",
                         "Will",
                         "Turner",
-                        "http://5.135.183.92:50220/res/will_turner",
+                        "http://5.135.183.92:50100/res/will_turner.png",
                         7,
                         0,
                         "21 rue Voltaire, Lyon 3",
@@ -211,7 +211,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Lady",
                         "Elisabeth",
                         "Swann",
-                        "http://5.135.183.92:50220/res/elizabeth_swann",
+                        "http://5.135.183.92:50100/res/elizabeth_swann.png",
                         0,
                         0,
                         "15 rue Sebastien Gryphe, Lyon 7",
@@ -265,7 +265,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Straw Hat Luffy",
                         "Monkey D.",
                         "Luffy",
-                        "http://5.135.183.92:50220/res/luffy",
+                        "http://5.135.183.92:50100/res/luffy.jpg",
                         4,
                         1,
                         "32 rue de bourgogne, lyon 9",
@@ -281,7 +281,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Pirate Hunter Zoro",
                         "Roronoa",
                         "Zoro",
-                        "http://5.135.183.92:50220/res/zoro",
+                        "http://5.135.183.92:50100/res/zoro.jpg",
                         5,
                         1,
                         "34 rue tupin",
@@ -297,7 +297,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "Black Leg Sanji",
                         "Sanji",
                         "",
-                        "http://5.135.183.92:50220/res/sanji",
+                        "http://5.135.183.92:50100/res/sanji.jpg",
                         2,
                         1,
                         "21 Route de Vienne, Lyon, France",
