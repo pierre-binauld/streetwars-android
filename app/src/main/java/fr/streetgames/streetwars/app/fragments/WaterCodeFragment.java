@@ -134,17 +134,6 @@ public class WaterCodeFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_share:
-                onShareClick();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     private void onShareClick() {
         Resources res = getResources();
         Intent intent = ShareCompat.IntentBuilder.from(getActivity())
