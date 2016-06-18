@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -244,7 +245,8 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    public void setupToolbar(Toolbar toolbar) {
+    @NonNull
+    public ActionBar setupToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         //noinspection ConstantConditions
@@ -272,6 +274,8 @@ public class MainActivity extends AppCompatActivity
 
         // calling sync state is necessary or else your hamburger icon wont show up
         mDrawerToggle.syncState();
+
+        return actionBar;
     }
 
     private void updatePlayerInfo() {

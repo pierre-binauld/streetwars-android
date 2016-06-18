@@ -6,19 +6,21 @@
 
     <string name="content_authority">com.streetgames.streetwars.game</string>
 
-    <string name="contract_title">Contract</string>
+    <string name="contract_title">Contrat</string>
 
     <string name="drawer_description_close">Close Drawer</string>
     <string name="drawer_description_open">Open Drawer</string>
 
     <string name="menu_contract">Contrat</string>
-    <string name="menu_map">Carte</string>
+    <string name="menu_map">Map</string>
     <string name="menu_water_code">Water Code</string>
     <string name="menu_news">News</string>
     <string name="menu_rules">Règles</string>
     <string name="menu_share">Partager</string>
     <string name="menu_target_down">Suppression d’une cible</string>
     <string name="menu_tickets">Tickets</string>
+
+    <string name="map_title">Map</string>
 
     <string name="water_code_title">Water Code</string>
     <string name="water_code_rule_1">Le Watercode doit être saisi le plus tôt possible afin de ne pas déséquilibrer le jeu.</string>
