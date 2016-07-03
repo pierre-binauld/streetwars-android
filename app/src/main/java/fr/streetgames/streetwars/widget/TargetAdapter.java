@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.api.StreetWarsJobCategory;
-import fr.streetgames.streetwars.content.contract.StreetWarsContract;
+import fr.streetgames.streetwars.database.RowTypeColumns;
 import fr.streetgames.streetwars.utils.IntentUtils;
 
 import static fr.streetgames.streetwars.content.contract.StreetWarsContract.Target;
@@ -58,7 +58,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         if (null != mCursor && mCursor.moveToPosition(position)) {
-            return mCursor.getInt(TargetProjection.QUERY_TYPE) == Target.TYPE_TEAM
+            return mCursor.getInt(TargetProjection.QUERY_ROW_TYPE) == Target.TYPE_TEAM
                     ? Target.TYPE_TEAM
                     : Target.TYPE_TARGET;
         }
@@ -89,10 +89,10 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         @ViewType int viewType = getItemViewType(position);
         switch (viewType) {
-            case fr.streetgames.streetwars.database.TypeColumns.TYPE_TARGET:
+            case RowTypeColumns.TYPE_TARGET:
                 onBindTargetViewHolder(holder, position);
                 break;
-            case fr.streetgames.streetwars.database.TypeColumns.TYPE_TEAM:
+            case RowTypeColumns.TYPE_TEAM:
                 onBindTeamViewHolder(holder, position);
                 break;
             default:
@@ -292,7 +292,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
     public interface TargetProjection {
 
         String[] PROJECTION = new String[]{
-                Target.TYPE,
+                Target.ROW_TYPE,
                 Target.TEAM_NAME,
                 Target.ID,
                 Target.FIRST_NAME,
@@ -306,7 +306,7 @@ public abstract class TargetAdapter extends CursorAdapter<RecyclerView.ViewHolde
                 Target.EXTRA
         };
 
-        int QUERY_TYPE = 0;
+        int QUERY_ROW_TYPE = 0;
 
         int QUERY_TEAM_NAME = 1;
 

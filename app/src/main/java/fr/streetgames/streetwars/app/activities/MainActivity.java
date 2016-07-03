@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
                 this,
                 StreetWarsContract.Player.CONTENT_URI,
                 PlayerProjection.PROJECTION,
-                null,
+                StreetWarsContract.Player.IS_ME + " = 1",
                 null,
                 null
         );

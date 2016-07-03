@@ -1,8 +1,8 @@
 package fr.streetgames.streetwars.database;
 
-public interface TypeColumns {
+public interface RowTypeColumns {
 
-    String TYPE = "type";
+    String ROW_TYPE = "row_type";
 
     int TYPE_TEAM = 0;
 

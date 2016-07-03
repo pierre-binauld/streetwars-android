@@ -5,4 +5,6 @@ public interface TeamColumns {
     String ID = Tables.TEAM + "_id";
 
     String NAME = Tables.TEAM + "_name";
+
+    String TYPE = Tables.TEAM + "_type";
 }

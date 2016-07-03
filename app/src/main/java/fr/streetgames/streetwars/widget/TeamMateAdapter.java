@@ -52,8 +52,8 @@ public class TeamMateAdapter extends CursorAdapter<TeamMateAdapter.TeamMateViewH
     public interface TeamMateProjection {
 
         String[] PROJECTION = new String[]{
-                StreetWarsContract.TeamMate.ID,
-                StreetWarsContract.TeamMate.PHOTO
+                StreetWarsContract.Player.ID,
+                StreetWarsContract.Player.PHOTO
         };
 
         int QUERY_ID = 0;

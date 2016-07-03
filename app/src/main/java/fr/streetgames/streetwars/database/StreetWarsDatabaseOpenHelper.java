@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import fr.streetgames.streetwars.BuildConfig;
-import fr.streetgames.streetwars.content.contract.StreetWarsContract;
+import fr.streetgames.streetwars.api.TeamType;
 
 public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
 
@@ -29,8 +29,19 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                 + PlayerColumns.FIRST_NAME + " TEXT NOT NULL, "
                 + PlayerColumns.LAST_NAME + " TEXT NOT NULL, "
                 + PlayerColumns.ALIAS + " TEXT NOT NULL, "
+                + PlayerColumns.IS_ME + " INTEGER NOT NULL, "
                 + PlayerColumns.PHOTO + " TEXT NOT NULL, "
-                + PlayerColumns.WATER_CODE + " TEXT NOT NULL"
+                + PlayerColumns.WATER_CODE + " TEXT,"
+                + PlayerColumns.KILL_COUNT + " INTEGER NOT NULL, "
+                + PlayerColumns.TEAM_ID + " INTEGER NOT NULL, "
+                + PlayerColumns.HOME + " TEXT, "
+                + PlayerColumns.HOME_LATITUDE + " NUMERIC, "
+                + PlayerColumns.HOME_LONGITUDE + " NUMERIC, "
+                + PlayerColumns.WORK + " TEXT, "
+                + PlayerColumns.WORK_LATITUDE + " NUMERIC, "
+                + PlayerColumns.WORK_LONGITUDE + " NUMERIC, "
+                + PlayerColumns.JOB_CATEGORY + " INTEGER, "
+                + PlayerColumns.EXTRA + " TEXT "
                 + ")");
 
         Log.d(TAG, "onCreate: Create table " + Tables.RULE);
@@ -43,32 +54,8 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate: Create table " + Tables.TEAM);
         db.execSQL("CREATE TABLE " + Tables.TEAM + " ("
                 + TeamColumns.ID + " INTEGER PRIMARY KEY, "
-                + TeamColumns.NAME + " TEXT NOT NULL"
-                + ")");
-
-        Log.d(TAG, "onCreate: Create table " + Tables.TARGET);
-        db.execSQL("CREATE TABLE " + Tables.TARGET + " ("
-                + TargetColumns.ID + " INTEGER PRIMARY KEY, "
-                + TargetColumns.ALIAS + " TEXT NOT NULL, "
-                + TargetColumns.FIRST_NAME + " TEXT NOT NULL, "
-                + TargetColumns.LAST_NAME + " TEXT NOT NULL, "
-                + TargetColumns.PHOTO + " TEXT NOT NULL, "
-                + TargetColumns.KILL_COUNT + " INTEGER NOT NULL, "
-                + TargetColumns.TEAM_ID + " INTEGER NOT NULL, "
-                + TargetColumns.HOME + " TEXT NOT NULL, "
-                + TargetColumns.HOME_LATITUDE + " NUMERIC NOT NULL, "
-                + TargetColumns.HOME_LONGITUDE + " NUMERIC NOT NULL, "
-                + TargetColumns.WORK + " TEXT, "
-                + TargetColumns.WORK_LATITUDE + " NUMERIC, "
-                + TargetColumns.WORK_LONGITUDE + " NUMERIC, "
-                + TargetColumns.JOB_CATEGORY + " INTEGER NOT NULL, "
-                + TargetColumns.EXTRA + " TEXT NOT NULL "
-                + ")");
-
-        Log.d(TAG, "onCreate: Create table " + Tables.TEAM_MATE);
-        db.execSQL("CREATE TABLE " + Tables.TEAM_MATE + " ("
-                + StreetWarsContract.TeamMate.ID + " INTEGER PRIMARY KEY, "
-                + StreetWarsContract.TeamMate.PHOTO + " TEXT NOT NULL "
+                + TeamColumns.NAME + " TEXT NOT NULL, "
+                + TeamColumns.TYPE + " INTEGER NOT NULL"
                 + ")");
 
         if(BuildConfig.DEBUG) {
@@ -115,73 +102,71 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         PlayerColumns.FIRST_NAME + ", " +
                         PlayerColumns.LAST_NAME + ", " +
                         PlayerColumns.ALIAS + ", " +
+                        PlayerColumns.IS_ME + ", " +
                         PlayerColumns.PHOTO + ", " +
-                        PlayerColumns.WATER_CODE +
+                        PlayerColumns.WATER_CODE + ", " +
+                        PlayerColumns.KILL_COUNT + ", " +
+                        PlayerColumns.TEAM_ID + ", " +
+                        PlayerColumns.HOME + ", " +
+                        PlayerColumns.HOME_LATITUDE + ", " +
+                        PlayerColumns.HOME_LONGITUDE + ", " +
+                        PlayerColumns.WORK + ", " +
+                        PlayerColumns.WORK_LATITUDE + ", " +
+                        PlayerColumns.WORK_LONGITUDE + ", " +
+                        PlayerColumns.JOB_CATEGORY + ", " +
+                        PlayerColumns.EXTRA +
                         ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {
                         0,
                         "Pierre",
                         "Binauld",
                         "Zxcv",
+                        1,
                         "http://5.135.183.92:50100/res/davy_jones.jpg",
-                        "NEIOZXCV"
-                });
+                        "NEIOZXCV",
+                        4,
+                        0,
+                        null,
+                        0,
+                        0,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null,
 
-        Log.d(TAG, "insertLoopTestData: Insert team mates");
-        db.execSQL("INSERT INTO " + Tables.TEAM_MATE + " (" +
-                        TeamMateColumns.ID + ", " +
-                        TeamMateColumns.PHOTO +
-                        ") " +
-                        "VALUES (?, ?), " +
-                        "(?, ?)",
-                new Object[] {
+                        1,
+                        "Rayane",
+                        "Chermitti",
+                        "Corredor",
                         0,
                         "http://5.135.183.92:50100/res/luffy.jpg",
-                        1,
-                        "http://5.135.183.92:50100/res/zorr.jpgo"
-                });
-
-        Log.d(TAG, "insertLoopTestData: Insert team");
-        db.execSQL("INSERT INTO " + Tables.TEAM + " (" +
-                        TeamColumns.ID + ", " +
-                        TeamColumns.NAME +
-                        ") " +
-                        "VALUES (?, ?)",
-                new Object[] {
+                        null,
+                        2,
                         0,
-                        "Black Pearl's Crew"
-                });
-
-        Log.d(TAG, "insertLoopTestData: Insert targets");
-        db.execSQL("INSERT INTO " + Tables.TARGET + " (" +
-                        TargetColumns.ID + ", " +
-                        TargetColumns.ALIAS + ", " +
-                        TargetColumns.FIRST_NAME + ", " +
-                        TargetColumns.LAST_NAME + ", " +
-                        TargetColumns.PHOTO + ", " +
-                        TargetColumns.KILL_COUNT + ", " +
-                        TargetColumns.TEAM_ID + ", " +
-                        TargetColumns.HOME + ", " +
-                        TargetColumns.HOME_LATITUDE + ", " +
-                        TargetColumns.HOME_LONGITUDE + ", " +
-                        TargetColumns.WORK + ", " +
-                        TargetColumns.WORK_LATITUDE + ", " +
-                        TargetColumns.WORK_LONGITUDE + ", " +
-                        TargetColumns.JOB_CATEGORY + ", " +
-                        TargetColumns.EXTRA +
-                        ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                new Object[] {
+                        null,
                         0,
+                        0,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null,
+
+                        3,
                         "Captain",
                         "Jack",
                         "Sparrow",
+                        0,
                         "http://5.135.183.92:50100/res/jack_sparrow.jpg",
-                        0,
-                        0,
+                        null,
+                        1,
+                        1,
                         "34 rue Tupin, Lyon 2",
                         45.762836,
                         4.835285,
@@ -191,13 +176,15 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         0,
                         "To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him. To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him.",
 
-                        1,
+                        4,
                         "Sailor",
                         "Will",
                         "Turner",
-                        "http://5.135.183.92:50100/res/will_turner.png",
-                        7,
                         0,
+                        "http://5.135.183.92:50100/res/will_turner.png",
+                        null,
+                        7,
+                        1,
                         "21 rue Voltaire, Lyon 3",
                         45.759731,
                         4.848365,
@@ -207,13 +194,15 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         2,
                         "That's the Flying Dutchman? It doesn't look like much.",
 
-                        2,
+                        5,
                         "Lady",
                         "Elisabeth",
                         "Swann",
+                        0,
                         "http://5.135.183.92:50100/res/elizabeth_swann.png",
+                        null,
                         0,
-                        0,
+                        1,
                         "15 rue Sebastien Gryphe, Lyon 7",
                         45.752845,
                         4.844944,
@@ -223,6 +212,23 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         1,
                         "I'm not entirely sure that I've had enough rum to allow that kind of talk."
                 });
+
+        Log.d(TAG, "insertLoopTestData: Insert team");
+        db.execSQL("INSERT INTO " + Tables.TEAM + " (" +
+                        TeamColumns.ID + ", " +
+                        TeamColumns.NAME + ", " +
+                        TeamColumns.TYPE +
+                        ") " +
+                        "VALUES (?, ?, ?), " +
+                        "(?, ?, ?)",
+                new Object[] {
+                        0,
+                        "Yeah Niggar",
+                        TeamType.TEAM_MATE,
+                        1,
+                        "Black Pearl's Crew",
+                        TeamType.TARGET
+                });
     }
 
     private void insertFFATestData(SQLiteDatabase db) {
@@ -231,43 +237,49 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
         Log.d(TAG, "insertFFATestData: Insert team");
         db.execSQL("INSERT INTO " + Tables.TEAM + " (" +
                         TeamColumns.ID + ", " +
-                        TeamColumns.NAME +
+                        TeamColumns.NAME + ", " +
+                        TeamColumns.TYPE +
                         ") " +
-                        "VALUES (?, ?)",
+                        "VALUES (?, ?, ?)",
                 new Object[] {
-                        1,
-                        "Straw Hat Pirates"
+                        2,
+                        "Straw Hat Pirates",
+                        TeamType.TARGET
                 });
 
         Log.d(TAG, "insertFFATestData: Insert targets");
-        db.execSQL("INSERT INTO " + Tables.TARGET + " (" +
-                        TargetColumns.ID + ", " +
-                        TargetColumns.ALIAS + ", " +
-                        TargetColumns.FIRST_NAME + ", " +
-                        TargetColumns.LAST_NAME + ", " +
-                        TargetColumns.PHOTO + ", " +
-                        TargetColumns.KILL_COUNT + ", " +
-                        TargetColumns.TEAM_ID + ", " +
-                        TargetColumns.HOME + ", " +
-                        TargetColumns.HOME_LATITUDE + ", " +
-                        TargetColumns.HOME_LONGITUDE + ", " +
-                        TargetColumns.WORK + ", " +
-                        TargetColumns.WORK_LATITUDE + ", " +
-                        TargetColumns.WORK_LONGITUDE + ", " +
-                        TargetColumns.JOB_CATEGORY + ", " +
-                        TargetColumns.EXTRA +
+        db.execSQL("INSERT INTO " + Tables.PLAYER + " (" +
+                        PlayerColumns.ID + ", " +
+                        PlayerColumns.FIRST_NAME + ", " +
+                        PlayerColumns.LAST_NAME + ", " +
+                        PlayerColumns.ALIAS + ", " +
+                        PlayerColumns.IS_ME + ", " +
+                        PlayerColumns.PHOTO + ", " +
+                        PlayerColumns.WATER_CODE + ", " +
+                        PlayerColumns.KILL_COUNT + ", " +
+                        PlayerColumns.TEAM_ID + ", " +
+                        PlayerColumns.HOME + ", " +
+                        PlayerColumns.HOME_LATITUDE + ", " +
+                        PlayerColumns.HOME_LONGITUDE + ", " +
+                        PlayerColumns.WORK + ", " +
+                        PlayerColumns.WORK_LATITUDE + ", " +
+                        PlayerColumns.WORK_LONGITUDE + ", " +
+                        PlayerColumns.JOB_CATEGORY + ", " +
+                        PlayerColumns.EXTRA +
                         ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)," +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {
-                        3,
+                        6,
                         "Straw Hat Luffy",
                         "Monkey D.",
                         "Luffy",
+                        0,
                         "http://5.135.183.92:50100/res/luffy.jpg",
+                        null,
                         4,
-                        1,
+                        2,
                         "32 rue de bourgogne, lyon 9",
                         45.777478,
                         4.803474,
@@ -277,13 +289,15 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         0,
                         "If you don't take risks, you can't create a future.",
 
-                        4,
+                        7,
                         "Pirate Hunter Zoro",
                         "Roronoa",
                         "Zoro",
+                        0,
                         "http://5.135.183.92:50100/res/zoro.jpg",
+                        null,
                         5,
-                        1,
+                        2,
                         "34 rue tupin",
                         45.762836,
                         4.835285,
@@ -293,13 +307,15 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         2,
                         "I don't care what the society says. I've regretted doing anything. I will survive and do what I want to.\n",
 
-                        5,
+                        8,
                         "Black Leg Sanji",
                         "Sanji",
                         "",
+                        0,
                         "http://5.135.183.92:50100/res/sanji.jpg",
+                        null,
                         2,
-                        1,
+                        2,
                         "21 Route de Vienne, Lyon, France",
                         45.744202,
                         4.850469,

@@ -5,10 +5,8 @@ import android.net.Uri;
 import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.database.RuleColumns;
-import fr.streetgames.streetwars.database.TargetColumns;
 import fr.streetgames.streetwars.database.TeamColumns;
-import fr.streetgames.streetwars.database.TeamMateColumns;
-import fr.streetgames.streetwars.database.TypeColumns;
+import fr.streetgames.streetwars.database.RowTypeColumns;
 
 public class StreetWarsContract {
 
@@ -34,22 +32,17 @@ public class StreetWarsContract {
 
     public static final String PATH_WATER_CODE = "water_code";
 
-    public interface Player extends PlayerColumns {
+    public interface Player extends PlayerColumns, TeamColumns {
+
+        String ID = PlayerColumns.ID;
+
+        String TEAM_ID = TeamColumns.ID;
 
         Uri CONTENT_URI = BASE_URI.buildUpon()
                 .appendPath(PATH_PLAYER)
                 .build();
 
         String CONTENT_ITEM_TYPE = CONTENT_ITEM_TYPE_BASE + PATH_WATER_CODE;
-    }
-
-    public interface TeamMate extends TeamMateColumns {
-
-        Uri CONTENT_URI = BASE_URI.buildUpon()
-                .appendPath(PATH_TEAM_MATE)
-                .build();
-
-        String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_TEAM_MATE;
     }
 
     public interface Rule extends RuleColumns {
@@ -70,7 +63,7 @@ public class StreetWarsContract {
         String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_TEAM;
     }
 
-    public interface Target extends TargetColumns, TypeColumns {
+    public interface Target extends PlayerColumns, RowTypeColumns {
 
         String PARAM_SHOW_TEAM = "show_team";
 

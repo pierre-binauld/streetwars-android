@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import fr.streetgames.streetwars.R;
+import fr.streetgames.streetwars.api.TeamType;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.widget.TeamMateAdapter;
 
@@ -81,11 +82,12 @@ public class ContractEliminationFragment extends Fragment implements LoaderManag
     private Loader<Cursor> onCreateQueryTeamMatesLoader(Bundle args) {
         return new CursorLoader(
                 getContext(),
-                StreetWarsContract.TeamMate.CONTENT_URI,
+                StreetWarsContract.Player.CONTENT_URI,
                 TeamMateAdapter.TeamMateProjection.PROJECTION,
-                null,
-                null,
-                null);
+                StreetWarsContract.Player.TYPE + " = ? OR "
+                        + StreetWarsContract.Player.TYPE + " = ?",
+                new String[] {String.valueOf(TeamType.TEAM_MATE), String.valueOf(TeamType.TEAM_MATE)},
+                StreetWarsContract.Player.TYPE);
     }
 
     @Override

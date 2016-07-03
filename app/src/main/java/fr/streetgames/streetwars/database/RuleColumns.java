@@ -6,5 +6,5 @@ public interface RuleColumns {
 
     String GROUP = Tables.RULE + "_group";
 
-    String RULE = Tables.RULE + "_fule";
+    String RULE = Tables.RULE + "_rule";
 }

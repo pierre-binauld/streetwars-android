@@ -1,71 +1,80 @@
 package fr.streetgames.streetwars.content;
 
+import fr.streetgames.streetwars.api.TeamType;
+import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.database.Tables;
-import fr.streetgames.streetwars.database.TargetColumns;
 import fr.streetgames.streetwars.database.TeamColumns;
-import fr.streetgames.streetwars.database.TypeColumns;
+import fr.streetgames.streetwars.database.RowTypeColumns;
 
 public abstract class StreetWarsContentProviderHelper {
 
+    public static String getPlayerStatement() {
+        return Tables.PLAYER
+                + " JOIN " + Tables.TEAM
+                + " ON " + TeamColumns.ID + " = " + PlayerColumns.TEAM_ID;
+    }
+
     public static String getTeamAndTargetStatement() {
-        return "(SELECT " + TypeColumns.TYPE_TARGET + " AS " + TypeColumns.TYPE + ", " +
+        return "(SELECT " + RowTypeColumns.TYPE_TARGET + " AS " + RowTypeColumns.ROW_TYPE + ", " +
                 Tables.TEAM + ".*, " +
-                TargetColumns.ID + ", " +
-                TargetColumns.ALIAS + ", " +
-                TargetColumns.FIRST_NAME + ", " +
-                TargetColumns.LAST_NAME + ", " +
-                TargetColumns.PHOTO + ", " +
-                TargetColumns.KILL_COUNT + ", " +
-                TargetColumns.TEAM_ID + ", " +
-                TargetColumns.HOME + ", " +
-                TargetColumns.WORK + ", " +
-                TargetColumns.JOB_CATEGORY + ", " +
-                TargetColumns.EXTRA +
+                PlayerColumns.ID + ", " +
+                PlayerColumns.ALIAS + ", " +
+                PlayerColumns.FIRST_NAME + ", " +
+                PlayerColumns.LAST_NAME + ", " +
+                PlayerColumns.PHOTO + ", " +
+                PlayerColumns.KILL_COUNT + ", " +
+                PlayerColumns.TEAM_ID + ", " +
+                PlayerColumns.HOME + ", " +
+                PlayerColumns.WORK + ", " +
+                PlayerColumns.JOB_CATEGORY + ", " +
+                PlayerColumns.EXTRA +
                 " FROM " + Tables.TEAM +
-                " JOIN " + Tables.TARGET +
-                " ON " + TeamColumns.ID + " = " + TargetColumns.TEAM_ID +
+                " JOIN " + Tables.PLAYER +
+                " ON " + TeamColumns.ID + " = " + PlayerColumns.TEAM_ID +
+                " WHERE " + TeamColumns.TYPE + " = " + TeamType.TARGET +
 
                 " UNION " +
 
-                "SELECT " + TypeColumns.TYPE_TEAM + " AS " + TypeColumns.TYPE + ", " +
+                "SELECT " + RowTypeColumns.TYPE_TEAM + " AS " + RowTypeColumns.ROW_TYPE + ", " +
                 Tables.TEAM + ".*, " +
-                "null AS " + TargetColumns.ID + ", " +
-                "null AS " + TargetColumns.ALIAS + ", " +
-                "null AS " + TargetColumns.FIRST_NAME + ", " +
-                "null AS " + TargetColumns.LAST_NAME + ", " +
-                "null AS " + TargetColumns.PHOTO + ", " +
-                "null AS " + TargetColumns.KILL_COUNT + ", " +
-                "null AS " + TargetColumns.TEAM_ID + ", " +
-                "null AS " + TargetColumns.HOME + ", " +
-                "null AS " + TargetColumns.WORK + ", " +
-                "null AS " + TargetColumns.JOB_CATEGORY + ", " +
-                "null AS " + TargetColumns.EXTRA +
+                "null AS " + PlayerColumns.ID + ", " +
+                "null AS " + PlayerColumns.ALIAS + ", " +
+                "null AS " + PlayerColumns.FIRST_NAME + ", " +
+                "null AS " + PlayerColumns.LAST_NAME + ", " +
+                "null AS " + PlayerColumns.PHOTO + ", " +
+                "null AS " + PlayerColumns.KILL_COUNT + ", " +
+                "null AS " + PlayerColumns.TEAM_ID + ", " +
+                "null AS " + PlayerColumns.HOME + ", " +
+                "null AS " + PlayerColumns.WORK + ", " +
+                "null AS " + PlayerColumns.JOB_CATEGORY + ", " +
+                "null AS " + PlayerColumns.EXTRA +
                 " FROM " + Tables.TEAM +
-                " ORDER BY " + TeamColumns.ID + ", " + TypeColumns.TYPE +
+                " WHERE " + TeamColumns.TYPE + " = " + TeamType.TARGET +
+                " ORDER BY " + TeamColumns.ID + ", " + RowTypeColumns.ROW_TYPE +
                 ")";
     }
 
     public static String getTargetStatement() {
         return "(SELECT " +
                 Tables.TEAM + ".*, " +
-                TargetColumns.ID + ", " +
-                TargetColumns.ALIAS + ", " +
-                TargetColumns.FIRST_NAME + ", " +
-                TargetColumns.LAST_NAME + ", " +
-                TargetColumns.PHOTO + ", " +
-                TargetColumns.KILL_COUNT + ", " +
-                TargetColumns.TEAM_ID + ", " +
-                TargetColumns.HOME + ", " +
-                TargetColumns.HOME_LATITUDE + ", " +
-                TargetColumns.HOME_LONGITUDE + ", " +
-                TargetColumns.WORK + ", " +
-                TargetColumns.WORK_LATITUDE + ", " +
-                TargetColumns.WORK_LONGITUDE + ", " +
-                TargetColumns.JOB_CATEGORY + ", " +
-                TargetColumns.EXTRA +
+                PlayerColumns.ID + ", " +
+                PlayerColumns.ALIAS + ", " +
+                PlayerColumns.FIRST_NAME + ", " +
+                PlayerColumns.LAST_NAME + ", " +
+                PlayerColumns.PHOTO + ", " +
+                PlayerColumns.KILL_COUNT + ", " +
+                PlayerColumns.TEAM_ID + ", " +
+                PlayerColumns.HOME + ", " +
+                PlayerColumns.HOME_LATITUDE + ", " +
+                PlayerColumns.HOME_LONGITUDE + ", " +
+                PlayerColumns.WORK + ", " +
+                PlayerColumns.WORK_LATITUDE + ", " +
+                PlayerColumns.WORK_LONGITUDE + ", " +
+                PlayerColumns.JOB_CATEGORY + ", " +
+                PlayerColumns.EXTRA +
                 " FROM " + Tables.TEAM +
-                " JOIN " + Tables.TARGET +
-                " ON " + TeamColumns.ID + " = " + TargetColumns.TEAM_ID +
+                " JOIN " + Tables.PLAYER +
+                " ON " + TeamColumns.ID + " = " + PlayerColumns.TEAM_ID +
                 ")";
     }
 }
