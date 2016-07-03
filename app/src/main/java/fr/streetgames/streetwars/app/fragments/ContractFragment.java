@@ -134,7 +134,9 @@ public class ContractFragment extends Fragment implements LoaderManager.LoaderCa
     private Loader<Cursor> onCreateQueryTargetsLoader(@NonNull Bundle args) {
         return new CursorLoader(
                 getContext(),
-                StreetWarsContract.Target.CONTENT_URI,
+                StreetWarsContract.Target.CONTENT_URI.buildUpon()
+                        .appendQueryParameter(StreetWarsContract.Target.PARAM_SHOW_TEAM, "true")
+                        .build(),
                 CardTargetAdapter.TargetProjection.PROJECTION,
                 null,
                 null,

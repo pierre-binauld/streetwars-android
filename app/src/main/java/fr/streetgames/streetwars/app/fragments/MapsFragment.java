@@ -172,9 +172,7 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     private Loader<Cursor> onCreateQueryTargetsLoader(Bundle args) {
         return new CursorLoader(
                 getContext(),
-                Target.CONTENT_URI.buildUpon()
-                        .appendQueryParameter(Target.PARAM_SHOW_TEAM, "false")
-                        .build(),
+                Target.CONTENT_URI,
                 TargetMarkerAdapter.TargetProjection.PROJECTION,
                 null,
                 null,

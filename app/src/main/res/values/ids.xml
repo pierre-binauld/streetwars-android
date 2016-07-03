@@ -7,6 +7,7 @@
 
     <item name="loader_query_player" type="id" />
     <item name="loader_query_rules" type="id" />
+    <item name="loader_query_target" type="id" />
     <item name="loader_query_targets" type="id" />
     <item name="loader_query_water_code" type="id" />
     <item name="loader_query_team_mates" type="id" />
