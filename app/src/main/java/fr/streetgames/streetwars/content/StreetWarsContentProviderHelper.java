@@ -25,7 +25,11 @@ public abstract class StreetWarsContentProviderHelper {
                 PlayerColumns.KILL_COUNT + ", " +
                 PlayerColumns.TEAM_ID + ", " +
                 PlayerColumns.HOME + ", " +
+                PlayerColumns.HOME_LATITUDE + ", " +
+                PlayerColumns.HOME_LONGITUDE + ", " +
                 PlayerColumns.WORK + ", " +
+                PlayerColumns.WORK_LATITUDE + ", " +
+                PlayerColumns.WORK_LONGITUDE + ", " +
                 PlayerColumns.JOB_CATEGORY + ", " +
                 PlayerColumns.EXTRA +
                 " FROM " + Tables.TEAM +
@@ -45,7 +49,11 @@ public abstract class StreetWarsContentProviderHelper {
                 "null AS " + PlayerColumns.KILL_COUNT + ", " +
                 "null AS " + PlayerColumns.TEAM_ID + ", " +
                 "null AS " + PlayerColumns.HOME + ", " +
+                "null AS " + PlayerColumns.HOME_LATITUDE + ", " +
+                "null AS " + PlayerColumns.HOME_LONGITUDE + ", " +
                 "null AS " + PlayerColumns.WORK + ", " +
+                "null AS " + PlayerColumns.WORK_LATITUDE + ", " +
+                "null AS " + PlayerColumns.WORK_LONGITUDE + ", " +
                 "null AS " + PlayerColumns.JOB_CATEGORY + ", " +
                 "null AS " + PlayerColumns.EXTRA +
                 " FROM " + Tables.TEAM +
