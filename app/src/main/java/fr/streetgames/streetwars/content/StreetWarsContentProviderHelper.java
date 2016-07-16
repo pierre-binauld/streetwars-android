@@ -1,10 +1,11 @@
 package fr.streetgames.streetwars.content;
 
 import fr.streetgames.streetwars.api.TeamType;
+import fr.streetgames.streetwars.content.contract.AddressColumns;
 import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.database.Tables;
 import fr.streetgames.streetwars.database.TeamColumns;
-import fr.streetgames.streetwars.database.RowTypeColumns;
+import fr.streetgames.streetwars.content.contract.RowTypeColumns;
 
 public abstract class StreetWarsContentProviderHelper {
 
@@ -84,5 +85,24 @@ public abstract class StreetWarsContentProviderHelper {
                 " JOIN " + Tables.PLAYER +
                 " ON " + TeamColumns.ID + " = " + PlayerColumns.TEAM_ID +
                 ")";
+    }
+
+    public static String getAddressStatement() {
+        return "(SELECT * " +
+                " FROM (SELECT " +
+                PlayerColumns.HOME_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +
+                PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE +
+                " FROM " + Tables.PLAYER +
+
+                " UNION " +
+
+                "SELECT " +
+                PlayerColumns.WORK_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +
+                PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE +
+                " FROM " + Tables.PLAYER +
+                ")" +
+                " GROUP BY " + AddressColumns.ADDRESS_LONGITUDE + ", " + AddressColumns.ADDRESS_LATITUDE +
+                ")";
+
     }
 }

@@ -6,7 +6,6 @@ import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.database.RuleColumns;
 import fr.streetgames.streetwars.database.TeamColumns;
-import fr.streetgames.streetwars.database.RowTypeColumns;
 
 public class StreetWarsContract {
 
@@ -26,9 +25,9 @@ public class StreetWarsContract {
 
     public static final String PATH_TEAM = "team";
 
-    public static final String PATH_TEAM_MATE = "team";
-
     public static final String PATH_TARGET = "target";
+
+    public static final String PATH_ADDRESS = "address";
 
     public static final String PATH_WATER_CODE = "water_code";
 
@@ -74,6 +73,16 @@ public class StreetWarsContract {
                 .build();
 
         String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_TARGET;
+
+    }
+
+    public interface Address extends AddressColumns {
+
+        Uri CONTENT_URI = BASE_URI.buildUpon()
+                .appendPath(PATH_ADDRESS)
+                .build();
+
+        String CONTENT_TYPE = CONTENT_TYPE_BASE + PATH_ADDRESS;
 
     }
 

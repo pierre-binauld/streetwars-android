@@ -15,7 +15,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import fr.streetgames.streetwars.app.fragments.TargetBottomSheetDialogFragment;
-import fr.streetgames.streetwars.database.RowTypeColumns;
+import fr.streetgames.streetwars.content.contract.RowTypeColumns;
 import fr.streetgames.streetwars.utils.IntentUtils;
 
 import static fr.streetgames.streetwars.content.contract.StreetWarsContract.Target;

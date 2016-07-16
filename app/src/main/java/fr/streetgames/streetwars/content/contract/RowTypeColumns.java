@@ -1,4 +1,4 @@
-package fr.streetgames.streetwars.database;
+package fr.streetgames.streetwars.content.contract;
 
 public interface RowTypeColumns {
 

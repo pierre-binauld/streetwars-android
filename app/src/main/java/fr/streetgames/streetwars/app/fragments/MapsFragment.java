@@ -28,15 +28,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.activities.MainActivity;
-import fr.streetgames.streetwars.widget.TargetMarkerAdapter;
+import fr.streetgames.streetwars.content.contract.StreetWarsContract.Address;
+import fr.streetgames.streetwars.utils.MarkerUtils;
 
-import static fr.streetgames.streetwars.content.contract.StreetWarsContract.Target;
-
-public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
+public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener, GoogleMap.OnMarkerClickListener {
 
     public static final String TAG = "MapsFragment";
 
@@ -46,7 +48,7 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
 
     private GoogleMap mMap;
 
-    private TargetMarkerAdapter mAdapter;
+    private MarkerOptions mMarkerOptions;
 
     private Toolbar mToolbar;
 
@@ -59,13 +61,12 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new TargetMarkerAdapter();
+        mMarkerOptions = new MarkerOptions();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mAdapter.onCreateView(inflater, container);
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
@@ -119,7 +120,7 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setInfoWindowAdapter(mAdapter);
+        mMap.setOnMarkerClickListener(this);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         TypedValue tv = new TypedValue();
@@ -159,6 +160,28 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
 
     }
 
+    public void initMarkers(GoogleMap map, Cursor cursor) {
+        if (null != cursor) {
+            int i = 0;
+            cursor.moveToFirst();
+            do {
+                // Bind address markers
+                final LatLng coord = new LatLng(
+                        cursor.getDouble(AddressProjection.QUERY_ADDRESS_LATITUDE),
+                        cursor.getDouble(AddressProjection.QUERY_ADDRESS_LONGITUDE)
+                );
+
+                map.addMarker(
+                        mMarkerOptions
+                                .position(coord)
+                                .icon(BitmapDescriptorFactory.defaultMarker(MarkerUtils.HUE[i % MarkerUtils.HUE.length]))
+                );
+
+                i++;
+            } while (cursor.moveToNext());
+        }
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
@@ -172,8 +195,8 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     private Loader<Cursor> onCreateQueryTargetsLoader(Bundle args) {
         return new CursorLoader(
                 getContext(),
-                Target.CONTENT_URI,
-                TargetMarkerAdapter.TargetProjection.PROJECTION,
+                Address.CONTENT_URI,
+                AddressProjection.PROJECTION,
                 null,
                 null,
                 null);
@@ -192,7 +215,7 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     }
 
     private void onQueryTargetsLoadFinished(@Nullable Cursor cursor) {
-        mAdapter.initMarkers(mMap, cursor);
+        initMarkers(mMap, cursor);
     }
 
     @Override
@@ -256,4 +279,20 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
         }
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+    public interface AddressProjection {
+
+        String[] PROJECTION = new String[]{
+                Address.ADDRESS_LATITUDE,
+                Address.ADDRESS_LONGITUDE
+        };
+
+        int QUERY_ADDRESS_LATITUDE = 0;
+
+        int QUERY_ADDRESS_LONGITUDE = 1;
+    }
 }

@@ -298,7 +298,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         null,
                         5,
                         2,
-                        "34 rue tupin",
+                        "34 rue Tupin, Lyon 2",
                         45.762836,
                         4.835285,
                         "",

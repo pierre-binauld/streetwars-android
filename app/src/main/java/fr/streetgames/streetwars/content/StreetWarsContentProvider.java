@@ -55,6 +55,9 @@ public class StreetWarsContentProvider extends ContentProvider {
                     qb.setTables(StreetWarsContentProviderHelper.getTargetStatement());
                 }
                 break;
+            case R.id.content_uri_addresses:
+                qb.setTables(StreetWarsContentProviderHelper.getAddressStatement());
+                break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown uri: %s", uri));
         }
@@ -89,6 +92,8 @@ public class StreetWarsContentProvider extends ContentProvider {
                 return StreetWarsContract.Rule.CONTENT_TYPE;
             case R.id.content_uri_targets:
                 return StreetWarsContract.Target.CONTENT_TYPE;
+            case R.id.content_uri_addresses:
+                return StreetWarsContract.Address.CONTENT_TYPE;
             default:
                 throw new IllegalArgumentException(String.format("Unknown content uri code: ", match));
         }
@@ -205,6 +210,12 @@ public class StreetWarsContentProvider extends ContentProvider {
                 StreetWarsContract.AUTHORITY,
                 StreetWarsContract.Target.CONTENT_URI.getPath(),
                 R.id.content_uri_targets
+        );
+        addUriToUriMatcher(
+                mUriMatcher,
+                StreetWarsContract.AUTHORITY,
+                StreetWarsContract.Address.CONTENT_URI.getPath(),
+                R.id.content_uri_addresses
         );
     }
 
