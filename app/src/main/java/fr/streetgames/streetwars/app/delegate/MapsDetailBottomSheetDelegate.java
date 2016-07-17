@@ -1,12 +1,12 @@
 package fr.streetgames.streetwars.app.delegate;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,11 +16,12 @@ import android.widget.TextView;
 
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.delegate.base.CursorLoaderFragmentDelegate;
+import fr.streetgames.streetwars.app.fragments.TargetBottomSheetDialogFragment;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.widget.MapsPlayerAdapter;
 
-public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate {
+public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate implements MapsPlayerAdapter.OnItemClickListener {
 
     private static final String TAG = "MapsDetailBottomSheetDelegate";
 
@@ -44,6 +45,7 @@ public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate 
         mFragment = fragment;
         mContext = mFragment.getActivity();
         mAdapter = new MapsPlayerAdapter();
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -169,5 +171,10 @@ public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate 
 
     public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
+    }
+
+    @Override
+    public void onItemClickListener(MapsPlayerAdapter.PlayerViewHolder holder) {
+        TargetBottomSheetDialogFragment.show(mFragment.getContext(), holder.playerId);
     }
 }

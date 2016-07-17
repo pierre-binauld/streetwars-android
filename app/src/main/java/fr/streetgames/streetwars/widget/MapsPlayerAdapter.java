@@ -18,11 +18,18 @@ import fr.streetgames.streetwars.picasso.CircleTransform;
 
 public class MapsPlayerAdapter extends RecyclerView.Adapter<MapsPlayerAdapter.PlayerViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClickListener(MapsPlayerAdapter.PlayerViewHolder holder);
+    }
+
     @Nullable
     private Cursor mCursor;
 
     @NonNull
     private CircleTransform mCircleTransform;
+
+    @Nullable
+    private OnItemClickListener mOnItemClickListener;
 
     public MapsPlayerAdapter() {
         mCircleTransform = new CircleTransform();
@@ -37,7 +44,20 @@ public class MapsPlayerAdapter extends RecyclerView.Adapter<MapsPlayerAdapter.Pl
                         parent,
                         false
                 );
-        return new PlayerViewHolder(view);
+        PlayerViewHolder holder = new PlayerViewHolder(view);
+
+        holder.itemView.setTag(holder);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != mOnItemClickListener) {
+                    MapsPlayerAdapter.PlayerViewHolder holder = (PlayerViewHolder) view.getTag();
+                    mOnItemClickListener.onItemClickListener(holder);
+                }
+            }
+        });
+
+        return holder;
     }
 
     @Override
@@ -73,6 +93,10 @@ public class MapsPlayerAdapter extends RecyclerView.Adapter<MapsPlayerAdapter.Pl
             playerPhotoImageView = (ImageView) itemView.findViewById(R.id.player_avatar);
         }
 
+    }
+
+    public void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     public interface PlayerProjection {
