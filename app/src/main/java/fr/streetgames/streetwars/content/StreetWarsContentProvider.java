@@ -13,10 +13,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import fr.streetgames.streetwars.BuildConfig;
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.database.StreetWarsDatabaseOpenHelper;
 import fr.streetgames.streetwars.database.Tables;
+import fr.streetgames.streetwars.utils.ContentProviderDebug;
 
 public class StreetWarsContentProvider extends ContentProvider {
 
@@ -63,6 +65,10 @@ public class StreetWarsContentProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+
+        if (BuildConfig.DEBUG && BuildConfig.LOG_SQL) {
+            ContentProviderDebug.logSql(projection, selection, selectionArgs, sortOrder);
+        }
 
         Cursor cursor = qb.query(
                 db,
@@ -229,4 +235,5 @@ public class StreetWarsContentProvider extends ContentProvider {
         }
         uriMatcher.addURI(authority, path, code);
     }
+
 }

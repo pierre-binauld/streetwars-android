@@ -25,10 +25,14 @@ android {
             buildConfigField "int", "LOOP", "0"
             buildConfigField "int", "FFA", "1"
 
+            buildConfigField "boolean", "LOG_SQL", "true"
+
         }
         release {
 
             buildConfigField "String", "CONTENT_AUTHORITY", "\"${defaultConfig.applicationId}.content\""
+
+            buildConfigField "boolean", "LOG_SQL", "false"
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

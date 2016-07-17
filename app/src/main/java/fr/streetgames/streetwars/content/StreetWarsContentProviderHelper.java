@@ -90,6 +90,7 @@ public abstract class StreetWarsContentProviderHelper {
     public static String getAddressStatement() {
         return "(SELECT * " +
                 " FROM (SELECT " +
+                PlayerColumns.HOME + " AS " + AddressColumns.ADDRESS + ", " +
                 PlayerColumns.HOME_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +
                 PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE +
                 " FROM " + Tables.PLAYER +
@@ -97,6 +98,7 @@ public abstract class StreetWarsContentProviderHelper {
                 " UNION " +
 
                 "SELECT " +
+                PlayerColumns.WORK + " AS " + AddressColumns.ADDRESS + ", " +
                 PlayerColumns.WORK_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +
                 PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE +
                 " FROM " + Tables.PLAYER +

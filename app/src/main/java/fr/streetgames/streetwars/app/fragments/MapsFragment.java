@@ -35,10 +35,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import fr.streetgames.streetwars.R;
 import fr.streetgames.streetwars.app.activities.MainActivity;
+import fr.streetgames.streetwars.app.delegate.MapsDetailBottomSheetDelegate;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract.Address;
 import fr.streetgames.streetwars.utils.MarkerUtils;
 
-public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener, GoogleMap.OnMarkerClickListener {
+public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.InfoWindowAdapter {
 
     public static final String TAG = "MapsFragment";
 
@@ -48,11 +49,15 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
 
     private GoogleMap mMap;
 
+    private View mEmptyInfoView;
+
     private MarkerOptions mMarkerOptions;
 
     private Toolbar mToolbar;
 
     private FloatingActionButton mMyLocation;
+
+    private MapsDetailBottomSheetDelegate mMapDetailBottomSheetDelegate;
 
     public static Fragment newInstance() {
         return new MapsFragment();
@@ -61,12 +66,14 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMapDetailBottomSheetDelegate = new MapsDetailBottomSheetDelegate(this, savedInstanceState);
         mMarkerOptions = new MarkerOptions();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mEmptyInfoView = new View(getContext());
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
@@ -74,6 +81,8 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mMyLocation = (FloatingActionButton) view.findViewById(R.id.fab_my_location);
+
+        mMapDetailBottomSheetDelegate.onViewCreated(view, savedInstanceState);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
@@ -121,6 +130,8 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
+        mMap.setInfoWindowAdapter(this);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         TypedValue tv = new TypedValue();
@@ -173,6 +184,7 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
 
                 map.addMarker(
                         mMarkerOptions
+                                .title(cursor.getString(AddressProjection.QUERY_ADDRESS))
                                 .position(coord)
                                 .icon(BitmapDescriptorFactory.defaultMarker(MarkerUtils.HUE[i % MarkerUtils.HUE.length]))
                 );
@@ -281,18 +293,38 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        LatLng position = marker.getPosition();
+        mMapDetailBottomSheetDelegate.searchFor(marker.getTitle(), position.latitude, position.longitude);
         return false;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        mMapDetailBottomSheetDelegate.closeBottomSheet();
+    }
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return mEmptyInfoView;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
     }
 
     public interface AddressProjection {
 
         String[] PROJECTION = new String[]{
+                Address.ADDRESS,
                 Address.ADDRESS_LATITUDE,
                 Address.ADDRESS_LONGITUDE
         };
 
-        int QUERY_ADDRESS_LATITUDE = 0;
+        int QUERY_ADDRESS = 0;
 
-        int QUERY_ADDRESS_LONGITUDE = 1;
+        int QUERY_ADDRESS_LATITUDE = 1;
+
+        int QUERY_ADDRESS_LONGITUDE = 2;
     }
 }

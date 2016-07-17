@@ -7,10 +7,10 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class FloatingActionButtonBehavior
+public class ListFloatingActionButtonBehavior
         extends FloatingActionButton.Behavior {
 
-    public FloatingActionButtonBehavior(Context context, AttributeSet attrs) {
+    public ListFloatingActionButtonBehavior(Context context, AttributeSet attrs) {
         super();
     }
 

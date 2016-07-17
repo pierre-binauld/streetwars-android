@@ -26,4 +26,6 @@
         app:layout_anchor="@id/map"
         app:layout_anchorGravity="bottom|right|end" />
 
+    <include layout="@layout/sheet_maps_detail" />
+
 </android.support.design.widget.CoordinatorLayout>
