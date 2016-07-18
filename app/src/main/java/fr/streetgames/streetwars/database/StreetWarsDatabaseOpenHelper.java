@@ -285,7 +285,7 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         4.803474,
                         "3 - 4 Place Charles Hernu, Villeurbanne, France",
                         45.770155,
-                        4.863494,
+                        4.8634936,
                         0,
                         "If you don't take risks, you can't create a future.",
 

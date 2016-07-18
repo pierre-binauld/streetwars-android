@@ -19,6 +19,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,14 @@ import fr.streetgames.streetwars.app.delegate.MapsDetailBottomSheetDelegate;
 import fr.streetgames.streetwars.content.contract.StreetWarsContract.Address;
 import fr.streetgames.streetwars.utils.MarkerUtils;
 
-public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.InfoWindowAdapter {
+public class MapsFragment
+        extends Fragment
+        implements ActivityCompat.OnRequestPermissionsResultCallback,
+        OnMapReadyCallback,
+        LoaderManager.LoaderCallbacks<Cursor>,
+        View.OnClickListener,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnMapClickListener {
 
     public static final String TAG = "MapsFragment";
 
@@ -50,8 +58,6 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     private GoogleMap mMap;
 
     private View mEmptyInfoView;
-
-    private MarkerOptions mMarkerOptions;
 
     private Toolbar mToolbar;
 
@@ -67,7 +73,6 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMapDetailBottomSheetDelegate = new MapsDetailBottomSheetDelegate(this, savedInstanceState);
-        mMarkerOptions = new MarkerOptions();
     }
 
     @Override
@@ -131,7 +136,6 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
-        mMap.setInfoWindowAdapter(this);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         TypedValue tv = new TypedValue();
@@ -183,7 +187,7 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
                 );
 
                 map.addMarker(
-                        mMarkerOptions
+                        new MarkerOptions()
                                 .title(cursor.getString(AddressProjection.QUERY_ADDRESS))
                                 .position(coord)
                                 .icon(BitmapDescriptorFactory.defaultMarker(MarkerUtils.HUE[i % MarkerUtils.HUE.length]))
@@ -301,16 +305,6 @@ public class MapsFragment extends Fragment implements ActivityCompat.OnRequestPe
     @Override
     public void onMapClick(LatLng latLng) {
         mMapDetailBottomSheetDelegate.closeBottomSheet();
-    }
-
-    @Override
-    public View getInfoWindow(Marker marker) {
-        return mEmptyInfoView;
-    }
-
-    @Override
-    public View getInfoContents(Marker marker) {
-        return null;
     }
 
     public interface AddressProjection {

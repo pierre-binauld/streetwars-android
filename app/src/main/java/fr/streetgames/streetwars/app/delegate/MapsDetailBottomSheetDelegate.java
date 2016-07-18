@@ -148,11 +148,12 @@ public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate 
 
     public void searchFor(@NonNull String address, double latitude, double longitude) {
         mTitle.setText(address);
+        mAdapter.setCursor(null);
         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         Bundle args = new Bundle(2);
         args.putDouble(LOADER_LATITUDE, latitude);
         args.putDouble(LOADER_LONGITUDE, longitude);
-        mFragment.getLoaderManager().initLoader(
+        mFragment.getLoaderManager().restartLoader(
                 R.id.loader_query_player,
                 args,
                 this);

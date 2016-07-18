@@ -67,7 +67,7 @@ public class StreetWarsContentProvider extends ContentProvider {
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
         if (BuildConfig.DEBUG && BuildConfig.LOG_SQL) {
-            ContentProviderDebug.logSql(projection, selection, selectionArgs, sortOrder);
+            ContentProviderDebug.logSqlQuery(uri, qb, projection, selection, selectionArgs, null, null,sortOrder, null);
         }
 
         Cursor cursor = qb.query(

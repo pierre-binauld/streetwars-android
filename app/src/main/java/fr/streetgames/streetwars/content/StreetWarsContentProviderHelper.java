@@ -91,17 +91,23 @@ public abstract class StreetWarsContentProviderHelper {
         return "(SELECT * " +
                 " FROM (SELECT " +
                 PlayerColumns.HOME + " AS " + AddressColumns.ADDRESS + ", " +
+                PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE + ", " +
                 PlayerColumns.HOME_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +
-                PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE +
+                TeamColumns.TYPE + " AS " + AddressColumns.TEAM_TYPE +
                 " FROM " + Tables.PLAYER +
+                " JOIN " + Tables.TEAM + " ON " + PlayerColumns.TEAM_ID + " = " + TeamColumns.ID +
+                " WHERE " + AddressColumns.ADDRESS + " <> \"\"" +
 
                 " UNION " +
 
                 "SELECT " +
                 PlayerColumns.WORK + " AS " + AddressColumns.ADDRESS + ", " +
+                PlayerColumns.WORK_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE + ", " +
                 PlayerColumns.WORK_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +
-                PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE +
+                TeamColumns.TYPE + " AS " + AddressColumns.TEAM_TYPE +
                 " FROM " + Tables.PLAYER +
+                " JOIN " + Tables.TEAM + " ON " + PlayerColumns.TEAM_ID + " = " + TeamColumns.ID +
+                " WHERE " + AddressColumns.ADDRESS + " <> \"\"" +
                 ")" +
                 " GROUP BY " + AddressColumns.ADDRESS_LONGITUDE + ", " + AddressColumns.ADDRESS_LATITUDE +
                 ")";

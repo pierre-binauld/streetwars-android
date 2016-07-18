@@ -1,6 +1,7 @@
 package fr.streetgames.streetwars.content.contract;
 
 import fr.streetgames.streetwars.database.Tables;
+import fr.streetgames.streetwars.database.TeamColumns;
 
 public interface AddressColumns {
 
@@ -9,5 +10,7 @@ public interface AddressColumns {
     String ADDRESS_LATITUDE = Tables.PLAYER + "_address_latitude";
 
     String ADDRESS_LONGITUDE = Tables.PLAYER + "_address_longitude";
+
+    String TEAM_TYPE = TeamColumns.TYPE;
 
 }

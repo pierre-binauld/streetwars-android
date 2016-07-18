@@ -1,32 +1,32 @@
 package fr.streetgames.streetwars.utils;
 
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
-
-import fr.streetgames.streetwars.BuildConfig;
 
 public class ContentProviderDebug {
 
     private static final String TAG = "ContentProviderDebug";
 
-    public static void logSql(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if(BuildConfig.DEBUG) {
-            String s = "SELECT ";
-            if (null != projection) {
-                for (String p : projection) {
-                    s += p + ", ";
-                }
-                s = s.substring(0, s.length() - 2);
+    public static void logSqlQuery(
+            @NonNull Uri uri,
+            @NonNull SQLiteQueryBuilder qb,
+            @Nullable String[] projection,
+            @Nullable String selection,
+            @Nullable String[] selectionArgs,
+            @Nullable String groupBy,
+            @Nullable String having,
+            @Nullable String sortOrder,
+            @Nullable String limit) {
+        String sql = qb.buildQuery(projection, selection, groupBy, having, sortOrder, limit);
+        if (selectionArgs != null) {
+            for (String arg : selectionArgs) {
+                sql = sql.replaceFirst("\\?", arg);
             }
-            Log.d(TAG, "query - projection: " + s);
-            Log.d(TAG, "query - selection: WHERE " + selection);
-            s = "";
-            if (null != selectionArgs) {
-                for (String sa : selectionArgs) {
-                    s += sa + " ";
-                }
-            }
-            Log.d(TAG, "query - selectionArgs: " + s);
-            Log.d(TAG, "query - sortOrder: " + sortOrder);
         }
+        Log.d(TAG, uri.toString());
+        Log.d(TAG, sql);
     }
 }
