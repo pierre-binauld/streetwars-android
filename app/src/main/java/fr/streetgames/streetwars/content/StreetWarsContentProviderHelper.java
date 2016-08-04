@@ -2,6 +2,7 @@ package fr.streetgames.streetwars.content;
 
 import fr.streetgames.streetwars.api.TeamType;
 import fr.streetgames.streetwars.content.contract.AddressColumns;
+import fr.streetgames.streetwars.content.contract.StreetWarsContract;
 import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.database.Tables;
 import fr.streetgames.streetwars.database.TeamColumns;
@@ -88,8 +89,10 @@ public abstract class StreetWarsContentProviderHelper {
     }
 
     public static String getAddressStatement() {
-        return "(SELECT * " +
+        return "(SELECT *, " +
+                "count(1) AS " + StreetWarsContract.Address.ADDRESS_COUNT +
                 " FROM (SELECT " +
+                PlayerColumns.ID + " AS " + AddressColumns.PLAYER_ID + ", " +
                 PlayerColumns.HOME + " AS " + AddressColumns.ADDRESS + ", " +
                 PlayerColumns.HOME_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE + ", " +
                 PlayerColumns.HOME_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +
@@ -101,6 +104,7 @@ public abstract class StreetWarsContentProviderHelper {
                 " UNION " +
 
                 "SELECT " +
+                PlayerColumns.ID + " AS " + AddressColumns.PLAYER_ID + ", " +
                 PlayerColumns.WORK + " AS " + AddressColumns.ADDRESS + ", " +
                 PlayerColumns.WORK_LATITUDE + " AS " + AddressColumns.ADDRESS_LATITUDE + ", " +
                 PlayerColumns.WORK_LONGITUDE + " AS " + AddressColumns.ADDRESS_LONGITUDE + ", " +

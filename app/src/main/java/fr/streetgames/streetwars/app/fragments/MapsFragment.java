@@ -65,6 +65,8 @@ public class MapsFragment
 
     private MapsDetailBottomSheetDelegate mMapDetailBottomSheetDelegate;
 
+    private Cursor mCursor;
+
     public static Fragment newInstance() {
         return new MapsFragment();
     }
@@ -176,25 +178,26 @@ public class MapsFragment
     }
 
     public void initMarkers(GoogleMap map, Cursor cursor) {
-        if (null != cursor) {
+        mCursor = cursor;
+        if (null != mCursor) {
             int i = 0;
-            cursor.moveToFirst();
+            mCursor.moveToFirst();
             do {
                 // Bind address markers
                 final LatLng coord = new LatLng(
-                        cursor.getDouble(AddressProjection.QUERY_ADDRESS_LATITUDE),
-                        cursor.getDouble(AddressProjection.QUERY_ADDRESS_LONGITUDE)
+                        mCursor.getDouble(AddressProjection.QUERY_ADDRESS_LATITUDE),
+                        mCursor.getDouble(AddressProjection.QUERY_ADDRESS_LONGITUDE)
                 );
 
-                map.addMarker(
+                Marker marker = map.addMarker(
                         new MarkerOptions()
-                                .title(cursor.getString(AddressProjection.QUERY_ADDRESS))
                                 .position(coord)
                                 .icon(BitmapDescriptorFactory.defaultMarker(MarkerUtils.HUE[i % MarkerUtils.HUE.length]))
                 );
+                marker.setTag(mCursor.getPosition());
 
                 i++;
-            } while (cursor.moveToNext());
+            } while (mCursor.moveToNext());
         }
     }
 
@@ -297,8 +300,25 @@ public class MapsFragment
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        LatLng position = marker.getPosition();
-        mMapDetailBottomSheetDelegate.searchFor(marker.getTitle(), position.latitude, position.longitude);
+        int cursorPosition = (int) marker.getTag();
+        if (mCursor.moveToPosition(cursorPosition)) {
+            int count = mCursor.getInt(AddressProjection.QUERY_ADDRESS_COUNT);
+            if (count <= 1) {
+                mMapDetailBottomSheetDelegate.closeBottomSheet();
+                long playerId = mCursor.getLong(AddressProjection.QUERY_ADDRESS_PLAYER_ID);
+                TargetBottomSheetDialogFragment.show(getContext(), playerId);
+            }
+            else {
+                String address = mCursor.getString(AddressProjection.QUERY_ADDRESS);
+                LatLng position = marker.getPosition();
+                mMapDetailBottomSheetDelegate.searchFor(address, position.latitude, position.longitude);
+            }
+        }
+        else {
+            mMapDetailBottomSheetDelegate.closeBottomSheet();
+            Log.e(TAG, "onMarkerClick: mCursor can't move to " + cursorPosition);
+        }
+
         return false;
     }
 
@@ -312,7 +332,9 @@ public class MapsFragment
         String[] PROJECTION = new String[]{
                 Address.ADDRESS,
                 Address.ADDRESS_LATITUDE,
-                Address.ADDRESS_LONGITUDE
+                Address.ADDRESS_LONGITUDE,
+                Address.ADDRESS_COUNT,
+                Address.PLAYER_ID
         };
 
         int QUERY_ADDRESS = 0;
@@ -320,5 +342,9 @@ public class MapsFragment
         int QUERY_ADDRESS_LATITUDE = 1;
 
         int QUERY_ADDRESS_LONGITUDE = 2;
+
+        int QUERY_ADDRESS_COUNT = 3;
+
+        int QUERY_ADDRESS_PLAYER_ID = 4;
     }
 }
