@@ -1,1 +1,2 @@
-The official Street Wars Android app !
+StreetWars Android App's POC.
+http://www.streetwarslyon.fr/site/

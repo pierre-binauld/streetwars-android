@@ -3,7 +3,9 @@ package fr.streetgames.streetwars.app.fragments;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -47,7 +49,8 @@ public class MapsFragment
         LoaderManager.LoaderCallbacks<Cursor>,
         View.OnClickListener,
         GoogleMap.OnMarkerClickListener,
-        GoogleMap.OnMapClickListener {
+        GoogleMap.OnMapClickListener,
+        MapsDetailBottomSheetDelegate.BottomSheetCallback {
 
     public static final String TAG = "MapsFragment";
 
@@ -61,11 +64,17 @@ public class MapsFragment
 
     private Toolbar mToolbar;
 
-    private FloatingActionButton mMyLocation;
+    private FloatingActionButton mMyLocationButton;
 
     private MapsDetailBottomSheetDelegate mMapDetailBottomSheetDelegate;
 
     private Cursor mCursor;
+
+    private ColorStateList mFabStateList;
+
+    private ColorStateList mAccentFabStateList;
+
+    private int mMapPaddingTop;
 
     public static Fragment newInstance() {
         return new MapsFragment();
@@ -87,9 +96,11 @@ public class MapsFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mMyLocation = (FloatingActionButton) view.findViewById(R.id.fab_my_location);
+        mMyLocationButton = (FloatingActionButton) view.findViewById(R.id.fab_my_location);
+//        mMyLocationButton.hide();
 
         mMapDetailBottomSheetDelegate.onViewCreated(view, savedInstanceState);
+        mMapDetailBottomSheetDelegate.setBottomSheetCallback(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
@@ -106,6 +117,16 @@ public class MapsFragment
 
         ActionBar actionBar = activity.setupToolbar(mToolbar);
         actionBar.setDisplayShowTitleEnabled(true);
+
+        mAccentFabStateList = ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        mFabStateList = ColorStateList.valueOf(Color.WHITE);
+
+        mMapPaddingTop = 0;
+        TypedValue tv = new TypedValue();
+        if (getActivity().getTheme().resolveAttribute(R.attr.actionBarSize, tv, true))
+        {
+            mMapPaddingTop = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+        }
     }
 
     @Override
@@ -138,20 +159,21 @@ public class MapsFragment
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(true); // false
+        mMap.getUiSettings().setMyLocationButtonEnabled(true); // false
+        mMap.getUiSettings().setZoomControlsEnabled(true); // false
         TypedValue tv = new TypedValue();
         if (getActivity().getTheme().resolveAttribute(R.attr.actionBarSize, tv, true))
         {
             mMap.setPadding(
                     0,
-                    TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics()),
+                    mMapPaddingTop,
                     0,
                     0
             );
         }
 
-        mMyLocation.setOnClickListener(this);
+        mMyLocationButton.setOnClickListener(this);
 
         boolean checkPermission = ContextCompat
                 .checkSelfPermission(
@@ -303,7 +325,7 @@ public class MapsFragment
         int cursorPosition = (int) marker.getTag();
         if (mCursor.moveToPosition(cursorPosition)) {
             int count = mCursor.getInt(AddressProjection.QUERY_ADDRESS_COUNT);
-            if (count <= 1) {
+            if (count <= 1 && false) {
                 mMapDetailBottomSheetDelegate.closeBottomSheet();
                 long playerId = mCursor.getLong(AddressProjection.QUERY_ADDRESS_PLAYER_ID);
                 TargetBottomSheetDialogFragment.show(getContext(), playerId);
@@ -325,6 +347,30 @@ public class MapsFragment
     @Override
     public void onMapClick(LatLng latLng) {
         mMapDetailBottomSheetDelegate.closeBottomSheet();
+    }
+
+    @Override
+    public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+    }
+
+    @Override
+    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+        mMap.setPadding(
+                0,
+                mMapPaddingTop,
+                0,
+                (int) (slideOffset * bottomSheet.getMeasuredHeight())
+        );
+
+        if (slideOffset > 0.5) {
+            mMyLocationButton.setBackgroundTintList(mAccentFabStateList);
+            mMyLocationButton.setImageResource(R.drawable.ic_my_location_white_24dp);
+        }
+        else {
+            mMyLocationButton.setBackgroundTintList(mFabStateList);
+            mMyLocationButton.setImageResource(R.drawable.ic_my_location_grey_24dp);
+        }
     }
 
     public interface AddressProjection {

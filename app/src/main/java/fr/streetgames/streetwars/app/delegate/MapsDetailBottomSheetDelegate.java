@@ -11,6 +11,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +23,12 @@ import fr.streetgames.streetwars.database.PlayerColumns;
 import fr.streetgames.streetwars.widget.MapsPlayerAdapter;
 
 public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate implements MapsPlayerAdapter.OnItemClickListener {
+
+    public interface BottomSheetCallback {
+        void onStateChanged(@NonNull View bottomSheet, int newState);
+
+        void onSlide(@NonNull View bottomSheet, float slideOffset);
+    }
 
     private static final String TAG = "MapsDetailBottomSheetDelegate";
 
@@ -40,6 +47,9 @@ public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate 
     private RecyclerView mRecyclerView;
 
     private MapsPlayerAdapter mAdapter;
+
+    @Nullable
+    private BottomSheetCallback mBottomSheetCallback;
 
     public MapsDetailBottomSheetDelegate(Fragment fragment, Bundle savedInstanceState) {
         mFragment = fragment;
@@ -168,14 +178,24 @@ public class MapsDetailBottomSheetDelegate extends CursorLoaderFragmentDelegate 
             mTitle.setText("");
             mAdapter.setCursor(null);
         }
+
+        if (null != mBottomSheetCallback) {
+            mBottomSheetCallback.onStateChanged(bottomSheet, newState);
+        }
     }
 
     public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
+        if (null != mBottomSheetCallback) {
+            mBottomSheetCallback.onSlide(bottomSheet, slideOffset);
+        }
     }
 
     @Override
     public void onItemClickListener(MapsPlayerAdapter.PlayerViewHolder holder) {
         TargetBottomSheetDialogFragment.show(mFragment.getContext(), holder.playerId);
+    }
+
+    public void setBottomSheetCallback(BottomSheetCallback bottomSheetCallback) {
+        mBottomSheetCallback = bottomSheetCallback;
     }
 }

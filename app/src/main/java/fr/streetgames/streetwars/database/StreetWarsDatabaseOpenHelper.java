@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import fr.streetgames.streetwars.BuildConfig;
+import fr.streetgames.streetwars.api.StreetWarsJobCategory;
 import fr.streetgames.streetwars.api.TeamType;
 
 public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
@@ -116,101 +117,147 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         PlayerColumns.JOB_CATEGORY + ", " +
                         PlayerColumns.EXTRA +
                         ") " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
-                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " + // Belle
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " + // Bulle
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " + // Rebelle
                         "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), " +
                         "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 new Object[] {
                         0,
-                        "Tony",
-                        "Stark",
-                        "Iron Man",
-                        1,
-                        "http://5.135.183.92:50100/res/iron_man.jpg",
+                        "Brayane",
+                        "Chermitti",
+                        "Belle",
+                        0,
+                        "http://www.streetwarslyon.fr/site/photo/gd/1lYhQ5aMO.jpg", //http://5.135.183.92:50100/res/iron_man.jpg",
                         "NEIOZXCV",
-                        4,
-                        0,
-                        null,
-                        0,
-                        0,
-                        null,
-                        0,
-                        0,
-                        0,
-                        null,
-
-                        1,
-                        "Steve",
-                        "Rogers",
-                        "Captain America",
-                        0,
-                        "http://5.135.183.92:50100/res/captain_america.jpg",
-                        null,
-                        2,
-                        0,
-                        null,
-                        0,
-                        0,
-                        null,
-                        0,
-                        0,
-                        0,
-                        null,
-
                         3,
-                        "Jack",
-                        "Sparrow",
-                        "Captain",
                         0,
-                        "http://5.135.183.92:50100/res/jack_sparrow.jpg",
                         null,
-                        1,
-                        1,
-                        "34 rue Tupin, Lyon 2",
-                        45.762836,
-                        4.835285,
-                        "50 quai Paul Sedaillan, Lyon 9",
-                        45.788470,
-                        4.814715,
                         0,
-                        "To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him. To what point and purpose, young missy? The Black Pearl is gone and unless you have a rudder and a lot of sails hidden in that bodice - unlikely - young Mr. Turner will be dead long before you can reach him.",
+                        0,
+                        null,
+                        0,
+                        0,
+                        StreetWarsJobCategory.WORKER,
+                        null,
+
+                        1,
+                        "Pierre",
+                        "Binauld",
+                        "Bulle",
+                        1,
+                        "http://www.streetwarslyon.fr/site/photo/gd/HA3kaw3Uec.jpg", //http://5.135.183.92:50100/res/captain_america.jpg",
+                        "xdiqtvtc",
+                        1,
+                        0,
+                        null,
+                        0,
+                        0,
+                        null,
+                        0,
+                        0,
+                        StreetWarsJobCategory.WORKER,
+                        null,
+
+                        2,
+                        "Agathe",
+                        "Pillot",
+                        "Rebelle",
+                        0,
+                        "http://www.streetwarslyon.fr/site/photo/gd/1VrzcUpwo.jpg", //"http://www.streetwarslyon.fr/site/photo/gd/HA3kaw3Uec.jpg", //http://5.135.183.92:50100/res/captain_america.jpg",
+                        "????????",
+                        0,
+                        0,
+                        null,
+                        0,
+                        0,
+                        null,
+                        0,
+                        0,
+                        StreetWarsJobCategory.NO_jOB,
+                        null,
+
+                        3, // player id
+                        "Pascal",
+                        "CHEVAILLIER WULLSCHLEGER",
+                        "Calou",
+                        0, // is_me
+                        "http://www.streetwarslyon.fr/site/photo/gd/9YjJaqyhbI.jpg", //"http://5.135.183.92:50100/res/jack_sparrow.jpg",
+                        null, // Water Code
+                        0, // kill count
+                        1, // Team Id
+                        "5 Avenue Du Commandant L'herminier, 69100 Villeurbanne", // Home
+                        45.770315, // Home latitude
+                        4.885160, // Home longitude
+                        "27 Boulevard Du 11 Novembre, 69100 Villeurbanne", // Work/School
+                        45.780723, // Work/School latitude
+                        4.863510, // Work/School longitude
+                        StreetWarsJobCategory.STUDENT, // job cat
+                        "Filière :\tstaps \n" +
+                                "Année d'étude :\tl1 \n" +
+                                "Batiments :\tsapin \n" +
+                                "Jours de présence :\tMardi, Mercredi, Jeudi, Vendredi \n" +
+                                "\n" +
+                                "\n" +
+                                "Ce joueur a des vacances durant la période de jeu\n" +
+                                "Dates de vacances :\t22/09/16 au 27/09/16 \n" +
+                                "Noms de ses magasins favoris:\tCarrefour gratte ciel \n" +
+                                "Lieux de sorties fréquents/prévus :\tvieux lyon, st jean, gerland ninkasi \n" +
+                                "\n" +
+                                "\n" +
+                                "Trajets réguliers :\tvélo personel tram et métro \n",
 
                         4,
-                        "Will",
-                        "Turner",
-                        "Sailor",
+                        "Maxence",
+                        "DEFOUR",
+                        "Max le bg",
                         0,
-                        "http://5.135.183.92:50100/res/will_turner.png",
+                        "http://www.streetwarslyon.fr/site/photo/gd/123cQZuvw.jpg",//"http://5.135.183.92:50100/res/will_turner.png",
                         null,
-                        7,
                         1,
-                        "21 rue Voltaire, Lyon 3",
-                        45.759731,
-                        4.848365,
-                        "",
-                        null,
-                        null,
-                        2,
-                        "That's the Flying Dutchman? It doesn't look like much.",
+                        1,
+                        "5 Avenue Du Commandant L'herminier, 69100 Villeurbanne", // Home
+                        45.770315, // Home latitude
+                        4.885160, // Home longitude
+                        "47 Rue Du Sergent Michel Berthet, 69009 Lyon",
+                        45.768472,
+                        4.806027,
+                        StreetWarsJobCategory.STUDENT,
+                        "Filière :\tBts Gestion et Protection de la Nature \n" +
+                                "Année d'étude :\t1ère année de BTS \n" +
+                                "Batiments :\tCampus René Cassin \n" +
+                                "Jours de présence :\tLundi, Mardi, Mercredi, Jeudi, Vendredi \n" +
+                                "\n" +
+                                "\n" +
+                                "Trajets réguliers :\tTCL : Métro A de Gratte Ciel a Bellcour + Métro D de Bellcour a Gorge de Loup \n" +
+                                "\n" +
+                                "Notes :\tEventuels retour a Vienne 38200 un dimanche sur 2 \n" +
+                                "\n" +
+                                "Courage et RDV en final mes poulets ;) ",
 
                         5,
-                        "Elisabeth",
-                        "Swann",
-                        "Lady",
+                        "Antoine",
+                        "GUILLOIS",
+                        "Yermath",
                         0,
-                        "http://5.135.183.92:50100/res/elizabeth_swann.jpg",
+                        "http://www.streetwarslyon.fr/site/photo/gd/1PoIa04cA.jpg",//"http://5.135.183.92:50100/res/elizabeth_swann.jpg",
                         null,
                         0,
                         1,
-                        "15 rue Sebastien Gryphe, Lyon 7",
-                        45.752845,
-                        4.844944,
-                        "86 Rue Pasteur, 69007 Lyon",
-                        45.749211,
-                        4.836951,
-                        1,
-                        "I'm not entirely sure that I've had enough rum to allow that kind of talk."
+                        "139 Avenue Felix Faure, 69003 Lyon",
+                        45.754407,
+                        4.864159,
+                        "47 Rue Du Sergent Michel Berthet, 69009 Lyon",
+                        45.768472,
+                        4.806027,
+                        StreetWarsJobCategory.STUDENT,
+                        "Filière :\tBTS gestion et protection de la nature \n" +
+                                "Année d'étude :\t1er \n" +
+                                "Batiments :\t1er \n" +
+                                "Jours de présence :\tLundi, Mardi, Mercredi, Jeudi, Vendredi \n" +
+                                "\n" +
+                                "\n" +
+                                "Trajets réguliers :\tDe chez moi au métro Garibaldi je le fait en skate et après je m'arrete à gorge de loup et je vais à mon école après "
                 });
 
         Log.d(TAG, "insertLoopTestData: Insert team");
@@ -223,10 +270,10 @@ public class StreetWarsDatabaseOpenHelper extends SQLiteOpenHelper {
                         "(?, ?, ?)",
                 new Object[] {
                         0,
-                        "Yeah Niggar",
+                        "Les Supers Nanas",
                         TeamType.TEAM_MATE,
                         1,
-                        "Black Pearl's Crew",
+                        "les canards enflamés",
                         TeamType.TARGET
                 });
     }
